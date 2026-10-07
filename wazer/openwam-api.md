@@ -60,6 +60,8 @@ Requests use `reversal.openwam-request.v1`:
 | `verify_cam_simulation` | CAM artifact and retained replay | Independent source/intent/plan/fault replay recomputation |
 | `research_cam_gcode` | CAM artifact and explicit `historical_wam16` profile | CAM-bound multi-span research candidate; controller qualification stays false |
 | `verify_cam_gcode` | CAM artifact and candidate | Independent source/intent/table/postprocessor regeneration |
+| `simulate_cam_gcode` | CAM artifact, research candidate and fault kind/time | Source/export-bound parsed command replay with all emitted dwells and output channels |
+| `verify_cam_gcode_simulation` | CAM artifact, candidate and retained command replay | Independent regeneration, parsing and synthetic plant replay |
 | `simulate` | Project and explicit fault kind/time | Synthetic motion/controller/plant replay |
 | `verify_simulation` | Project and retained replay | Independent recomputation receipt |
 | `inspect_gcode` | G-code text | Typed observed-dialect program, canonical serialization, digest and feed/dwell summary |
@@ -118,6 +120,10 @@ kerf compensation, holes-first ordering, explicit starts, uncut tabs and leads.
 Its retained CAM artifact is independently verified. The [CAM loop](cam-loop.md)
 connects it to fault replay and multi-span historical research exports without
 changing the older project-only operations.
+
+The [exported command replay](gcode-simulation.md) executes the regenerated G-code
+text, including shutdown dwells and separate jet/abrasive sequencing. Simulation
+failure uses `simulation_failed`; rejected retained traces use `invalid_replay`.
 
 The [CLI demonstration receipt](openwam-api-demonstration.json) records retained
 request/response hashes, independently verified project and replay, and nominal

@@ -1,0 +1,95 @@
+{
+  "schema": "reversal.openwam-cam-gcode-demonstration.v1",
+  "fixture": "wazer/fixtures/cam-panel.svg",
+  "intent": "wazer/fixtures/cam-panel.intent.json",
+  "profile": "historical_wam16",
+  "cam_sha256": "fe51a6dcc92932e72d078d894d81f046f9cac46f4fd4c9320e278ac834e543fd",
+  "gcode_sha256": "dc4b8e72bb2b638fe1da879df8aa41dfed73754e5796a41c64502cb12f0bd45e",
+  "nominal": {
+    "command_count": 155,
+    "completed_commands": 155,
+    "virtual_elapsed_ms": 383650,
+    "dwell_elapsed_ms": 54000,
+    "simulated_cut_length_mm": 578.3937529722191,
+    "outcome": "completed"
+  },
+  "nominal_verification": {
+    "cam_sha256": "fe51a6dcc92932e72d078d894d81f046f9cac46f4fd4c9320e278ac834e543fd",
+    "completed_commands": 155,
+    "controller_qualified": false,
+    "gcode_sha256": "dc4b8e72bb2b638fe1da879df8aa41dfed73754e5796a41c64502cb12f0bd45e",
+    "hardware_qualified": false,
+    "machine_output_enabled": false,
+    "outcome": "completed",
+    "schema": "reversal.openwam-cam-gcode-simulation-verification.v1",
+    "verified": true
+  },
+  "fault": {
+    "fault": {
+      "at_ms": 10000,
+      "kind": "enclosure_open"
+    },
+    "completed_commands": 14,
+    "virtual_elapsed_ms": 10000,
+    "dwell_elapsed_ms": 6000,
+    "outcome": "faulted"
+  },
+  "fault_verification": {
+    "cam_sha256": "fe51a6dcc92932e72d078d894d81f046f9cac46f4fd4c9320e278ac834e543fd",
+    "completed_commands": 14,
+    "controller_qualified": false,
+    "gcode_sha256": "dc4b8e72bb2b638fe1da879df8aa41dfed73754e5796a41c64502cb12f0bd45e",
+    "hardware_qualified": false,
+    "machine_output_enabled": false,
+    "outcome": "faulted",
+    "schema": "reversal.openwam-cam-gcode-simulation-verification.v1",
+    "verified": true
+  },
+  "validation": {
+    "workspace_tests": 102,
+    "strict_clippy": true,
+    "format_check": true
+  },
+  "machine_output_enabled": false,
+  "controller_qualified": false,
+  "hardware_qualified": false,
+  "limitations": [
+    "Synthetic controller and pressure model; no WAZER firmware execution or hardware calibration.",
+    "Straight-line nominal feeds without acceleration or step generation; rapid feed uses verified CAM maximum feed.",
+    "Validated metadata and initialization have zero synthetic duration; all emitted dwells are replayed."
+  ],
+  "retained_files": [
+    {
+      "sha256": "1d3309efb2a2e6941c2100cbc7c3fd75d5a6c4ce1a8f7fa8ee5197b8be902281",
+      "path": "wazer/private/independent-cam-1/gcode-sim.request.json"
+    },
+    {
+      "sha256": "39155b9b70dc9ebd6176907c5d3a3a8ebe1a54977843ea8ae0d026ee476e7b74",
+      "path": "wazer/private/independent-cam-1/gcode-sim.response.json"
+    },
+    {
+      "sha256": "4c184c75562051607e5c1c91ba7327af3525bc83c531e9ad8ea48c8ffcec018d",
+      "path": "wazer/private/independent-cam-1/verify-gcode-sim.request.json"
+    },
+    {
+      "sha256": "82da89e29b395516d991078d07f3c9b14e79b26f37f156c314e8df86d8c2fa8a",
+      "path": "wazer/private/independent-cam-1/verify-gcode-sim.response.json"
+    },
+    {
+      "sha256": "50e98469648f9a56e98d4d7fba28ecd891699a62b1ddfc9108ffd82cd53ed4ea",
+      "path": "wazer/private/independent-cam-1/gcode-fault.request.json"
+    },
+    {
+      "sha256": "5acd12f3fbb70f9bc1a3af9aca53461c146caa9c210f9169bf6d1dd58a7b83cf",
+      "path": "wazer/private/independent-cam-1/gcode-fault.response.json"
+    },
+    {
+      "sha256": "05491f272dea183d38c14ef4766c387b81ea5d8a523e6502b8ad0adff4e07413",
+      "path": "wazer/private/independent-cam-1/verify-gcode-fault.request.json"
+    },
+    {
+      "sha256": "8c4215b89c5ac0d314456c4576252c2eac4baeee0d3324e5f34f9070bcc3f3f5",
+      "path": "wazer/private/independent-cam-1/verify-gcode-fault.response.json"
+    }
+  ]
+}

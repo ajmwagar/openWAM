@@ -235,3 +235,204 @@ fn changed_intent_outputs_authority_and_unsupported_profiles_fail() {
     assert!(!invoke(json!({"operation":"research_cam_gcode","artifact":artifact,"profile":"wam24_pro_presegmented"})).1);
     assert!(!invoke(json!({"operation":"simulate_cam","artifact":artifact,"fault":{"kind":"enclosure_open","at_ms":3600000}})).1);
 }
+
+fn exported(artifact: &Value) -> Value {
+    ok(json!({"operation":"research_cam_gcode","artifact":artifact,"profile":"historical_wam16"}))["candidate"].clone()
+}
+fn command_replay(artifact: &Value, candidate: &Value, kind: &str, at_ms: u64) -> Value {
+    ok(json!({"operation":"simulate_cam_gcode","artifact":artifact,"candidate":candidate,"fault":{"kind":kind,"at_ms":at_ms}}))["replay"].clone()
+}
+fn verify_commands(artifact: &Value, candidate: &Value, replay: &Value) -> (Value, bool) {
+    invoke(
+        json!({"operation":"verify_cam_gcode_simulation","artifact":artifact,"candidate":candidate,"replay":replay}),
+    )
+}
+
+#[test]
+fn exported_commands_replay_exact_dwells_moves_and_separate_output_channels() {
+    let artifact = artifact();
+    let candidate = exported(&artifact);
+    let replay = command_replay(&artifact, &candidate, "none", 0);
+    assert_eq!(replay, command_replay(&artifact, &candidate, "none", 0));
+    assert!(verify_commands(&artifact, &candidate, &replay).1);
+    let trace = &replay["trace"];
+    assert_eq!(trace["outcome"], "completed");
+    assert_eq!(trace["command_count"], 155);
+    assert_eq!(trace["completed_commands"], 155);
+    assert_eq!(trace["dwell_elapsed_ms"], 54_000);
+    let expected_length = artifact["plan"]["draft"]["raw_centerline_length_mm"]
+        .as_f64()
+        .unwrap();
+    assert!((trace["simulated_cut_length_mm"].as_f64().unwrap() - expected_length).abs() < 1e-8);
+    let frames = trace["frames"].as_array().unwrap();
+    let commands = candidate["code"]["program"]["commands"].as_array().unwrap();
+    let mut position = [0.0_f64, 0.0];
+    let mut feed = 0.0;
+    let mut elapsed = 0_u64;
+    let rapid_feed = trace["model"]["rapid_feed_mm_min"].as_f64().unwrap();
+    for (i, command) in commands.iter().enumerate() {
+        let start = frames
+            .iter()
+            .find(|f| f["observation"]["operation"] == i && f["observation"]["phase"] == "start")
+            .unwrap();
+        let end = frames
+            .iter()
+            .find(|f| f["observation"]["operation"] == i && f["observation"]["phase"] == "end")
+            .unwrap();
+        assert_eq!(&end["command"], command);
+        assert_eq!(start["observation"]["at_ms"], elapsed);
+        match command["command"].as_str().unwrap() {
+            "rapid" | "linear" => {
+                let target = [
+                    command["xy_mm"][0].as_f64().unwrap(),
+                    command["xy_mm"][1].as_f64().unwrap(),
+                ];
+                if let Some(value) = command["feed_mm_min"].as_f64() {
+                    feed = value;
+                }
+                let rate = if command["command"] == "rapid" {
+                    rapid_feed
+                } else {
+                    feed
+                };
+                elapsed += ((target[0] - position[0]).hypot(target[1] - position[1]) / rate
+                    * 60000.0)
+                    .ceil() as u64;
+                position = target;
+                assert_eq!(end["observation"]["position_mm"], command["xy_mm"]);
+                if command["command"] == "rapid" {
+                    assert_eq!(end["observation"]["effective_jet"], false);
+                    assert_eq!(end["observation"]["nozzle_flow"], false);
+                }
+            }
+            "dwell" => {
+                elapsed += (command["seconds"].as_f64().unwrap() * 1000.0).ceil() as u64;
+                assert_eq!(
+                    start["observation"]["position_mm"],
+                    end["observation"]["position_mm"]
+                );
+                assert_eq!(end["channels"]["effective_cutting_motion"], false);
+                if i > 0 && commands[i - 1]["command"] == "abrasive_off" {
+                    assert_eq!(end["observation"]["effective_jet"], true);
+                    assert_eq!(end["channels"]["effective_abrasive"], false);
+                    assert_eq!(
+                        end["observation"]["pressure_units"],
+                        trace["model"]["pressure_capacity_units"]
+                    );
+                }
+            }
+            "jet_on" | "abrasive_off" => {
+                assert_eq!(end["observation"]["effective_jet"], true);
+                assert_eq!(end["channels"]["effective_abrasive"], false);
+            }
+            "abrasive_on" => {
+                assert_eq!(end["observation"]["effective_jet"], true);
+                assert_eq!(end["channels"]["effective_abrasive"], true);
+            }
+            "jet_off" => {
+                assert_eq!(end["observation"]["effective_jet"], false);
+                assert_eq!(end["channels"]["effective_abrasive"], false);
+                assert!(end["observation"]["pressure_units"].as_u64().unwrap() > 0);
+                let release = frames
+                    .iter()
+                    .find(|f| {
+                        f["observation"]["operation"] == i + 1 && f["observation"]["phase"] == "end"
+                    })
+                    .unwrap();
+                assert_eq!(release["observation"]["pressure_units"], 0);
+                assert_eq!(release["observation"]["state"], "Disarmed");
+            }
+            _ => (),
+        }
+        assert_eq!(end["observation"]["at_ms"], elapsed);
+    }
+    assert_eq!(trace["virtual_elapsed_ms"], elapsed);
+    for flag in [
+        "machine_output_enabled",
+        "controller_qualified",
+        "hardware_qualified",
+    ] {
+        assert_eq!(replay[flag], false);
+    }
+}
+
+#[test]
+fn command_faults_and_stalled_host_stop_without_dispatching_more_commands() {
+    let artifact = artifact();
+    let candidate = exported(&artifact);
+    for (kind, at, expected) in [
+        ("enclosure_open", 10000, "faulted"),
+        ("watchdog_stall", 10000, "faulted"),
+        ("stale_input", 10000, "faulted"),
+        ("release_blocked", 0, "waiting_for_release"),
+        ("pressure_sensor_lies", 0, "unsafe_plant"),
+    ] {
+        let replay = command_replay(&artifact, &candidate, kind, at);
+        assert_eq!(replay["trace"]["outcome"], expected, "{replay}");
+        assert!(replay["trace"]["completed_commands"].as_u64().unwrap() < 155);
+        assert!(verify_commands(&artifact, &candidate, &replay).1);
+    }
+    let stalled = command_replay(&artifact, &candidate, "watchdog_stall", 0);
+    assert_eq!(stalled["trace"]["completed_commands"], 0);
+    assert_eq!(stalled["trace"]["virtual_elapsed_ms"], 100);
+    // A fault during the explicit jet-only shutdown dwell must remain timed
+    // against exported commands rather than the shorter CAM replay.
+    let nominal = command_replay(&artifact, &candidate, "none", 0);
+    let off = nominal["trace"]["frames"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|f| f["command"]["command"] == "abrasive_off" && f["observation"]["phase"] == "end")
+        .unwrap();
+    let at = off["observation"]["at_ms"].as_u64().unwrap() + 500;
+    let interrupted = command_replay(&artifact, &candidate, "enclosure_open", at);
+    assert_eq!(interrupted["trace"]["virtual_elapsed_ms"], at);
+    let end = interrupted["trace"]["frames"]
+        .as_array()
+        .unwrap()
+        .last()
+        .unwrap();
+    assert_eq!(end["command"]["command"], "dwell");
+    assert_eq!(end["observation"]["effective_jet"], false);
+    assert_eq!(end["channels"]["effective_abrasive"], false);
+    assert!(verify_commands(&artifact, &candidate, &interrupted).1);
+}
+
+#[test]
+fn command_replay_rejects_forged_export_trace_and_changed_source_intent() {
+    let artifact = artifact();
+    let candidate = exported(&artifact);
+    let replay = command_replay(&artifact, &candidate, "none", 0);
+    for pointer in [
+        "/gcode_sha256",
+        "/trace/dwell_elapsed_ms",
+        "/trace/frames/0/channels/effective_abrasive",
+        "/machine_output_enabled",
+    ] {
+        let mut forged = replay.clone();
+        let v = forged.pointer_mut(pointer).unwrap();
+        *v = if v.is_boolean() {
+            json!(true)
+        } else if v.is_number() {
+            json!(0)
+        } else {
+            json!("forged")
+        };
+        let (response, success) = verify_commands(&artifact, &candidate, &forged);
+        assert!(!success && response["error"]["code"] == "invalid_replay");
+    }
+    let mut forged = candidate.clone();
+    forged["code"]["gcode"] = json!(
+        candidate["code"]["gcode"]
+            .as_str()
+            .unwrap()
+            .replacen("G4 S1", "G4 S2", 1)
+    );
+    assert_ne!(forged, candidate);
+    assert!(!invoke(json!({"operation":"simulate_cam_gcode","artifact":artifact,"candidate":forged,"fault":{"kind":"none","at_ms":0}})).1);
+    let mut revised = artifact.clone();
+    revised["intent"]["contours"][4]["start_fraction"] = json!(0.5);
+    ok(json!({"operation":"verify_cam","artifact":revised}));
+    assert!(!verify_commands(&revised, &candidate, &replay).1);
+    assert!(!invoke(json!({"operation":"simulate_cam_gcode","artifact":artifact,"candidate":candidate,"fault":{"kind":"enclosure_open","at_ms":3600000}})).1);
+}

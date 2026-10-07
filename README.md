@@ -15,6 +15,8 @@ and applications.
 - Portable source/intent/table-bound artifacts, independent recomputation and
   standalone SVG previews.
 - Synthetic control/plant fault replay and explicit research G-code profiles.
+- Source-bound exported-command replay with explicit dwells and separate jet /
+  abrasive sequencing; see [the replay runbook](wazer/gcode-simulation.md).
 
 The CAM planner currently supports simple closed flattened polygons with bounded
 miter offsets. Unsupported topology fails explicitly. Verified CAM artifacts feed

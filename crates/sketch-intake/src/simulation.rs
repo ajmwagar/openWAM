@@ -73,6 +73,36 @@ pub struct Replay {
     pub limitations: Vec<&'static str>,
 }
 
+#[derive(Debug, Serialize, schemars::JsonSchema)]
+pub struct OutputChannels {
+    pub requested_abrasive: bool,
+    pub effective_abrasive: bool,
+    pub requested_cutting_motion: bool,
+    pub effective_cutting_motion: bool,
+}
+
+#[derive(Debug, Serialize, schemars::JsonSchema)]
+pub struct CommandFrame {
+    pub command: swarf_waterjet::wazer::Command,
+    /// operation is the zero-based index in the parsed command stream.
+    pub observation: Frame,
+    pub channels: OutputChannels,
+}
+
+#[derive(Debug, Serialize, schemars::JsonSchema)]
+pub struct ProgramTrace {
+    pub schema: &'static str,
+    pub fault: FaultSpec,
+    pub model: serde_json::Value,
+    pub command_count: usize,
+    pub completed_commands: usize,
+    pub virtual_elapsed_ms: u64,
+    pub simulated_cut_length_mm: f64,
+    pub dwell_elapsed_ms: u64,
+    pub outcome: Outcome,
+    pub frames: Vec<CommandFrame>,
+}
+
 struct Runner {
     sim: Simulator,
     fault: FaultSpec,
@@ -80,8 +110,24 @@ struct Runner {
     position: [f64; 2],
     cut_length: f64,
     frames: Vec<Frame>,
+    channels: Vec<OutputChannels>,
 }
 impl Runner {
+    fn new(fault: FaultSpec) -> Result<Self> {
+        ensure!(
+            fault.at_ms <= MAX_TIME_MS && (fault.kind != FaultKind::None || fault.at_ms == 0),
+            "invalid fault schedule"
+        );
+        Ok(Self {
+            sim: Simulator::new(Model::default()).map_err(|e| anyhow::anyhow!("{e:?}"))?,
+            fault,
+            injected: false,
+            position: [0.0, 0.0],
+            cut_length: 0.0,
+            frames: Vec::new(),
+            channels: Vec::new(),
+        })
+    }
     fn frame(&mut self, op: usize, phase: &'static str) {
         let s = self.sim.snapshot();
         self.frames.push(Frame {
@@ -96,6 +142,12 @@ impl Runner {
             nozzle_flow: s.nozzle_flow,
             watchdog_tripped: s.watchdog_tripped,
             unsafe_recovery: s.unsafe_recovery,
+        });
+        self.channels.push(OutputChannels {
+            requested_abrasive: s.requested.abrasive,
+            effective_abrasive: s.effective.abrasive,
+            requested_cutting_motion: s.requested.cutting_motion,
+            effective_cutting_motion: s.effective.cutting_motion,
         });
     }
     fn inject(&mut self, op: usize) {
@@ -237,22 +289,11 @@ pub(crate) fn replay_draft(
     motion_scope: &'static str,
 ) -> Result<Replay> {
     ensure!(
-        fault.at_ms <= MAX_TIME_MS && (fault.kind != FaultKind::None || fault.at_ms == 0),
-        "invalid fault schedule"
-    );
-    ensure!(
         draft.operations.len() <= MAX_OPERATIONS,
         "simulation operation bound exceeded"
     );
     let model = Model::default();
-    let mut r = Runner {
-        sim: Simulator::new(model).map_err(|e| anyhow::anyhow!("{e:?}"))?,
-        fault,
-        injected: false,
-        position: [0.0, 0.0],
-        cut_length: 0.0,
-        frames: Vec::new(),
-    };
+    let mut r = Runner::new(fault)?;
     let mut completed = 0;
     let mut outcome = Outcome::Completed;
     for (i, operation) in draft.operations.iter().enumerate() {
@@ -351,6 +392,177 @@ pub(crate) fn replay_draft(
             "Durations rounded up per operation to milliseconds. Rapids use nominal gantry limit. Pierce values are public table estimates.",
             "No automatic resume after faults; pressure release is modeled, not a proven installed sensor.",
         ],
+    })
+}
+
+/// Execute validated parsed commands, with all explicit dwells. Only callers
+/// that verified candidate provenance may expose this runner through the API.
+pub(crate) fn replay_program(
+    program: &swarf_waterjet::wazer::Program,
+    rapid_feed_mm_min: f64,
+    fault: FaultSpec,
+) -> Result<ProgramTrace> {
+    use reversal_waterjet_control::Requests;
+    use swarf_waterjet::wazer::Command as G;
+    let summary = swarf_waterjet::wazer::validate(program)?;
+    ensure!(
+        program.commands.len() <= MAX_OPERATIONS,
+        "command replay bound exceeded"
+    );
+    ensure!(summary.unresolved_feed_moves == 0, "unresolved modal feed");
+    ensure!(
+        rapid_feed_mm_min.is_finite() && rapid_feed_mm_min > 0.0,
+        "invalid rapid feed"
+    );
+    let mut r = Runner::new(fault)?;
+    let mut gate = Requests::default();
+    r.sim.set_output_gate(gate);
+    let mut feed = None;
+    let mut completed = 0;
+    let mut dwell_elapsed_ms = 0;
+    let mut outcome = Outcome::Completed;
+    for (i, command) in program.commands.iter().enumerate() {
+        r.inject(i);
+        r.host(Command::Poll);
+        r.frame(i, "start");
+        // A stalled host dispatches no further zero-duration commands. Wait for
+        // the independent supervisor boundary, without changing channel gates.
+        if r.injected && fault.kind == FaultKind::WatchdogStall && r.stopped().is_none() {
+            let deadline = r
+                .sim
+                .watchdog_deadline_ms()
+                .ok_or_else(|| anyhow::anyhow!("missing watchdog deadline"))?;
+            let duration = deadline.saturating_sub(r.sim.snapshot().at_ms).max(1);
+            r.wait(i, duration, None, false)?;
+        }
+        if let Some(stop) = r.stopped() {
+            outcome = stop;
+            r.frame(i, "interrupted");
+            break;
+        }
+        let stop = match *command {
+            G::Rapid { xy_mm } => {
+                let s = r.sim.snapshot();
+                if s.state != State::Disarmed || s.pressure_units > 0 || s.nozzle_flow {
+                    Some(Outcome::WaitingForRelease)
+                } else {
+                    let distance = (xy_mm[0] - r.position[0]).hypot(xy_mm[1] - r.position[1]);
+                    if distance == 0.0 {
+                        r.position = xy_mm;
+                        None
+                    } else {
+                        r.wait(
+                            i,
+                            millis(distance / rapid_feed_mm_min * 60.0)?,
+                            Some(xy_mm),
+                            false,
+                        )?
+                    }
+                }
+            }
+            G::JetOn => {
+                if r.sim.snapshot().state != State::Disarmed {
+                    Some(Outcome::WaitingForRelease)
+                } else {
+                    gate = Requests {
+                        jet: true,
+                        abrasive: false,
+                        cutting_motion: false,
+                    };
+                    r.sim.set_output_gate(gate);
+                    r.host(Command::Arm);
+                    r.host(Command::Pierce);
+                    r.stopped()
+                }
+            }
+            G::AbrasiveOn => {
+                gate.abrasive = true;
+                r.sim.set_output_gate(gate);
+                r.stopped()
+            }
+            G::Linear { xy_mm, feed_mm_min } => {
+                if let Some(value) = feed_mm_min {
+                    feed = Some(value);
+                }
+                let rate = feed.ok_or_else(|| anyhow::anyhow!("unresolved modal feed"))?;
+                if r.sim.snapshot().state == State::Piercing {
+                    r.host(Command::Cut);
+                }
+                gate.cutting_motion = true;
+                r.sim.set_output_gate(gate);
+                r.frame(i, "active");
+                let distance = (xy_mm[0] - r.position[0]).hypot(xy_mm[1] - r.position[1]);
+                let result = if let Some(stop) = r.stopped() {
+                    Some(stop)
+                } else if distance == 0.0 {
+                    r.position = xy_mm;
+                    None
+                } else {
+                    r.wait(i, millis(distance / rate * 60.0)?, Some(xy_mm), true)?
+                };
+                gate.cutting_motion = false;
+                r.sim.set_output_gate(gate);
+                result
+            }
+            G::Dwell { seconds } => {
+                let start = r.sim.snapshot().at_ms;
+                let result = r.wait(i, millis(seconds)?, None, false)?;
+                dwell_elapsed_ms += r.sim.snapshot().at_ms - start;
+                result
+            }
+            G::AbrasiveOff => {
+                gate.abrasive = false;
+                r.sim.set_output_gate(gate);
+                r.stopped()
+            }
+            G::JetOff => {
+                gate = Requests::default();
+                r.sim.set_output_gate(gate);
+                r.host(Command::Stop);
+                r.stopped()
+            }
+            G::End => {
+                let s = r.sim.snapshot();
+                if s.state != State::Disarmed || s.pressure_units > 0 || s.nozzle_flow {
+                    Some(Outcome::WaitingForRelease)
+                } else {
+                    None
+                }
+            }
+            _ => None, // Validated metadata/envelope commands have no synthetic duration.
+        };
+        r.frame(i, "end");
+        if let Some(stop) = stop {
+            outcome = stop;
+            break;
+        }
+        completed += 1;
+    }
+    ensure!(
+        fault.kind == FaultKind::None || r.injected,
+        "fault time falls after completed program"
+    );
+    let model = Model::default();
+    Ok(ProgramTrace {
+        schema: "reversal.wazer-program-trace.v1",
+        fault,
+        model: serde_json::json!({"input_age_ms":model.input_age_ms,"watchdog_ms":model.watchdog_ms,"pressure_capacity_units":model.pressure_capacity,"pressure_rise_per_ms":model.pressure_rise_per_ms,"pressure_fall_per_ms":model.pressure_fall_per_ms,"poll_interval_ms":20,"rapid_feed_mm_min":rapid_feed_mm_min}),
+        command_count: program.commands.len(),
+        completed_commands: completed,
+        virtual_elapsed_ms: r.sim.snapshot().at_ms,
+        simulated_cut_length_mm: r.cut_length,
+        dwell_elapsed_ms,
+        outcome,
+        frames: r
+            .frames
+            .into_iter()
+            .zip(r.channels)
+            .map(|(observation, channels)| CommandFrame {
+                command: program.commands[observation.operation].clone(),
+                observation,
+                channels,
+            })
+            .collect(),
     })
 }
 

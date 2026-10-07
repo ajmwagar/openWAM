@@ -49,6 +49,16 @@ pub struct Request {
 #[derive(Debug, Serialize, Deserialize, JsonSchema)]
 #[serde(tag = "operation", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Operation {
+    SimulateCamGcode {
+        artifact: crate::cam::Artifact,
+        candidate: Box<crate::cam_loop::Candidate>,
+        fault: simulation::FaultSpec,
+    },
+    VerifyCamGcodeSimulation {
+        artifact: crate::cam::Artifact,
+        candidate: Box<crate::cam_loop::Candidate>,
+        replay: serde_json::Value,
+    },
     SimulateCam {
         artifact: crate::cam::Artifact,
         fault: simulation::FaultSpec,
@@ -135,6 +145,9 @@ pub enum Operation {
 #[derive(Debug, Serialize, JsonSchema)]
 #[serde(tag = "kind", rename_all = "snake_case")]
 pub enum Output {
+    CamGcodeSimulation {
+        replay: Box<crate::gcode_simulation::Replay>,
+    },
     CamSimulation {
         replay: Box<crate::cam_loop::Replay>,
     },
@@ -316,6 +329,22 @@ pub fn execute(request: Request, catalog: &cutting::Catalog) -> Result<Output, A
         .validate()
         .map_err(|e| ApiError::from_error(ErrorCode::CatalogInvalid, e))?;
     match request.request {
+        Operation::SimulateCamGcode {
+            artifact,
+            candidate,
+            fault,
+        } => crate::gcode_simulation::simulate(&artifact, catalog, &candidate, fault)
+            .map(|replay| Output::CamGcodeSimulation {
+                replay: Box::new(replay),
+            })
+            .map_err(|e| ApiError::from_error(ErrorCode::SimulationFailed, e)),
+        Operation::VerifyCamGcodeSimulation {
+            artifact,
+            candidate,
+            replay,
+        } => crate::gcode_simulation::verify(&artifact, catalog, &candidate, &replay)
+            .map(|verification| Output::Verification { verification })
+            .map_err(|e| ApiError::from_error(ErrorCode::InvalidReplay, e)),
         Operation::SimulateCam { artifact, fault } => {
             crate::cam_loop::simulate(&artifact, catalog, fault)
                 .map(|replay| Output::CamSimulation {

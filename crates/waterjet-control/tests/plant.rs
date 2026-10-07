@@ -106,3 +106,39 @@ fn advancing_in_chunks_does_not_change_the_plant_and_errors_are_atomic() {
         Err(Error::InvalidModel)
     ));
 }
+
+#[test]
+fn channel_gate_only_restricts_controller_and_independent_supervisor() {
+    let all = Requests {
+        jet: true,
+        abrasive: true,
+        cutting_motion: true,
+    };
+    let mut sim = Simulator::new(Model::default()).unwrap();
+    sim.set_output_gate(all);
+    assert_eq!(sim.snapshot().effective, Requests::default());
+    sim.host(Command::Arm);
+    sim.host(Command::Pierce);
+    sim.set_output_gate(Requests {
+        jet: true,
+        abrasive: false,
+        cutting_motion: false,
+    });
+    let jet_only = sim.advance_to(20).unwrap();
+    assert!(jet_only.effective.jet);
+    assert!(!jet_only.effective.abrasive);
+    assert!(jet_only.pressure_units > 0);
+    sim.set_output_gate(all);
+    assert!(sim.snapshot().effective.abrasive);
+    sim.set_output_gate(Requests {
+        jet: true,
+        abrasive: false,
+        cutting_motion: false,
+    });
+    assert!(!sim.snapshot().effective.abrasive);
+    assert!(sim.snapshot().effective.jet);
+    sim.set_output_gate(all);
+    let tripped = sim.advance_to(100).unwrap();
+    assert!(tripped.watchdog_tripped);
+    assert_eq!(tripped.effective, Requests::default());
+}

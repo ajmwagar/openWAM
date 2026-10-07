@@ -210,6 +210,7 @@ pub struct Simulator {
     last_sample: u64,
     watchdog_tripped: bool,
     pressure: u32,
+    output_gate: Requests,
     pub injection: Injection,
 }
 
@@ -230,6 +231,11 @@ impl Simulator {
             last_sample: 0,
             watchdog_tripped: false,
             pressure: 0,
+            output_gate: Requests {
+                jet: true,
+                abrasive: true,
+                cutting_motion: true,
+            },
             injection: Injection::default(),
         })
     }
@@ -241,7 +247,7 @@ impl Simulator {
         if cutoff && !self.injection.cutoff_stuck_on {
             Requests::default()
         } else {
-            self.controller.requests()
+            self.requested()
         }
     }
 
@@ -250,7 +256,7 @@ impl Simulator {
         Snapshot {
             at_ms: self.now,
             state: self.controller.state(),
-            requested: self.controller.requests(),
+            requested: self.requested(),
             effective,
             pressure_units: self.pressure,
             nozzle_flow: self.pressure > 0
@@ -261,6 +267,21 @@ impl Simulator {
                 || self.injection.emergency_stop)
                 && effective.jet,
             unsafe_recovery: self.controller.state() == State::Disarmed && self.pressure > 0,
+        }
+    }
+
+    /// A host may independently disable output channels, but cannot bypass the
+    /// controller or independent cutoff. Defaults preserve legacy policy replay.
+    pub fn set_output_gate(&mut self, gate: Requests) {
+        self.output_gate = gate;
+    }
+
+    fn requested(&self) -> Requests {
+        let allowed = self.controller.requests();
+        Requests {
+            jet: allowed.jet && self.output_gate.jet,
+            abrasive: allowed.abrasive && self.output_gate.abrasive,
+            cutting_motion: allowed.cutting_motion && self.output_gate.cutting_motion,
         }
     }
 

@@ -9,6 +9,7 @@ pub mod cam;
 pub mod cam_loop;
 pub mod cutting;
 pub mod dxf_intake;
+pub mod gcode_simulation;
 mod json_identity;
 pub mod openwam;
 pub mod openwam_api;

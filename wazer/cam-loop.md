@@ -84,9 +84,11 @@ after three completed operations. Nominal replay, fault replay and export all
 independently verify; input/output hashes reference retained local files.
 
 This establishes software consistency, not manufacturer/controller compatibility.
-The simulator executes CAM operations, not the exported G-code's peripheral
-dwells. Historical export adds three one-second shutdown dwells per span; the
-synthetic model observes its own release dynamics. Neither model calibrates
+The `simulate_cam` simulator executes CAM operations; historical export adds
+three one-second shutdown dwells per span. The separate
+[exported command replay](gcode-simulation.md) now executes these exact dwells
+with separate jet/abrasive channels. CAM replay observes its own release dynamics.
+Neither model calibrates
 actual WAZER hydraulics, corner feeds, acceleration, tab strength or hardware.
 Source/profile qualification warnings remain in the owner export alongside CAM
 geometry limits. Every machine/controller/hardware qualification flag stays false.
