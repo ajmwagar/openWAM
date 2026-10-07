@@ -1,0 +1,360 @@
+{
+  "schema": "openwam.wazer-pro-switch-halt-research.v1",
+  "bead": "reversal-faq.1",
+  "followup": "reversal-faq",
+  "firmware_receipt": "wazer/shutdown-research.json#/firmware",
+  "source_basis": "Static analysis of pinned Pro 2.32 image at base 0x4000; acquisition identity owned by shutdown receipt.",
+  "program": "firmware-v2.32-base4000.bin",
+  "gcode": {
+    "match_on": "0x1bbcc",
+    "match_off": "0x1bc40",
+    "callback": "0x1bcb4",
+    "excluded_m_codes": [
+      3,
+      5,
+      8,
+      9,
+      31,
+      33,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      1403,
+      1404,
+      1405,
+      1406,
+      1407,
+      1408
+    ],
+    "exclusion_scope": "Both Switch M-code matchers reject these before configured command matching, regardless of embedded assignments.",
+    "digital_change_drain": "0xcb00",
+    "other_match_requirements": [
+      "command letter",
+      "command number",
+      "subcode"
+    ]
+  },
+  "event_dispatch": {
+    "kernel": "0x05f20",
+    "halt_event": 8,
+    "activation_argument": 0,
+    "clear_argument": "nonzero",
+    "kernel_halted_flag": "object+0xb0 bit1",
+    "callback_table": "0x4a6a8",
+    "halt_virtual_offset": "0x2c",
+    "switch_vtable": "0x4c428",
+    "switch_module_entry": "0x1cbe0",
+    "switch_registered_events": [
+      2,
+      0,
+      6,
+      7,
+      8
+    ],
+    "register_append": "0x6e28",
+    "module_load": "0x05f14",
+    "switch_loader": "0x1cc24",
+    "initialization": "0x04584",
+    "relative_order": "Enabled Switch modules register before waterjet in traced startup; live list and later changes not observed.",
+    "post_dispatch_position_sync": "0xd7b4",
+    "position_sync_guard": "HALT cleared or conveyor was not idle before dispatch"
+  },
+  "switch_halt": {
+    "callback": "0x1bb20",
+    "returns_without_write_when": [
+      "event argument nonzero",
+      "object+0x2a bit7 set"
+    ],
+    "digital_type": 2,
+    "digital_value": "object+0x2b bit0",
+    "digital_scope": "Connected pins only; GPIO SET/CLEAR respects inversion.",
+    "sigma_delta_type": 1,
+    "sigma_delta_helper": "0x077bc",
+    "sigma_delta_value": "object+0x2b bit0",
+    "hardware_pwm_type": 3,
+    "hardware_pwm_helper": "0x3e1f8",
+    "hardware_pwm_value": 0,
+    "cached_state": "object+0x2a bit6 assigned object+0x2b bit0",
+    "halt_clear_restores_output_in_this_callback": false,
+    "waterjet_callback": "0x22fa0",
+    "waterjet_scope": "Conditional player abort and deferred state request; complete clear/guard interaction not modeled."
+  },
+  "config": {
+    "loader": "0x1c06c",
+    "namespace": "switch",
+    "namespace_checksum": "0x3c94",
+    "checksum_algorithm": "Fletcher16 over key bytes",
+    "key_identity_basis": "Calculated key checksums match vendor lookup immediates; names inferred with primary upstream comparison.",
+    "keys": [
+      {
+        "key": "startup_state",
+        "checksum": "0x9298",
+        "destination": "object+0x2a bit6",
+        "default": 0
+      },
+      {
+        "key": "failsafe_set_to",
+        "checksum": "0xde2e",
+        "destination": "object+0x2b bit0",
+        "default": 0
+      },
+      {
+        "key": "ignore_on_halt",
+        "checksum": "0x91cd",
+        "destination": "object+0x2a bit7",
+        "default": false
+      }
+    ],
+    "embedded_example_key": "fail_safe_set_to",
+    "embedded_example_checksum": "0xf48d",
+    "embedded_spelling_matches_loader": false,
+    "shared_halt_and_debugger_field": "object+0x2b bit0",
+    "upstream_separate_halt_key": "halt_set_to",
+    "upstream_separate_halt_checksum": "0x519a",
+    "runtime_precedence_resolved": false,
+    "installed_config_observed": false,
+    "spelling_scope": "Identifiers differ at lookup boundary; aliases elsewhere not exhaustively excluded. Zero fallback means mismatch alone does not establish unsafe output."
+  },
+  "debug_masks": {
+    "register_high": "0x6e38",
+    "register_low": "0x6e58",
+    "high_array": "0x100002c8",
+    "low_array": "0x100002b4",
+    "ports": 5,
+    "pins_per_port": 32,
+    "selection": "Loaded failsafe bit selects high/low; observed branches do not apply inversion.",
+    "vendor_mask_consumers_resolved": false,
+    "vendor_breakpoint_to_hooks_resolved": false,
+    "upstream_scope": "Comparison only: upstream saves GPIO state, applies masks on debug entry and restores masked state on exit. Not established for vendor image."
+  },
+  "watchdog": {
+    "irq": "0x937c",
+    "mode_bit_clear": "0x43d8",
+    "mode_bit": 2,
+    "feed": "0x43e8",
+    "feed_values": [
+      170,
+      85
+    ],
+    "breakpoint": "0x93b2",
+    "direct_halt_dispatch_call_observed_in_irq": false,
+    "six_channel_cutoff_qualified": false,
+    "reset_behavior_qualified": false
+  },
+  "primary_comparison_sources": [
+    "https://github.com/Smoothieware/Smoothieware/blob/38e2cc083db0e4f768535a9bf2d32cdf104ea980/src/modules/tools/switch/Switch.cpp",
+    "https://github.com/Smoothieware/Smoothieware/blob/38e2cc083db0e4f768535a9bf2d32cdf104ea980/src/libs/MRI_Hooks.cpp"
+  ],
+  "validation": {
+    "execution_scope": "Static analysis; firmware and machine not executed.",
+    "function_spans": 16,
+    "bytes_per_function_span": 64,
+    "switch_region": {
+      "address": "0x1bb20",
+      "bytes": 4728
+    },
+    "embedded_config_region": {
+      "address": "0x67000",
+      "bytes": 4096
+    },
+    "dispatch_tables": [
+      {
+        "address": "0x4a6a8",
+        "bytes": 80
+      },
+      {
+        "address": "0x4c428",
+        "bytes": 112
+      }
+    ],
+    "all_memory_captures_match_original": true,
+    "calculated_key_checksums_verified": true,
+    "raw_thumb_disassembly_retained": true
+  },
+  "captures": [
+    {
+      "sha256": "814d8f0abfc5eb0e3d168efa73e7a7f19a20b55e11883fafb8aa603ec16fa47c",
+      "path": "wazer/private/shutdown-v232/firmware-v2.32.bin"
+    },
+    {
+      "sha256": "56ec362839b30e0c46664042baa0cb13cb097a7346d423147513a6c1c45bb130",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-04584.json"
+    },
+    {
+      "sha256": "a7cdbaf1baf6dd8a67ed02989cb3b072577259413be31462db717ab05064368e",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-056c0.json"
+    },
+    {
+      "sha256": "8c963f2b62a1ee91f4ae400e7690ce40e647c3a615af9ab56387dad26fe4b787",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-05f14.json"
+    },
+    {
+      "sha256": "fb15497c7bd62026124d9adfbfe03c178fbce5910ceb77a7437ee7b356b9a3e1",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-05f20.json"
+    },
+    {
+      "sha256": "9631d95c63a008863852cb79d1507a336465aa35a0e770a0ba7350ba4a3df464",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-06e28.json"
+    },
+    {
+      "sha256": "a7cd28f51d411abc77a149407a48d8ef90644aebc3c106e133d1780bb9fba4cd",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-06e38.json"
+    },
+    {
+      "sha256": "3dc197114d2375d26ab2dd8fde3630c5be36179a0b35fa25c7c9328fe7ab2875",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-06e58.json"
+    },
+    {
+      "sha256": "eae226e08cf4800ce449f2aca6e524ced98991ddbaef8f85b20a9e18b38e27cd",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-0937c.json"
+    },
+    {
+      "sha256": "7d7018dddb328248e9890a12ec358d342f328553f6dc6379ef34e59f8f104f62",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-1bb20.json"
+    },
+    {
+      "sha256": "0223d43e1888e98c7c73252f7fa6025007271392be7cdf3fe27d426a4b6ceefb",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-1bbcc.json"
+    },
+    {
+      "sha256": "18de06dd432ae522d5118183aeeb07de8f9e0566eafc5367146ae3333f6536e9",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-1bc40.json"
+    },
+    {
+      "sha256": "6a733c0495aef01631af5a2de8226c8215f01fa37adbaece421a4caa1d0c5c5a",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-1bcb4.json"
+    },
+    {
+      "sha256": "dc5ded89f6228dc1209b286ae1bf8dace1fc4968911c6bbd9cac56e66b9f5211",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-1bf30.json"
+    },
+    {
+      "sha256": "42c981f29ca77b2b636621ba40c70738968d1fc2836c31dcf629a035a317c05a",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-1c06c.json"
+    },
+    {
+      "sha256": "812338c53ee8fe1fffba14e8da1806deee8ba5e94f5b7f749fa5b88b179a4bc7",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-1cbe0.json"
+    },
+    {
+      "sha256": "71a97f50c05d19d870299973f18a6b08e4f915292cd695a626491e942f77e1ff",
+      "path": "wazer/private/switch-halt-v232/switch-bytes-1cc24.json"
+    },
+    {
+      "sha256": "33e2f7718dc3ddb78aa3d27d2aa91d17ac9022bcc3f084431576df6d376466da",
+      "path": "wazer/private/switch-halt-v232/switch-code-region.json"
+    },
+    {
+      "sha256": "23ddbf979e84c304acbd1440cfb231fd4ea8e254f533d17fcfc4aefcb04606d4",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-04584.json"
+    },
+    {
+      "sha256": "0921d0f348fdb87229219be0c67129f31f3b09ee68dcf65e1c1963484a8b3d50",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-056c0.json"
+    },
+    {
+      "sha256": "eff5f50f3a361bff050e3838d51e2b990275944c0370fca8e800b144f22124bb",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-05f14.json"
+    },
+    {
+      "sha256": "7150fc580007368e3bd34bb0eadd61a49339bf27b5403e1f9f0c6ec0662d07d3",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-05f20.json"
+    },
+    {
+      "sha256": "861ad409dbf2719a8a85e59117383f18127aa7955437a7f9befa9d612e9417af",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-0937c.json"
+    },
+    {
+      "sha256": "967c4c73cdf00a51b9ab1ceed88e8550b96783b96abd2164098caee980427e75",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-1bb20.json"
+    },
+    {
+      "sha256": "b0413943cee151d39c99c235147eb22433eff304bb083c34854e987174e1dede",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-1bba0.json"
+    },
+    {
+      "sha256": "a9766346d4122c3dbcfe40382daa38df8a03bf66e50ee5d00437098959364cbe",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-1bbcc.json"
+    },
+    {
+      "sha256": "873001aa9a325566c72cd213dd18d29b59ecc0da8ed0e65be2be11bbf986a60c",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-1bc40.json"
+    },
+    {
+      "sha256": "3398f77783e1669b5febf7b0c7d1f6cd8eff2bd2f54199b19c654a03b1b8fac5",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-1bcb4.json"
+    },
+    {
+      "sha256": "3041ec12f0d0143884482d53df94615dc76664b8aa8fe06623c51c2e9ea3ce6b",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-1bf30.json"
+    },
+    {
+      "sha256": "019a6aab9c638ebdcf7273d846a1c6d056fb9c32c9ba6a9532ff9faa3a53eb61",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-1c06c.json"
+    },
+    {
+      "sha256": "222ea4ea6eff1a4ca55ee76d3edafe7e026085e8c91a89b67df3a69c019b8afc",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-1cbe0.json"
+    },
+    {
+      "sha256": "fe9ee3c1243474882897b9c7af67eb3043c3b2c56c208c10fc3762379420067a",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-1cc24.json"
+    },
+    {
+      "sha256": "eaedf6086aea68f2c878e50c7f965f60d4ef0c0be610f7fbcaeaab6c894a7558",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-6e28.json"
+    },
+    {
+      "sha256": "30c46f39b781b32b941e45daf17317b3a3db8640bb30c3c258b5a3ab416c5e2f",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-6e38.json"
+    },
+    {
+      "sha256": "3c3a5572180f4a35eb8db7f80378afbebdc6f4bece1ef101549299fe967c6cae",
+      "path": "wazer/private/switch-halt-v232/switch-decompile-6e58.json"
+    },
+    {
+      "sha256": "80a4c9d72a1be87ccfd7157b113983a35d638c2db5e2dce698fa9a27b3107df9",
+      "path": "wazer/private/switch-halt-v232/switch-disassembly.txt"
+    },
+    {
+      "sha256": "fc2799b163aa26b6e31c0ef6713a6098d94ec449f8dbffb416da9a2c0a3f43ea",
+      "path": "wazer/private/switch-halt-v232/switch-embedded-config.json"
+    },
+    {
+      "sha256": "8308aaf729fd83424d9dd55be9fd6478a811424d58e7ad0a0e07b4df07ee2fc7",
+      "path": "wazer/private/switch-halt-v232/switch-kernel-callback-table.json"
+    },
+    {
+      "sha256": "32078929a929ac9beef4eaf434bab9b642a121a53e4382e1332e8b98eeddd9e8",
+      "path": "wazer/private/switch-halt-v232/switch-kernel-disassembly.txt"
+    },
+    {
+      "sha256": "d156dd736931d0ceb961d8f9f9c2f466716881962706e6050bafbcdd8ab539d1",
+      "path": "wazer/private/switch-halt-v232/switch-upstream-MRI_Hooks.cpp"
+    },
+    {
+      "sha256": "a8dc56f1f30633d843a344f70cd315f4d5f0551846a1e5754b12a2cbb88d1532",
+      "path": "wazer/private/switch-halt-v232/switch-upstream.cpp"
+    },
+    {
+      "sha256": "9812afbb7a558c66edd73af66a2c06bc6882c75feeb77c0e685e996b6c89461a",
+      "path": "wazer/private/switch-halt-v232/switch-vtable.json"
+    },
+    {
+      "sha256": "92681d5f661dbf079bd2c825b80e00052badd2f06798bd235049ccd3babb5811",
+      "path": "wazer/private/switch-halt-v232/watchdog-irq-disassembly.txt"
+    },
+    {
+      "sha256": "145f033d0f49079e8fde4f83feeecdfd44eb03d25c96d5ed789b15e2d33829ac",
+      "path": "wazer/private/switch-halt-v232/watchdog-register-helpers.txt"
+    }
+  ],
+  "synthetic_replay_changed": false,
+  "firmware_modified": false,
+  "machine_output_enabled": false,
+  "controller_qualified": false,
+  "hardware_qualified": false
+}

@@ -364,5 +364,11 @@
   "machine_output_enabled": false,
   "controller_qualified": false,
   "hardware_qualified": false,
-  "firmware_modified": false
+  "firmware_modified": false,
+  "followup_receipts": [
+    {
+      "path": "wazer/switch-halt-research.json",
+      "scope": "Subsequent evidence resolves generic Switch exclusions, HALT write defaults and relative startup dispatch order; runtime config precedence and vendor debugger path remain unresolved."
+    }
+  ]
 }

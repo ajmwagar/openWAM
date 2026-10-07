@@ -19,6 +19,8 @@ and applications.
   abrasive sequencing; see [the replay runbook](wazer/gcode-simulation.md).
 - Pinned Pro firmware [shutdown research](wazer/shutdown-research.md) with
   byte-checked command, completion and pause/abort evidence.
+- [Switch/HALT research](wazer/switch-halt-research.md) covering command exclusions,
+  ordered HALT writes, config defaults and the watchdog/debugger evidence boundary.
 
 The CAM planner currently supports simple closed flattened polygons with bounded
 miter offsets. Unsupported topology fails explicitly. Verified CAM artifacts feed

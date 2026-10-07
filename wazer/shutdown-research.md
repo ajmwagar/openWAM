@@ -30,8 +30,9 @@ Mode changes go through `0x1f490` and `0x1f0bc`. Applying a mode has state,
 motion-drain, feed-hold and timer guards. In the traced module, M9 followed by M5
 can turn abrasive off while preserving water-only mode, then turn the HP valve
 off when leaving water-only. That does not turn every pump/peripheral off.
-Other G-code event subscribers, including generic Switch modules, may also act;
-this trace does not establish the final combined electrical output.
+The subsequent [Switch/HALT trace](switch-halt-research.md) establishes that the
+generic Switch matchers reject these waterjet commands. Other subscribers and
+the installed wiring remain outside this trace's electrical qualification.
 
 ## Normal completion and pause
 
@@ -80,8 +81,9 @@ and requests the end-stop state for several current states.
 
 This establishes a software route into the pause machinery. It does not establish
 every global HALT subscriber, Switch fail-safe behavior, watchdog breakpoint
-shutdown or power-loss output state. Those need independent traces before a
-vendor shutdown model or hardware adapter can claim those mechanisms.
+shutdown or power-loss output state. The subsequent [Switch/HALT trace](switch-halt-research.md)
+resolves Switch command exclusions, HALT defaults and relative registration order.
+The complete vendor debugger path and power-loss behavior still require evidence.
 
 ## Effect on OpenWAM
 
@@ -95,8 +97,9 @@ with the constructor or config values above.
 
 The next bounded comparison is a Rust sequence model covering normal completion,
 door pause and abort, with six logical output groups and separate emitted/internal
-timers. Resolve generic Switch/HALT dispatch and runtime config precedence first;
-then compare event traces and inject delayed, missing and false observations.
+timers. The Switch/HALT trace supplies command and ordered callback boundaries;
+runtime config precedence and debugger execution remain unresolved. Compare event
+traces and inject delayed, missing and false observations in that separate model.
 No machine/controller/hardware qualification follows from matching static paths.
 
 ## Reproduce the evidence
