@@ -1,0 +1,368 @@
+{
+  "schema": "reversal.wazer-pro-shutdown-research.v1",
+  "bead": "reversal-287",
+  "firmware": {
+    "model": "WAZER Pro",
+    "version": "2.32",
+    "installed_version": null,
+    "url": "https://support.wazer.com/s/firmware-sef6.bin",
+    "bytes": 416324,
+    "sha256": "814d8f0abfc5eb0e3d168efa73e7a7f19a20b55e11883fafb8aa603ec16fa47c",
+    "retained_path": "wazer/private/shutdown-v232/firmware-v2.32.bin",
+    "image_base": "0x4000"
+  },
+  "tools": {
+    "ghidra": "12.1.2",
+    "bridge": "GhidraMCP 7.0.0-headless",
+    "language": "ARM:LE:32:Cortex",
+    "program": "firmware-v2.32-base4000.bin",
+    "objdump": "GNU Binutils 2.47.20260726"
+  },
+  "command_dispatch": {
+    "function": "0x209a0",
+    "mode_change": "0x1f490",
+    "apply_mode": "0x1f0bc",
+    "mode_labels_function": "0x1e02c",
+    "state_change": "0x1f580",
+    "modes": {
+      "0": "NOT_ACTIVE",
+      "1": "PIERCE",
+      "2": "PIERCE_RESTART",
+      "3": "WATER_ONLY",
+      "4": "JOGGING_OR_PAUSED"
+    },
+    "commands": [
+      {
+        "code": "M3",
+        "observation": "Requests WATER_ONLY unless mode is already PIERCE, PIERCE_RESTART or WATER_ONLY."
+      },
+      {
+        "code": "M8",
+        "observation": "Requests PIERCE."
+      },
+      {
+        "code": "M9",
+        "observation": "PIERCE/PIERCE_RESTART requests WATER_ONLY; WATER_ONLY returns; other modes request JOGGING_OR_PAUSED."
+      },
+      {
+        "code": "M5",
+        "observation": "Requests JOGGING_OR_PAUSED."
+      },
+      {
+        "code": "M1403",
+        "observation": "Sets bit0x20 at object+0x182; no direct GPIO write in this branch."
+      },
+      {
+        "code": "M1404",
+        "observation": "Sets bit1 at object+0x189 and requests state100 COMPLETED_CUT."
+      }
+    ],
+    "apply_mode_scope": "Deferred or suppressed outside states0x5b/0x5c/0x0d (WL_FILL/WL_DUMP/TANK_CLEANING_ACTION) or under other guards; mode request is not unconditional physical output action. Other event subscribers may also act."
+  },
+  "states": {
+    "0x50": "OPENED_DOOR_DURING_CUT",
+    "0x5a": "RUN_MODE_AND_WATCH_WATER_LEVEL",
+    "0x5b": "WL_FILL",
+    "0x5c": "WL_DUMP",
+    "0x5d": "ERROR_WL_LOW",
+    "0x61": "TRIGGERED_END_STOPS",
+    "0x64": "COMPLETED_CUT",
+    "0x65": "ALL_DONE",
+    "0x68": "PREPARE_TO_PAUSE",
+    "0x69": "PAUSING",
+    "0x6a": "PAUSED"
+  },
+  "state_labels": {
+    "function": "0x1d6a8",
+    "pointer_table": "0x1d98c",
+    "basis": "Decompiler case selection plus little-endian pointer table and exact strings in original firmware."
+  },
+  "candidate_outputs": {
+    "config_loader": "0x23f7c",
+    "namespace_checksum": "0xe703",
+    "pin_parser": "0x73a4",
+    "logical_write": "0x1d16c",
+    "basis": "Pinned upstream Fletcher16 checksum of config key names matches vendor lookup immediates; vendor Pin parser and logical writer establish inversion bit. Key identities remain inferred, physical contacts/electrical behavior unqualified.",
+    "pins": [
+      {
+        "key": "low_pressure_pump_pin",
+        "checksum": "0x32f9",
+        "object_offset": "0x7c"
+      },
+      {
+        "key": "abrasive_motor_pin",
+        "checksum": "0xf68a",
+        "object_offset": "0x84"
+      },
+      {
+        "key": "high_pressure_pump_pin",
+        "checksum": "0x2d48",
+        "object_offset": "0x8c"
+      },
+      {
+        "key": "high_pressure_valve_pin",
+        "checksum": "0x7ba4",
+        "object_offset": "0x94"
+      },
+      {
+        "key": "abrasive_valve_pin",
+        "checksum": "0x8877",
+        "object_offset": "0x9c"
+      },
+      {
+        "key": "dump_valve_pin",
+        "checksum": "0x22de",
+        "object_offset": "0xa4"
+      }
+    ]
+  },
+  "normal_completion": {
+    "dispatcher": "0x23520",
+    "handler": "0x20264",
+    "steps": [
+      "Request abrasive valve logical0 at object+0x9c.",
+      "Start timer at object+0x124 on first entry, then compare elapsed value with object+0xb0.",
+      "On timer threshold, request logical0 in order: low-pressure pump, abrasive motor, high-pressure valve, high-pressure pump, dump valve.",
+      "Clear bookkeeping flags and request state0x65 ALL_DONE."
+    ],
+    "pressure_feedback_observed_in_handler": false,
+    "constructor": "0x1d1f4",
+    "timer_threshold_constructor_f32": 1.0,
+    "constructor_observation": "Object+0xb0 initialized with f32 bits0x3f800000; runtime overrides/aliases elsewhere not exhaustively excluded."
+  },
+  "pause_and_abort": {
+    "door_handler": "0x21058",
+    "prepare_pause": "0x20f94",
+    "pausing": "0x20650",
+    "abort_state_handler": "0x22ef4",
+    "halt_callback": "0x22fa0",
+    "player_abort_helper": "0x22e7c",
+    "steps": [
+      "Door handler sets object+0x53 to2 and requests PREPARE_TO_PAUSE through0x20f94; this selects the alternate pause threshold+0xb4.",
+      "Prepare pause requests feed hold, stops mode timers, requests abrasive logical0, then requests PAUSING.",
+      "PAUSING starts timer+0x124 and selects threshold+0xb4 when object+0x53==2, otherwise+0xb0.",
+      "After threshold, requests the same five remaining output groups logical0, then requests PAUSED.",
+      "End-stop/abort handler0x22ef4 stops motion through0xcd1c, invokes player-abort helper, then calls prepare pause.",
+      "Halt callback0x22fa0 conditionally invokes player-abort helper and requests TRIGGERED_END_STOPS for several states; complete HALT/debugger subscriber dispatch remains unresolved."
+    ],
+    "pressure_feedback_observed_in_pausing_handler": false,
+    "constructor_alternate_threshold_f32": 0.10000000149011612,
+    "constructor_alternate_threshold_bits": "0x3dcccccd",
+    "constructor_alternate_threshold_scope": "Static default at object+0xb4 selected by door reason2; installed/runtime value and physical release unqualified."
+  },
+  "configured_release_delay": {
+    "key": "release_pressure_seconds",
+    "checksum": "0x7911",
+    "destination": "object+0xd8",
+    "config_loader": "0x23f7c",
+    "helper": "0x1cd98",
+    "observation": "Distinct from normal/pause timer threshold+0xb0. Helper waits using+0xd8, requests HP-valve logical1, waits again, requests logical0. Embedded config0.4 is not the traced normal completion threshold.",
+    "hardware_pressure_release_qualified": false
+  },
+  "openwam_comparison": {
+    "current_model": "Synthetic command gates with straight-line kinematics and synthetic pressure/supervisor.",
+    "gaps": [
+      "M5/M9 change operating mode; vendor controls more channels than jet/abrasive.",
+      "M1404 has a timed completion handler; current End check does not execute it.",
+      "M3/M8 mode application has motion-drain and timer guards; current JetOn/AbrasiveOn gates omit them.",
+      "Vendor pause distinguishes feed hold, pausing and paused; synthetic faults immediately latch off.",
+      "Synthetic pressure-release feedback and independent cutoff are experimental requirements, not proved vendor mechanisms.",
+      "Generic Switch/HALT/debugger subscribers and configuration overrides still require tracing."
+    ],
+    "policy": "Retain synthetic replay unchanged until independent vendor sequence model and differential harness are verified; no automatic calibration from config literals."
+  },
+  "upstream_checksum_reference": "https://github.com/Smoothieware/Smoothieware/blob/38e2cc083db0e4f768535a9bf2d32cdf104ea980/src/libs/utils.cpp",
+  "validation": {
+    "function_byte_spans": 20,
+    "bytes_per_span": 64,
+    "raw_firmware_matches_corrected_ghidra": true,
+    "execution_scope": "Static analysis only; no firmware or machine execution.",
+    "data_spans": 2
+  },
+  "captures": [
+    {
+      "sha256": "814d8f0abfc5eb0e3d168efa73e7a7f19a20b55e11883fafb8aa603ec16fa47c",
+      "path": "wazer/private/shutdown-v232/firmware-v2.32.bin"
+    },
+    {
+      "sha256": "d5c6feb9d735ff588fe6985ec5926f62acf201dbaedcd77e63e50764ee38d364",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-073a4.json"
+    },
+    {
+      "sha256": "e8526dfe7e59ad6ca7636bc78e6fe38e1c2ef9fef4a74d0733013402ede30fee",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-1cd98.json"
+    },
+    {
+      "sha256": "c04c8060c924b7f60c678a66f0bd8f8f42b3d75623da64580aad544dcf54410b",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-1d16c.json"
+    },
+    {
+      "sha256": "96e7914e04f93aede1c24807d93eaeeeb910d216cab6c270c6d3b28454bd6fa4",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-1d1f4.json"
+    },
+    {
+      "sha256": "5997b8343fdd47163065559c78106145ce256ff0daee34e7e072d5745f010a89",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-1d6a8.json"
+    },
+    {
+      "sha256": "4b6875cc0f6082293edbee885ed032d014bd780b3772c8d732202dc0b2fb2c07",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-1e02c.json"
+    },
+    {
+      "sha256": "8d8ea4b4be600ab350fa71c6765d7279293dccc4fa3818c0aa183ee2a7fad146",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-1f0bc.json"
+    },
+    {
+      "sha256": "245521aa04947ab89dc407e8bccd221f2980777e5bbe7316cd7c3e12864d933c",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-1f490.json"
+    },
+    {
+      "sha256": "6df26a87088e59524794330a477d2239abd62c4e1eaa6b2f79b151a73b2ce03e",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-20264.json"
+    },
+    {
+      "sha256": "7511fbf33f1af330694f0868ceb707e7e18c4a8282125c3c8c2cd70fb50724aa",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-20650.json"
+    },
+    {
+      "sha256": "8e2564b14a3f85b862c66034ccd76d7df2459a2dccc6effdba9a31731ea7a205",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-209a0.json"
+    },
+    {
+      "sha256": "4e6ba5365d8182b0048c26598089b4e13eab9e853e1cf66ba5bff7111ec7780c",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-20f94.json"
+    },
+    {
+      "sha256": "190ea2abe409ee43a5734b3077cd67e7d12b89729bbb0d161cbad6673ed5906c",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-21058.json"
+    },
+    {
+      "sha256": "6355764f18e68da468337765ee7461b3912f3b6c59e74c30c76e8e15434d14ed",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-210bc.json"
+    },
+    {
+      "sha256": "8c6aa49e3e7629836378c1093ba214b074cdf1e7eaae20e98a47989b8b28d7f4",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-22e7c.json"
+    },
+    {
+      "sha256": "d5077bbcd87cea25aa3b4204b4ff757db9e453cd207774d3a38e94a3e6477ec8",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-22ef4.json"
+    },
+    {
+      "sha256": "ef12896dee2dc8922756f6b3850bcad3785201b1c05871bffbc59ae299d46695",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-22fa0.json"
+    },
+    {
+      "sha256": "354a3ab355c72de1c367ce365a45a7f0372598ef95d1d6d784a2b5d02b97c70e",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-23520.json"
+    },
+    {
+      "sha256": "6b3c0d8bec6b99548a16672e10ffdb2c9535422a8a7c7dd337f3574c4712b03e",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-23f7c.json"
+    },
+    {
+      "sha256": "d4c005517291c810e68eaba0f3198039709a8767478192dd1b7d383bbeffa192",
+      "path": "wazer/private/shutdown-v232/shutdown-bytes-3f6e4.json"
+    },
+    {
+      "sha256": "9f6edbdd36c577850b5313fc7e8b4e423317c964b392fafdc345d5ac7ffe9ad8",
+      "path": "wazer/private/shutdown-v232/shutdown-constructor-constants.json"
+    },
+    {
+      "sha256": "db1095ec1c599bcedf8db65328fa384620cb361189ee87058f0d1dd190f75dc3",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-073a4.json"
+    },
+    {
+      "sha256": "f86d48d7ffee9b1befea1d8ea74aef95cf7d551a14d898bf3647002948f2a323",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-1cd98.json"
+    },
+    {
+      "sha256": "02e56cc38f4af56cb33fe765cf1fd29e28fd14065eff4340dfa671223d48d3c1",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-1d16c.json"
+    },
+    {
+      "sha256": "ce37f4034661b70a2937f313f022a4b66d7077d61000fdeb9d3b44703c6e7b8b",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-1d1f4.json"
+    },
+    {
+      "sha256": "698a69cded7477c54297e312fcb6636a58e963c42205c5f16a4399c6ea1786ea",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-1d6a8.json"
+    },
+    {
+      "sha256": "4c826779a7f8b7ad2b09aa230bb333d3bd5c32ffd75e4aefe0f01b71d5d26eaf",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-1e02c.json"
+    },
+    {
+      "sha256": "d5921f0367fb0d2da25bff41191b1d0071748a4376d4727000224a8a7a5cf4e7",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-1f0bc.json"
+    },
+    {
+      "sha256": "ac667bb3f9539d17323e5ed342b54debe1dd448b44a64efa2ab4b0e7a3d52491",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-1f490.json"
+    },
+    {
+      "sha256": "1c32d8de54a12587036bf3ce8d0e110aafa25e9cb18298c757210b0dac51fc28",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-20264.json"
+    },
+    {
+      "sha256": "b1b2258d7e82f1a8b91dfbf1a10b264d2c971adb3e0722e96debe4d723a2ca68",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-20650.json"
+    },
+    {
+      "sha256": "f1ff6739d2d5f21f6be6535c015db14ee837004cf14c492b8d60cf7af68856a2",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-209a0.json"
+    },
+    {
+      "sha256": "95f8a06f8eb48cc5f1534ea26434f9563fc05091ec1465efad9a01a541642857",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-20f94.json"
+    },
+    {
+      "sha256": "ed534a4108b23a3ec7a5fb7c09c718ef9a901ee788a1338c597301841ae02c47",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-21058.json"
+    },
+    {
+      "sha256": "41d1ab49391f992880b9f8cfddf8e03cdafbcd73042ec7c21de4fa8e875c8a18",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-210bc.json"
+    },
+    {
+      "sha256": "d8bfeb340f500eb6c52e3bfd5e69beabe5ccd20c4f442baf610b9bacf5ad5057",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-22e7c.json"
+    },
+    {
+      "sha256": "15cbcc41b9763fe969058e528bdc223097e9ad60d923018079d07fd04880d38d",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-22ef4.json"
+    },
+    {
+      "sha256": "694ace6b1ee30adc8d43b51de284e3e184236d981975955237a11a919fb525ae",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-22fa0.json"
+    },
+    {
+      "sha256": "f3d2ed7bf382d5534a083f532e19b1c5f609a4be77a9bf05e9b00dc38dd774e8",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-23520.json"
+    },
+    {
+      "sha256": "5404fa3138fd2282bc91fc08aa5ad8aa193d7fdd03c2f359f58e2b4c809088e0",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-23f7c.json"
+    },
+    {
+      "sha256": "051244321006d2a574b01ac79a0181871640f2a473e8cdd79cde6df62e7dc86e",
+      "path": "wazer/private/shutdown-v232/shutdown-decompile-3f6e4.json"
+    },
+    {
+      "sha256": "1974f59a490b05d97a64a86b2b8fb531bea9c2d2f1421cc8658cde4c26a8fa35",
+      "path": "wazer/private/shutdown-v232/shutdown-state-label-pointers.json"
+    },
+    {
+      "sha256": "15d325a49df71d549ab884fddb333e06e7f9ba553b7fdc3536fef89d7755159e",
+      "path": "wazer/private/shutdown-v232/shutdown-upstream-utils.cpp"
+    },
+    {
+      "sha256": "88e65b8da11906f106f1062fc721b80d8c39bae202ab635a6d818a9c6fb9abf0",
+      "path": "wazer/private/shutdown-v232/shutdown-waterjet-disassembly.txt"
+    }
+  ],
+  "machine_output_enabled": false,
+  "controller_qualified": false,
+  "hardware_qualified": false,
+  "firmware_modified": false
+}

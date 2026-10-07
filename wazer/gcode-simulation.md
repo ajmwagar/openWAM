@@ -69,3 +69,8 @@ pressure model. Metadata/initialization has zero synthetic duration; rapid speed
 uses the verified CAM maximum feed. Acceleration, step generation, actual WAZER
 firmware behavior and hydraulic calibration are unmodeled. All machine-output,
 controller and hardware qualification flags remain false; no machine I/O exists.
+
+The [firmware shutdown trace](shutdown-research.md) identifies additional internal
+timers and pump/motor/dump channels, including an M1404 completion handler absent
+from this synthetic replay. Its static defaults are retained as research evidence;
+they do not calibrate this plant.

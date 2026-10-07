@@ -17,6 +17,8 @@ and applications.
 - Synthetic control/plant fault replay and explicit research G-code profiles.
 - Source-bound exported-command replay with explicit dwells and separate jet /
   abrasive sequencing; see [the replay runbook](wazer/gcode-simulation.md).
+- Pinned Pro firmware [shutdown research](wazer/shutdown-research.md) with
+  byte-checked command, completion and pause/abort evidence.
 
 The CAM planner currently supports simple closed flattened polygons with bounded
 miter offsets. Unsupported topology fails explicitly. Verified CAM artifacts feed
