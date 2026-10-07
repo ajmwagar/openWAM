@@ -48,6 +48,9 @@ Requests use `reversal.openwam-request.v1`:
 
 | Operation | Inputs | Result |
 |---|---|---|
+| `replay_shutdown` | Explicit shutdown config, fault and timed events | Separate six-channel offline shutdown trace |
+| `verify_shutdown_replay` | Independent input and retained replay | Full evidence/input/trace recomputation |
+| `compare_shutdown_trace` | Input and caller-supplied typed reference trace | Exact differences with bounded details; see [shutdown replay](shutdown-replay.md) |
 | `catalog` | Optional model, exact material name, unit system | Rows, catalog digest and source provenance; unsupported/anomalous points remain visible |
 | `prepare` | Exact UTF-8 source, `svg`/`dxf`, explicit settings | Portable independently recomputable project |
 | `revise` | Retained project and new settings | New project; original is first verified and never mutated |

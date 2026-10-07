@@ -1,0 +1,131 @@
+{
+  "schema": "openwam.shutdown-replay-demonstration.v1",
+  "bead": "reversal-faq.2",
+  "scope": "Actual offline CLI runs; static shutdown subset and synthetic outputs, not firmware-execution parity",
+  "case_order": [
+    "completion",
+    "door_pause",
+    "stuck_pump",
+    "halt_then_abort"
+  ],
+  "cases": [
+    {
+      "input_sha256": "c3421e9d465129329d97450990dd9eec62d449fcb35ff79fe0ac99bb427221ff",
+      "final_state": "all_done",
+      "final_output_mismatches": [],
+      "pending_electrical_changes": 0,
+      "trace_entries": 19,
+      "last_trace_at_us": 1000001
+    },
+    {
+      "input_sha256": "df370724d2923ffd7964cb178b19b8251a63358591f71c1031ed6ee6bbc89a82",
+      "final_state": "paused",
+      "final_output_mismatches": [],
+      "pending_electrical_changes": 0,
+      "trace_entries": 20,
+      "last_trace_at_us": 100001
+    },
+    {
+      "input_sha256": "5c95ad3474ea462c5dbad96979023043702dd45ebd18e6314c0ec3edaa94a7c7",
+      "final_state": "all_done",
+      "final_output_mismatches": [
+        "high_pressure_pump"
+      ],
+      "pending_electrical_changes": 0,
+      "trace_entries": 18,
+      "last_trace_at_us": 1000001
+    },
+    {
+      "input_sha256": "c9a1750d0536f0c2a00d8b19fde13cf1d381702fb7ef89272df74ed53c0cb90f",
+      "final_state": "paused",
+      "final_output_mismatches": [],
+      "pending_electrical_changes": 0,
+      "trace_entries": 29,
+      "last_trace_at_us": 1000001
+    }
+  ],
+  "evidence": {
+    "firmware_sha256": "814d8f0abfc5eb0e3d168efa73e7a7f19a20b55e11883fafb8aa603ec16fa47c",
+    "shutdown_receipt_sha256": "5daf6437c53cab839049640e0effc50f8c95ba10a0b922c5cb1fd2987eff0939",
+    "switch_receipt_sha256": "0efa71bb96f057124246c5642d87d1c558c3b72579cd8c11f709248d450d0ef7",
+    "timer_receipt_sha256": "91d735109c0c61d91c7359af50ae35755172f81626438ca9f5425667f1a89df2"
+  },
+  "repeated_responses_byte_identical": true,
+  "all_replays_independently_recomputed": true,
+  "changed_reference_difference_count": 1,
+  "captures": [
+    {
+      "sha256": "ab6a2a1978a1d5b79918764e51fcd3959d07ac3390d18962c019a5ef978c29c3",
+      "path": "wazer/private/shutdown-replay/demo/changed-reference.request.json"
+    },
+    {
+      "sha256": "93c7f67d769f9e7b393c091fadb8a7cb89c9305fffa1020bb5ec22a6b0173397",
+      "path": "wazer/private/shutdown-replay/demo/changed-reference.response.json"
+    },
+    {
+      "sha256": "e3ee673bbc23cf3fa2d3ea13b0c4e9e9f08870afa4b92d1042ae2771c209cda9",
+      "path": "wazer/private/shutdown-replay/demo/completion.request.json"
+    },
+    {
+      "sha256": "67fc1b9e9f907c38721c1994c4703f5dca6c79aaee803dd24bb0acc1a6a9c4b0",
+      "path": "wazer/private/shutdown-replay/demo/completion.response.json"
+    },
+    {
+      "sha256": "5b5b468a8999b3634d54e52bc3ee50fe2facfde66348d5d5291ce44621d51333",
+      "path": "wazer/private/shutdown-replay/demo/completion.verification.json"
+    },
+    {
+      "sha256": "7077915fb75861b42cd3f9f1ad63e7f8595647a7d74065dd6089e8573c55db49",
+      "path": "wazer/private/shutdown-replay/demo/completion.verify-request.json"
+    },
+    {
+      "sha256": "57a19c463810cc3e817c1f684b78fb4044056b382d04855fca85a5c5240d60b2",
+      "path": "wazer/private/shutdown-replay/demo/door-pause.request.json"
+    },
+    {
+      "sha256": "eddefca63e5e7f2a370f82cde2412c2733be3737cd46ab0acc821a38bfc2217f",
+      "path": "wazer/private/shutdown-replay/demo/door-pause.response.json"
+    },
+    {
+      "sha256": "cc51772f651c00066a1c0e929621c5b8c7271cc89dccd88b4303d026fa3a82ae",
+      "path": "wazer/private/shutdown-replay/demo/door-pause.verification.json"
+    },
+    {
+      "sha256": "18f483d6dc300d177af1b5f63f4db1b5082f44c073908a5d56498dcf6c732acd",
+      "path": "wazer/private/shutdown-replay/demo/door-pause.verify-request.json"
+    },
+    {
+      "sha256": "042c977427a4ce257a4517633ca4c7a31ea975df02636b1c81af49e4af9ac21e",
+      "path": "wazer/private/shutdown-replay/demo/halt-abort.request.json"
+    },
+    {
+      "sha256": "01875c6a1a3ed3ecdf69c9d901515b4fdd77c17a100a048b3f666c8f2f0e27cd",
+      "path": "wazer/private/shutdown-replay/demo/halt-abort.response.json"
+    },
+    {
+      "sha256": "48c0dff1821e29744e30d04d38c8de9af02bd5fcc8f6c7f6bdbd720be98524d6",
+      "path": "wazer/private/shutdown-replay/demo/halt-abort.verification.json"
+    },
+    {
+      "sha256": "fb73e7291de1667a969367a30e113b570bfde5f29c91e2d0657c90b8fb411e56",
+      "path": "wazer/private/shutdown-replay/demo/halt-abort.verify-request.json"
+    },
+    {
+      "sha256": "3d59da656b4271bdc72298202ae07770dae0ffdaf8e90f8c245bb5f33ad805d1",
+      "path": "wazer/private/shutdown-replay/demo/stuck-pump.request.json"
+    },
+    {
+      "sha256": "372c8fca945cb9ea3bc22aad85ea47c9c8948a364c5897db521f9a510347f2b5",
+      "path": "wazer/private/shutdown-replay/demo/stuck-pump.response.json"
+    },
+    {
+      "sha256": "737823ce08b29e58a653b0fcb7f84c93ca286dcee7c7569571100327366b1d29",
+      "path": "wazer/private/shutdown-replay/demo/stuck-pump.verification.json"
+    },
+    {
+      "sha256": "1a07de00bb3c639639c56d91a8972e7f3024b9e5cc597c878df04a63e6328cd4",
+      "path": "wazer/private/shutdown-replay/demo/stuck-pump.verify-request.json"
+    }
+  ],
+  "firmware_executed": false
+}

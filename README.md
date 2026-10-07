@@ -21,6 +21,8 @@ and applications.
   byte-checked command, completion and pause/abort evidence.
 - [Switch/HALT research](wazer/switch-halt-research.md) covering command exclusions,
   ordered HALT writes, config defaults and the watchdog/debugger evidence boundary.
+- [Offline shutdown replay](wazer/shutdown-replay.md) with six-channel traces,
+  strict timer boundaries, output faults and agent API comparison/verification.
 
 The CAM planner currently supports simple closed flattened polygons with bounded
 miter offsets. Unsupported topology fails explicitly. Verified CAM artifacts feed
