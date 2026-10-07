@@ -1,0 +1,10 @@
+{
+  "schema": "reversal.wazer-calculator-crosscheck.v1",
+  "response_sha256": "cbe024068ba3772078aef2bf76ec9fb76f30ddfc4ff8acc583072dd7810e0311",
+  "material": "Aluminum",
+  "thickness_in": 0.125,
+  "models": [
+    {"model":"desktop","display_feed_ipm":1.7,"pierce_seconds":20},
+    {"model":"pro","display_feed_ipm":4.0,"pierce_seconds":7}
+  ]
+}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120mm" height="100mm" viewBox="0 0 120 100">
+  <path d="M10 10 H110 V90 H10 Z"/>
+  <path id="openings" d="M25 30 H45 V50 H25 Z M65 30 H85 V50 H65 Z"/>
+  <circle id="round-opening" cx="55" cy="70" r="8"/>
+  <path id="annotation" fill="none" stroke="black" d="M15 60 H35"/>
+</svg>

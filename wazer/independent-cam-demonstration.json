@@ -1,0 +1,173 @@
+{
+  "schema": "reversal.independent-cam-demonstration.v1",
+  "date": "2026-10-06",
+  "scope": "Offline independent SVG normalization and bounded polygon CAM; no vendor importer or controller output",
+  "owners": {
+    "transmog": {
+      "commit": "5f4f584036a69662a62ed9e3710f275ebd5c2c53",
+      "module": "transmog-core::planar"
+    },
+    "swarf": {
+      "commit": "975ce24db4ce67565df0dedbfec752ed6769394b",
+      "module": "swarf_waterjet::cam"
+    },
+    "reversal": {
+      "module": "reversal_sketch_intake::cam"
+    }
+  },
+  "inputs": {
+    "model": "pro",
+    "material": "Aluminum",
+    "thickness_mm": 3,
+    "tolerance_mm": 0.02,
+    "placement_xy_down_mm": [
+      0,
+      0
+    ]
+  },
+  "artifact": {
+    "schema": "reversal.openwam-cam.v1",
+    "project_sha256": "a5598d5a3a71d99c9be35a6722b3beada1f7228f2efdf2b0f1b3263f1bf8fb6f",
+    "tables_canonical_sha256": "a25bdbff7866d76e8751a045c6db23b7d064552d6d2d8cd472808e918af4c72a"
+  },
+  "plan": {
+    "kerf_mm": 1.1,
+    "kerf_basis": "request_published_nominal",
+    "paths": [
+      {
+        "source_id": "openings/subpath-0",
+        "containment_depth": 1,
+        "side": "inside",
+        "perimeter_mm": 75.59999415079753,
+        "uncut_intervals_mm": [],
+        "cut_span_count": 1
+      },
+      {
+        "source_id": "openings/subpath-1",
+        "containment_depth": 1,
+        "side": "inside",
+        "perimeter_mm": 75.59999011357624,
+        "uncut_intervals_mm": [],
+        "cut_span_count": 1
+      },
+      {
+        "source_id": "round-opening",
+        "containment_depth": 1,
+        "side": "inside",
+        "perimeter_mm": 46.79378695473945,
+        "uncut_intervals_mm": [],
+        "cut_span_count": 1
+      },
+      {
+        "source_id": "svg-contour-0",
+        "containment_depth": 0,
+        "side": "outside",
+        "perimeter_mm": 364.39998175303134,
+        "uncut_intervals_mm": [
+          [
+            44.04999771912892,
+            47.04999771912892
+          ],
+          [
+            226.2499885956446,
+            229.2499885956446
+          ]
+        ],
+        "cut_span_count": 3
+      }
+    ],
+    "cut_span_count": 6,
+    "operation_count": 108,
+    "raw_centerline_length_mm": 578.3937529721445,
+    "nominal_cut_and_pierce_seconds": 357.32986276230247,
+    "limitations": [
+      "Simple closed polygon miter offsets; topology splitting/collapsed edges and sharp miters are refused.",
+      "Uncut tab widths are nominal centerline gaps, not measured holding strength; leads on every repierced cut span are checked geometrically.",
+      "Even-odd nested material boundaries are explicit cut policy; no artwork fill/stroke inference.",
+      "Planning operations only; cut quality, pressure/abrasive timing, mechanical stock and controller compatibility unqualified."
+    ],
+    "blockers": [
+      "Simple closed polygon miter offsets; topology splitting/collapsed edges and sharp miters are refused.",
+      "Uncut tab widths are nominal centerline gaps, not measured holding strength; leads on every repierced cut span are checked geometrically.",
+      "Even-odd nested material boundaries are explicit cut policy; no artwork fill/stroke inference.",
+      "Planning operations only; cut quality, pressure/abrasive timing, mechanical stock and controller compatibility unqualified."
+    ]
+  },
+  "verification": {
+    "machine_output_enabled": false,
+    "operation_count": 108,
+    "path_count": 4,
+    "project_sha256": "a5598d5a3a71d99c9be35a6722b3beada1f7228f2efdf2b0f1b3263f1bf8fb6f",
+    "schema": "reversal.openwam-cam-verification.v1",
+    "verified": true
+  },
+  "retained_files": [
+    {
+      "sha256": "f262d143067e9ae63fab5e8a3dfbe1833fb0d7a746d2149bce321e2bcc24a6ec",
+      "path": "wazer/fixtures/cam-panel.svg"
+    },
+    {
+      "sha256": "f83483fe8b30ab336bab03d6d7f6d532974de4707628ab3c5e656c8218395274",
+      "path": "wazer/fixtures/cam-panel.intent.json"
+    },
+    {
+      "sha256": "c4a12b61b35182e7677808d37f3ff53ac50c7345aef4541710fbe56bbaeb88c6",
+      "path": "wazer/private/independent-cam-1/prepare.request.json"
+    },
+    {
+      "sha256": "d1884cfd026756f978cd4f6f4f4ba23667dd1446392714ae7f02b65ce54964bf",
+      "path": "wazer/private/independent-cam-1/prepare.response.json"
+    },
+    {
+      "sha256": "814d25b414627fcad9356d8d6a47f1e6b6aec292c0ae482b57c922621584b221",
+      "path": "wazer/private/independent-cam-1/plan.request.json"
+    },
+    {
+      "sha256": "0a74620c8096d167082f69adddd11ce18aa8802985e6339c872a797a19627e7b",
+      "path": "wazer/private/independent-cam-1/plan.response.json"
+    },
+    {
+      "sha256": "c63170e54b07754dadc210c18f42e4d0a7451e2e2de87c2925da6d9fd3234fc9",
+      "path": "wazer/private/independent-cam-1/verify.request.json"
+    },
+    {
+      "sha256": "2a31f1af41386a3f3a85353350f8380dd3bc7ac43e32c8f26d3315092bd3a092",
+      "path": "wazer/private/independent-cam-1/verify.response.json"
+    },
+    {
+      "sha256": "a283fa5a5e2702ad90d5fef3234e09460d71186cb72cefae5032a9297e74aa58",
+      "path": "wazer/private/independent-cam-1/preview.request.json"
+    },
+    {
+      "sha256": "bf966231061080fbb89041085f696b2b2af7a07d0d4530762f4711ef0d960352",
+      "path": "wazer/private/independent-cam-1/preview.response.json"
+    },
+    {
+      "sha256": "56a45c1b9f21aea0e52010f02e92aa5a6aa5813b9683ee42dde7eeb747ce053d",
+      "path": "wazer/private/independent-cam-1/preview.svg"
+    }
+  ],
+  "preview": {
+    "rendered_with": "rsvg-convert",
+    "visually_inspected": true,
+    "scope": "Full stock SVG, white background, source boundaries, cutting moves, rapids and pierces"
+  },
+  "validation": {
+    "reversal_tests": 50,
+    "transmog_core_tests": 15,
+    "swarf_waterjet_tests": 14,
+    "strict_all_target_clippy": true,
+    "fmt_check": true,
+    "checks": [
+      "Analytic winding-independent rectangle and concave polygon offsets",
+      "Rejected crossings, touches, collapsed edges and excessive miters",
+      "Stable anonymous/compound IDs and rejected generated ID collisions",
+      "CLI fixture round opening, compound holes and open no-cut annotation",
+      "Independent artifact verification, deterministic repeat and explicit kerf override",
+      "Rejected wrong sides, overlapping tabs and retained-material lead crossings",
+      "Rejected changed plan, intent and machine authority"
+    ]
+  },
+  "machine_output_enabled": false,
+  "controller_qualified": false
+}

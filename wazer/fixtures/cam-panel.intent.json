@@ -1,0 +1,10 @@
+{
+  "kerf_override_mm": null,
+  "contours": [
+    {"source_id":"svg-contour-0","side":"outside","start_fraction":0,"tabs":[{"center_fraction":0.125,"width_mm":3},{"center_fraction":0.625,"width_mm":3}],"lead_in_mm":2,"lead_out_mm":2},
+    {"source_id":"openings/subpath-0","side":"inside","start_fraction":0,"tabs":[],"lead_in_mm":2,"lead_out_mm":2},
+    {"source_id":"openings/subpath-1","side":"inside","start_fraction":0,"tabs":[],"lead_in_mm":2,"lead_out_mm":2},
+    {"source_id":"round-opening","side":"inside","start_fraction":0,"tabs":[],"lead_in_mm":1,"lead_out_mm":1},
+    {"source_id":"annotation","side":"no_cut","start_fraction":0,"tabs":[],"lead_in_mm":0,"lead_out_mm":0}
+  ]
+}

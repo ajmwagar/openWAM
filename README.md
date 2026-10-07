@@ -1,13 +1,62 @@
 # OpenWAM
 
-Independent offline waterjet CAM in Rust, licensed under **AGPL-3.0-or-later**.
+An independent, offline waterjet CAM toolkit in Rust. Import SVG/DXF, select
+source-pinned WAZER material settings, retain project intent and independently
+verify derived plans. The primary interface is an API and JSON CLI for agents
+and applications.
 
-The repository is initialized with the complete standard [AGPL license](LICENSE)
-and the same [Contributor License Agreement](CLA.md) as
+## What works
+
+- Physical units, SVG transforms and curves, bounded planar DXF intake.
+- Stable document-local identities for anonymous and compound SVG paths.
+- Explicit inside/outside/centerline/no-cut policy and kerf overrides.
+- Holes-first ordering, selectable starts, uncut tabs and waste-side leads on
+  every separately pierced span.
+- Portable source/intent/table-bound artifacts, independent recomputation and
+  standalone SVG previews.
+- Synthetic control/plant fault replay and explicit research G-code profiles.
+
+The CAM planner currently supports simple closed flattened polygons with bounded
+miter offsets. Unsupported topology fails explicitly. CAM artifacts are not yet
+connected to the simulator/research postprocessor. All machine-output flags remain
+false; no machine transfer or qualified controller export is implemented.
+
+## Start with the CLI
+
+```sh
+cargo run --locked -p reversal-sketch-intake --bin openwam -- capabilities
+cargo run --locked -p reversal-sketch-intake --bin openwam -- request request.json
+```
+
+Use [the agent API](wazer/openwam-api.md) for request/response schemas and
+[the contour CAM runbook](wazer/independent-cam.md) for a complete panel example
+with kerf, tabs and leads. Original sources are retained; artifacts verify by
+rebuilding from source and typed intent, without a WAM account or runtime network.
+
+Crate names retain their existing `reversal_*` identities to preserve the Rust
+API and portable JSON protocols during extraction. The product UI will use
+Svelte/Coherence over this API. The optional Rust preview UI is a historical
+experiment, not the product frontend.
+
+Minimal Transmog and Swarf source dependencies are pinned under `vendor/` so the
+checkout builds without sibling repositories. These are owner snapshots, not
+independently maintained implementations. See [dependency provenance](vendor/README.md).
+
+## Develop
+
+```sh
+cargo check --locked --workspace --all-targets --all-features
+cargo test --locked --workspace --all-features
+cargo clippy --locked --workspace --all-targets --all-features -- -D warnings
+cargo fmt --all -- --check
+```
+
+## License and contributions
+
+OpenWAM first-party application code is **AGPL-3.0-or-later**. See [LICENSE](LICENSE)
+and [third-party notices](NOTICE.md) for dependency and historical source licenses.
+This project is independent of WAZER and is not manufacturer-certified.
+
+Contributions use the same copyright-assignment agreement as
 [ajmwagar/pedalkernel](https://github.com/ajmwagar/pedalkernel/blob/main/CLA.md).
-See [CONTRIBUTING.md](CONTRIBUTING.md) before submitting contributions.
-
-The tested standalone implementation is prepared locally. Importing its pinned
-Transmog dependency awaits an explicit publication choice because that owner
-repository is private. No private dependency source is published in this initial
-repository setup.
+Read [CLA.md](CLA.md) and [CONTRIBUTING.md](CONTRIBUTING.md) before contributing.

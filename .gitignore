@@ -1,0 +1,10 @@
+/target/
+**/target/
+**/private/
+.DS_Store
+.env
+.env.*
+*.bin
+*.elf
+*.gpr
+*.rep/

@@ -1,0 +1,28 @@
+[workspace]
+resolver = "2"
+members = ["crates/sketch-intake", "crates/waterjet-control", "vendor/transmog/crates/transmog-core", "vendor/swarf/crates/swarf-waterjet"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/FuturePresentLabs/transmog"
+rust-version = "1.82"
+
+[workspace.dependencies]
+glam = { version = "0.29", features = ["serde"] }
+ron = "0.12"
+serde = { version = "1", features = ["derive"] }
+thiserror = "2"
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+missing_debug_implementations = "warn"
+unreachable_pub = "warn"
+
+[workspace.lints.clippy]
+all = { level = "deny", priority = -1 }
+
+[profile.release]
+lto = "thin"
+strip = "symbols"

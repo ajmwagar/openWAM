@@ -1,0 +1,42 @@
+[package]
+name = "reversal-sketch-intake"
+version = "0.1.0"
+edition = "2024"
+license = "AGPL-3.0-or-later"
+repository = "https://github.com/ajmwagar/openWAM"
+publish = false
+default-run = "reversal-sketch-intake"
+
+[features]
+ui = ["dep:axum", "dep:tokio", "dep:getrandom"]
+
+[[bin]]
+name = "openwam"
+path = "src/bin/openwam.rs"
+
+[[bin]]
+name = "openwam-preview-ui"
+path = "src/bin/openwam-preview-ui.rs"
+required-features = ["ui"]
+
+[dependencies]
+anyhow = "1"
+roxmltree = "0.20"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["float_roundtrip"] }
+schemars = "1"
+sha2 = "0.10"
+svgtypes = "0.15"
+usvg = { version = "=0.45.1", default-features = false }
+scraper = { version = "0.27", default-features = false }
+kurbo = "0.11"
+dxf = "=0.6.2"
+transmog-core = { path = "../../vendor/transmog/crates/transmog-core" }
+swarf-waterjet = { path = "../../vendor/swarf/crates/swarf-waterjet" }
+reversal-waterjet-control = { path = "../waterjet-control", features = ["std"] }
+axum = { version = "0.8", features = ["multipart"], optional = true }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "net", "signal"], optional = true }
+getrandom = { version = "0.4", optional = true }
+
+[dev-dependencies]
+tower = { version = "0.5", features = ["util"] }

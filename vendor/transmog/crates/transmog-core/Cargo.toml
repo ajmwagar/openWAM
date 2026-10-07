@@ -1,0 +1,17 @@
+[package]
+name = "transmog-core"
+description = "Shared geometry, mesh, and IR types for the transmog mesh-to-STEP pipeline."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+glam.workspace = true
+ron.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,46 @@
+{
+  "schema": "reversal.wazer-cutting-data-acquisition.v1",
+  "checked_on": "2026-10-06",
+  "bead": "reversal-8i5",
+  "sources": [
+    {"url":"https://wazer.com/materials/materials-specs/","path":"private/cutting-data/materials-specs.html","sha256":"03c98c0a9aad5274e054b2383cac31c9cdb4c61f4ef5c7c68a9e589acd1a769a"},
+    {"url":"https://wazer.com/waterjets/tech-specs/","path":"private/cutting-data/tech-specs.html","sha256":"9768e44bbe2ca695e06c764ea5808e9531a438d96110eab45b1dbd6e42df04c2"},
+    {"url":"https://wazer.com/wp-admin/admin-ajax.php?action=calculate&material=116&thickness=0.125&length=50&pierces=2","path":"private/cutting-data/calculator-aluminum-0125.json","sha256":"cbe024068ba3772078aef2bf76ec9fb76f30ddfc4ff8acc583072dd7810e0311","basis":"Read-only GET to the calculator endpoint explicitly declared by the public page; no WAM account, job export or machine operation"}
+  ],
+  "normalized": {
+    "path": "cutting-tables.json",
+    "sha256": "f3e8916950d08abf447da388d6ecae63182484fa7891a25a0005b254f59f1afe",
+    "importer": "reversal-sketch-intake --import-wazer",
+    "source_thickness_rows": 142,
+    "materials": 21,
+    "model_unit_entries": 568,
+    "unsupported_entries": 80,
+    "warning_entries": 4,
+    "coverage_scope": "All thickness rows in the captured public materials table, both models and both unit systems; not a claim to the complete authenticated WAM material library"
+  },
+  "calculator_crosscheck": {
+    "fixture": "calculator-crosscheck.json",
+    "matched_public_table": true,
+    "scope": "One exact imperial row; calculator internal rate has higher precision than rounded public display values. No full formula recovery or exact WAM timing parity claimed."
+  },
+  "export_target": {
+    "model": "pro",
+    "basis": "User selected WAZER Pro on 2026-10-06 and will provide its firmware version",
+    "controller_firmware": null,
+    "reference_wam_exports": [],
+    "machine_output_enabled": false
+  },
+  "planning_demonstration": {
+    "original_svg": "../crates/sketch-intake/examples/plate.svg",
+    "original_svg_sha256": "b70417041f210eb8f1da16b405b4cef8b932459ddc0ec19ec1595a26e63cbc2a",
+    "selection": {"model":"pro","material":"Aluminum","thickness":3,"units":"metric"},
+    "report": "private/cutting-data/plate-pro-job.json",
+    "report_sha256": "dd65772657cfba04215843e7525b3fd8f541faa3e79ba42c2f0d427618fec6ce",
+    "verification": "private/cutting-data/plate-pro-verification.json",
+    "verification_sha256": "5b902f11081ebdf880448492ab5cb4fe0b001b99ecbe59c8f2d1a4bc934ce372",
+    "verified": true,
+    "machine_output_enabled": false,
+    "scope": "Independent SVG reparse and exact table-selection/estimate recomputation; not geometry/toolpath or controller qualification"
+  },
+  "unknown": ["Authenticated WAM library completeness and custom material entries", "Table cut-quality identity", "Per-material/exact-unit kerf calibration", "Leads, tabs and corner policy values", "WAZER postprocessor compatibility and hardware execution"]
+}

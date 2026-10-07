@@ -1,0 +1,14 @@
+{
+  "schema": "reversal.wam-service-fixture.v1",
+  "source_relative_path": "parity-square.svg",
+  "source_sha256": "09ebf04d5c97d6be736026444048ebce568914d9e8535379d5fb0844aa03df6e",
+  "vertices_mm": [[10,10],[40,10],[40,40],[10,40],[10,10]],
+  "cumulative_distance_mm": [0,30,60,90,120],
+  "path_width_depth_mm": [30,30],
+  "stock_width_depth_mm": [460,305],
+  "material_label": "Aluminum-PRO",
+  "thickness_mm": 3,
+  "feed_mm_min": 108,
+  "pierce_seconds": 6,
+  "quality_label": "mediumRate"
+}

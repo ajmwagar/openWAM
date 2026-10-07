@@ -1,0 +1,10 @@
+[
+  "node-square.json",
+  "node-rectangle.json",
+  "node-triangle.json",
+  "node-short-segments.json",
+  "node-shallow-turn.json",
+  "node-clockwise-reverse.json",
+  "node-dense-short.json",
+  "node-fractional.json"
+]

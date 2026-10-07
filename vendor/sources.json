@@ -1,0 +1,99 @@
+{
+  "schema": "openwam.source-provenance.v1",
+  "owners": [
+    {
+      "repository": "https://github.com/FuturePresentLabs/transmog",
+      "revision": "5f4f584036a69662a62ed9e3710f275ebd5c2c53",
+      "crate": "transmog-core",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "repository": "https://github.com/FuturePresentLabs/swarf",
+      "revision": "975ce24db4ce67565df0dedbfec752ed6769394b",
+      "crate": "swarf-waterjet",
+      "license": "AGPL-3.0"
+    }
+  ],
+  "application_origin": {
+    "repository": "reversal",
+    "revision": "dff7cb34c22461cd1bfca7792560185ab6680139",
+    "crate": "reversal-sketch-intake",
+    "historical_license": "MIT OR Apache-2.0",
+    "distribution_license": "AGPL-3.0-or-later"
+  },
+  "controller": {
+    "origin_revision": "dff7cb34c22461cd1bfca7792560185ab6680139",
+    "crate": "reversal-waterjet-control",
+    "license": "GPL-3.0-or-later"
+  },
+  "files": [
+    {
+      "sha256": "892a73e8375252f753808d24fd8bedfd9f22fc04ecaccb98f0bfcd4c3bc0790a",
+      "path": "vendor/swarf/crates/swarf-waterjet/Cargo.toml"
+    },
+    {
+      "sha256": "d8a6cc31abc16b6748c7a21f21611f5a1ec33f67d22ca23d7da1c19b95496bee",
+      "path": "vendor/swarf/crates/swarf-waterjet/LICENSE"
+    },
+    {
+      "sha256": "fbb27d591378d3f79c41699e56d5b222b2335e414a6e43004c694513f228dd94",
+      "path": "vendor/swarf/crates/swarf-waterjet/README.md"
+    },
+    {
+      "sha256": "90a9ef09d5c312cc4a57e1dd46f51100d0b4f9abfd23ba9f728737617c3aeef5",
+      "path": "vendor/swarf/crates/swarf-waterjet/UPSTREAM-NOTICE"
+    },
+    {
+      "sha256": "947b1c22fa08a4cd6ff6c444a6d26dd0866fd3b45cb93aa9d2992936a0f3aa69",
+      "path": "vendor/swarf/crates/swarf-waterjet/src/cam.rs"
+    },
+    {
+      "sha256": "e7217cc9fbd5351d1c80a9bd4db19a93dcc3b97e64c29cfbb989769aca9e9abd",
+      "path": "vendor/swarf/crates/swarf-waterjet/src/lib.rs"
+    },
+    {
+      "sha256": "7f3813c793b58d3e2e35be819ecc2d57a6767f55a43dcc015ac03bf2ca1b9608",
+      "path": "vendor/swarf/crates/swarf-waterjet/src/wam_pro.rs"
+    },
+    {
+      "sha256": "a61e3be66f53082823b726eded73058eb69f5628d66f036acdbc082c32f7bc6a",
+      "path": "vendor/swarf/crates/swarf-waterjet/src/wazer.rs"
+    },
+    {
+      "sha256": "0b2e07457c955ed099ff8fc2c38664ef91e4fc6fc1ea3bf06b8195d02172a921",
+      "path": "vendor/swarf/crates/swarf-waterjet/src/wazer_compare.rs"
+    },
+    {
+      "sha256": "bdf373d48ab1e20e58563efd8303a72755fec9e77fdd81abc251f001821b55f6",
+      "path": "vendor/transmog/crates/transmog-core/Cargo.toml"
+    },
+    {
+      "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+      "path": "vendor/transmog/crates/transmog-core/LICENSE-APACHE"
+    },
+    {
+      "sha256": "b05785f9f18e6716bab63424b11454513b9943a222595b70411009202fc592b5",
+      "path": "vendor/transmog/crates/transmog-core/LICENSE-MIT"
+    },
+    {
+      "sha256": "4e1ece6805cae0a6c2fa9d864685d17c19688a56d9044839364b8e45d9572967",
+      "path": "vendor/transmog/crates/transmog-core/src/geometry.rs"
+    },
+    {
+      "sha256": "7e110309fbf3a2df3201235c980d3a7616bfad3c3bc6cad77cf9d0f13fd7dfec",
+      "path": "vendor/transmog/crates/transmog-core/src/ir.rs"
+    },
+    {
+      "sha256": "6a6c8782fe0e7ad10ecbe55582a8a4c9af16e124bdde8b9b8932a4fbe6406675",
+      "path": "vendor/transmog/crates/transmog-core/src/lib.rs"
+    },
+    {
+      "sha256": "e319ce9cbf57ee2657943cc8abb3620343433411f5290c1f49a73b3d311012e5",
+      "path": "vendor/transmog/crates/transmog-core/src/mesh.rs"
+    },
+    {
+      "sha256": "4f6a24b09381a5bc96e9422e9f81002f04154af450bf92d93e4a0b93dfb121b7",
+      "path": "vendor/transmog/crates/transmog-core/src/planar.rs"
+    }
+  ]
+}

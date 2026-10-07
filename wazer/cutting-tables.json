@@ -1,0 +1,7861 @@
+{
+  "limits": [
+    {
+      "abrasive_kg_min": 0.15,
+      "continuous_cut_minutes": 90.0,
+      "cutting_area_depth_width_mm": [
+        305.0,
+        460.0
+      ],
+      "hopper_capacity_kg": 19.1,
+      "max_gantry_mm_min": 1500.0,
+      "model": "pro",
+      "nominal_kerf_mm": 1.1,
+      "units": "metric"
+    },
+    {
+      "abrasive_kg_min": 0.14968548210000002,
+      "continuous_cut_minutes": 90.0,
+      "cutting_area_depth_width_mm": [
+        304.79999999999995,
+        457.2
+      ],
+      "hopper_capacity_kg": 19.05087954,
+      "max_gantry_mm_min": 1498.6,
+      "model": "pro",
+      "nominal_kerf_mm": 1.1176,
+      "units": "imperial"
+    },
+    {
+      "abrasive_kg_min": 0.15,
+      "continuous_cut_minutes": 60.0,
+      "cutting_area_depth_width_mm": [
+        305.0,
+        460.0
+      ],
+      "hopper_capacity_kg": 13.5,
+      "max_gantry_mm_min": 1500.0,
+      "model": "desktop",
+      "nominal_kerf_mm": 1.1,
+      "units": "metric"
+    },
+    {
+      "abrasive_kg_min": 0.14968548210000002,
+      "continuous_cut_minutes": 60.0,
+      "cutting_area_depth_width_mm": [
+        304.79999999999995,
+        457.2
+      ],
+      "hopper_capacity_kg": 13.6077711,
+      "max_gantry_mm_min": 1498.6,
+      "model": "desktop",
+      "nominal_kerf_mm": 1.1176,
+      "units": "imperial"
+    }
+  ],
+  "materials_source": {
+    "checked_on": "2026-10-06",
+    "sha256": "03c98c0a9aad5274e054b2383cac31c9cdb4c61f4ef5c7c68a9e589acd1a769a",
+    "url": "https://wazer.com/materials/materials-specs/"
+  },
+  "rows": [
+    {
+      "cut": {
+        "feed": 324.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 1,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 117.0,
+        "pierce_seconds": 3.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 1,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 16.2,
+        "pierce_seconds": 1.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 1,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 5.6,
+        "pierce_seconds": 2.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 1,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 162.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 2,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 64.0,
+        "pierce_seconds": 9.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 2,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 8.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 2,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.1,
+        "pierce_seconds": 6.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 2,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 108.0,
+        "pierce_seconds": 6.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 3,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 45.0,
+        "pierce_seconds": 18.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 3,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 4.0,
+        "pierce_seconds": 7.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 3,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.7,
+        "pierce_seconds": 20.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 3,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 54.0,
+        "pierce_seconds": 27.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 4,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 25.0,
+        "pierce_seconds": 66.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 4,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.0,
+        "pierce_seconds": 30.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 4,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.9,
+        "pierce_seconds": 73.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 4,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 25.0,
+        "pierce_seconds": 130.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 5,
+      "thickness": 13.0,
+      "thickness_label": "13 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 13.0,
+        "pierce_seconds": 297.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 5,
+      "thickness": 13.0,
+      "thickness_label": "13 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.0,
+        "pierce_seconds": 124.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 5,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 284.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 5,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 17.0,
+        "pierce_seconds": 277.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 6,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 6,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.7,
+        "pierce_seconds": 279.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 6,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 6,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 13.0,
+        "pierce_seconds": 495.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 7,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 7,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 495.0
+      },
+      "material": "Aluminum",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 7,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Aluminum",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 7,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 276.0,
+        "pierce_seconds": 5.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 8,
+      "thickness": 0.5,
+      "thickness_label": "0.5 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 83.0,
+        "pierce_seconds": 4.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 8,
+      "thickness": 0.5,
+      "thickness_label": "0.5 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 12.9,
+        "pierce_seconds": 5.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 8,
+      "thickness": 0.016,
+      "thickness_label": "0.016″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.8,
+        "pierce_seconds": 3.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 8,
+      "thickness": 0.016,
+      "thickness_label": "0.016″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 155.0,
+        "pierce_seconds": 5.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 9,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 50.0,
+        "pierce_seconds": 7.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 9,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 7.4,
+        "pierce_seconds": 5.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 9,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.3,
+        "pierce_seconds": 5.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 9,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 87.0,
+        "pierce_seconds": 7.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 10,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 30.0,
+        "pierce_seconds": 16.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 10,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 4.1,
+        "pierce_seconds": 6.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 10,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.4,
+        "pierce_seconds": 12.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 10,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 62.0,
+        "pierce_seconds": 10.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 11,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": [
+        "paired thickness labels differ by more than a factor of two; source row requires correction"
+      ]
+    },
+    {
+      "cut": {
+        "feed": 22.0,
+        "pierce_seconds": 31.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 11,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": [
+        "paired thickness labels differ by more than a factor of two; source row requires correction"
+      ]
+    },
+    {
+      "cut": {
+        "feed": 2.3,
+        "pierce_seconds": 11.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 11,
+      "thickness": 0.0125,
+      "thickness_label": "0.0125″",
+      "units": "imperial",
+      "warnings": [
+        "paired thickness labels differ by more than a factor of two; source row requires correction"
+      ]
+    },
+    {
+      "cut": {
+        "feed": 0.8,
+        "pierce_seconds": 35.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 11,
+      "thickness": 0.0125,
+      "thickness_label": "0.0125″",
+      "units": "imperial",
+      "warnings": [
+        "paired thickness labels differ by more than a factor of two; source row requires correction"
+      ]
+    },
+    {
+      "cut": {
+        "feed": 35.0,
+        "pierce_seconds": 27.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 12,
+      "thickness": 6.0,
+      "thickness_label": "6 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 12.0,
+        "pierce_seconds": 125.0
+      },
+      "material": "Brass",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 12,
+      "thickness": 6.0,
+      "thickness_label": "6 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.3,
+        "pierce_seconds": 30.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 12,
+      "thickness": 0.25,
+      "thickness_label": "0.25″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 119.0
+      },
+      "material": "Brass",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 12,
+      "thickness": 0.25,
+      "thickness_label": "0.25″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 19.0,
+        "pierce_seconds": 108.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 13,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 13,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.7,
+        "pierce_seconds": 103.0
+      },
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 13,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 13,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 14.0,
+        "pierce_seconds": 223.0
+      },
+      "material": "Brass",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 14,
+      "thickness": 19.0,
+      "thickness_label": "19 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 14,
+      "thickness": 19.0,
+      "thickness_label": "19 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 224.0
+      },
+      "material": "Brass",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 14,
+      "thickness": 0.75,
+      "thickness_label": "0.75″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Brass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 14,
+      "thickness": 0.75,
+      "thickness_label": "0.75″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 190.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 15,
+      "thickness": 0.5,
+      "thickness_label": "0.5 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 69.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 15,
+      "thickness": 0.5,
+      "thickness_label": "0.5 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 8.9,
+        "pierce_seconds": 1.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 15,
+      "thickness": 0.016,
+      "thickness_label": "0.016″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.2,
+        "pierce_seconds": 2.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 15,
+      "thickness": 0.016,
+      "thickness_label": "0.016″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 106.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 16,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 40.0,
+        "pierce_seconds": 4.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 16,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 5.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 16,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.9,
+        "pierce_seconds": 3.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 16,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.0,
+        "pierce_seconds": 7.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 17,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 23.0,
+        "pierce_seconds": 17.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 17,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.8,
+        "pierce_seconds": 3.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 17,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.1,
+        "pierce_seconds": 11.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 17,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 42.0,
+        "pierce_seconds": 18.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 18,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 17.0,
+        "pierce_seconds": 40.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 18,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.6,
+        "pierce_seconds": 21.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 18,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.6,
+        "pierce_seconds": 46.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 18,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 33.0,
+        "pierce_seconds": 33.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 19,
+      "thickness": 4.0,
+      "thickness_label": "4 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 13.0,
+        "pierce_seconds": 75.0
+      },
+      "material": "Copper",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 19,
+      "thickness": 4.0,
+      "thickness_label": "4 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.1,
+        "pierce_seconds": 47.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 19,
+      "thickness": 0.188,
+      "thickness_label": "0.188″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 109.0
+      },
+      "material": "Copper",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 19,
+      "thickness": 0.188,
+      "thickness_label": "0.188″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 24.0,
+        "pierce_seconds": 73.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 20,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 20,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.9,
+        "pierce_seconds": 82.0
+      },
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 20,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 20,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 12.0,
+        "pierce_seconds": 323.0
+      },
+      "material": "Copper",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 21,
+      "thickness": 13.0,
+      "thickness_label": "13 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 21,
+      "thickness": 13.0,
+      "thickness_label": "13 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 309.0
+      },
+      "material": "Copper",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 21,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Copper",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 21,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 177.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 22,
+      "thickness": 0.5,
+      "thickness_label": "0.5 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 67.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 22,
+      "thickness": 0.5,
+      "thickness_label": "0.5 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 8.4,
+        "pierce_seconds": 1.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 22,
+      "thickness": 0.016,
+      "thickness_label": "0.016″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.1,
+        "pierce_seconds": 2.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 22,
+      "thickness": 0.016,
+      "thickness_label": "0.016″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 96.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 23,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 41.0,
+        "pierce_seconds": 5.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 23,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 4.7,
+        "pierce_seconds": 1.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 23,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.9,
+        "pierce_seconds": 3.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 23,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 52.0,
+        "pierce_seconds": 7.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 24,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 25.0,
+        "pierce_seconds": 17.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 24,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.5,
+        "pierce_seconds": 4.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 24,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.1,
+        "pierce_seconds": 11.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 24,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 37.0,
+        "pierce_seconds": 17.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 25,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 19.0,
+        "pierce_seconds": 37.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 25,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.4,
+        "pierce_seconds": 19.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 25,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.7,
+        "pierce_seconds": 41.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 25,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 23.0,
+        "pierce_seconds": 52.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 26,
+      "thickness": 5.0,
+      "thickness_label": "5 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 13.0,
+        "pierce_seconds": 102.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 26,
+      "thickness": 5.0,
+      "thickness_label": "5 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.0,
+        "pierce_seconds": 47.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 26,
+      "thickness": 0.188,
+      "thickness_label": "0.188″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 93.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 26,
+      "thickness": 0.188,
+      "thickness_label": "0.188″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 20.0,
+        "pierce_seconds": 77.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 27,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 27,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.7,
+        "pierce_seconds": 87.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 27,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 27,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 13.0,
+        "pierce_seconds": 225.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 28,
+      "thickness": 10.0,
+      "thickness_label": "10 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 28,
+      "thickness": 10.0,
+      "thickness_label": "10 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 203.0
+      },
+      "material": "Mild Steel",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 28,
+      "thickness": 0.375,
+      "thickness_label": "0.375″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Mild Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 28,
+      "thickness": 0.375,
+      "thickness_label": "0.375″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 181.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 29,
+      "thickness": 0.5,
+      "thickness_label": "0.5 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 61.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 29,
+      "thickness": 0.5,
+      "thickness_label": "0.5 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 8.6,
+        "pierce_seconds": 1.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 29,
+      "thickness": 0.016,
+      "thickness_label": "0.016″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.8,
+        "pierce_seconds": 1.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 29,
+      "thickness": 0.016,
+      "thickness_label": "0.016″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 96.0,
+        "pierce_seconds": 5.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 30,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 37.0,
+        "pierce_seconds": 4.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 30,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 4.7,
+        "pierce_seconds": 4.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 30,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.7,
+        "pierce_seconds": 2.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 30,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 51.0,
+        "pierce_seconds": 14.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 31,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 23.0,
+        "pierce_seconds": 18.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 31,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.5,
+        "pierce_seconds": 10.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 31,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.0,
+        "pierce_seconds": 11.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 31,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 35.0,
+        "pierce_seconds": 23.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 32,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 17.0,
+        "pierce_seconds": 45.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 32,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.3,
+        "pierce_seconds": 24.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 32,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.6,
+        "pierce_seconds": 51.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 32,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 22.0,
+        "pierce_seconds": 42.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 33,
+      "thickness": 5.0,
+      "thickness_label": "5 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 12.0,
+        "pierce_seconds": 135.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 33,
+      "thickness": 5.0,
+      "thickness_label": "5 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.9,
+        "pierce_seconds": 40.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 33,
+      "thickness": 0.188,
+      "thickness_label": "0.188″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 122.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 33,
+      "thickness": 0.188,
+      "thickness_label": "0.188″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 19.0,
+        "pierce_seconds": 54.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 34,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 34,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.7,
+        "pierce_seconds": 59.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 34,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 34,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 12.0,
+        "pierce_seconds": 186.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 35,
+      "thickness": 10.0,
+      "thickness_label": "10 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 35,
+      "thickness": 10.0,
+      "thickness_label": "10 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 158.0
+      },
+      "material": "Stainless Steel",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 35,
+      "thickness": 0.375,
+      "thickness_label": "0.375″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Stainless Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 35,
+      "thickness": 0.375,
+      "thickness_label": "0.375″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 184.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 36,
+      "thickness": 0.5,
+      "thickness_label": "0.5 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 84.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 36,
+      "thickness": 0.5,
+      "thickness_label": "0.5 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 8.7,
+        "pierce_seconds": 1.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 36,
+      "thickness": 0.016,
+      "thickness_label": "0.016″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.9,
+        "pierce_seconds": 2.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 36,
+      "thickness": 0.016,
+      "thickness_label": "0.016″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 100.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 37,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 47.0,
+        "pierce_seconds": 3.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 37,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 4.8,
+        "pierce_seconds": 1.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 37,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.3,
+        "pierce_seconds": 3.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 37,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 54.0,
+        "pierce_seconds": 6.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 38,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 26.0,
+        "pierce_seconds": 13.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 38,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.6,
+        "pierce_seconds": 4.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 38,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.2,
+        "pierce_seconds": 8.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 38,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 38.0,
+        "pierce_seconds": 13.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 39,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 19.0,
+        "pierce_seconds": 34.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 39,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.4,
+        "pierce_seconds": 15.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 39,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.7,
+        "pierce_seconds": 39.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 39,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 24.0,
+        "pierce_seconds": 36.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 40,
+      "thickness": 5.0,
+      "thickness_label": "5 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 12.0,
+        "pierce_seconds": 107.0
+      },
+      "material": "Titanium",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 40,
+      "thickness": 5.0,
+      "thickness_label": "5 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.0,
+        "pierce_seconds": 32.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 40,
+      "thickness": 0.188,
+      "thickness_label": "0.188″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 97.0
+      },
+      "material": "Titanium",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 40,
+      "thickness": 0.188,
+      "thickness_label": "0.188″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 20.0,
+        "pierce_seconds": 51.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 41,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 41,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.8,
+        "pierce_seconds": 58.0
+      },
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 41,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 41,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 13.0,
+        "pierce_seconds": 160.0
+      },
+      "material": "Titanium",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 42,
+      "thickness": 10.0,
+      "thickness_label": "10 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 42,
+      "thickness": 10.0,
+      "thickness_label": "10 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 142.0
+      },
+      "material": "Titanium",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 42,
+      "thickness": 0.375,
+      "thickness_label": "0.375″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Titanium",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 42,
+      "thickness": 0.375,
+      "thickness_label": "0.375″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 121.0,
+        "pierce_seconds": 3.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 43,
+      "thickness": 0.5,
+      "thickness_label": "0.5 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 56.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 43,
+      "thickness": 0.5,
+      "thickness_label": "0.5 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 5.7,
+        "pierce_seconds": 3.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 43,
+      "thickness": 0.016,
+      "thickness_label": "0.016″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.6,
+        "pierce_seconds": 1.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 43,
+      "thickness": 0.016,
+      "thickness_label": "0.016″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 68.0,
+        "pierce_seconds": 4.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 44,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 34.0,
+        "pierce_seconds": 5.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 44,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.3,
+        "pierce_seconds": 4.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 44,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.6,
+        "pierce_seconds": 3.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 44,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 38.0,
+        "pierce_seconds": 6.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 45,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 20.0,
+        "pierce_seconds": 22.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 45,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.8,
+        "pierce_seconds": 5.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 45,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.9,
+        "pierce_seconds": 14.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 45,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 27.0,
+        "pierce_seconds": 13.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 46,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 15.0,
+        "pierce_seconds": 34.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 46,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.0,
+        "pierce_seconds": 14.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 46,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.6,
+        "pierce_seconds": 59.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 46,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 21.0,
+        "pierce_seconds": 27.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 47,
+      "thickness": 4.0,
+      "thickness_label": "4 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 12.0,
+        "pierce_seconds": 96.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 47,
+      "thickness": 4.0,
+      "thickness_label": "4 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.8,
+        "pierce_seconds": 26.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 47,
+      "thickness": 0.156,
+      "thickness_label": "0.156″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 94.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 47,
+      "thickness": 0.156,
+      "thickness_label": "0.156″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 15.0,
+        "pierce_seconds": 86.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 48,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 48,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.6,
+        "pierce_seconds": 101.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 48,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 48,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 12.0,
+        "pierce_seconds": 183.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 49,
+      "thickness": 8.0,
+      "thickness_label": "8 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 49,
+      "thickness": 8.0,
+      "thickness_label": "8 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 181.0
+      },
+      "material": "Tool Steel",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 49,
+      "thickness": 0.313,
+      "thickness_label": "0.313″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Tool Steel",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 49,
+      "thickness": 0.313,
+      "thickness_label": "0.313″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 50,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 50,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 50,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 50,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 51,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 771.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 51,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 51,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 48.2,
+        "pierce_seconds": 1.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 51,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1037.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 52,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 333.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 52,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 37.4,
+        "pierce_seconds": 1.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 52,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 11.6,
+        "pierce_seconds": 1.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 52,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 360.0,
+        "pierce_seconds": 3.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 53,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 79.0,
+        "pierce_seconds": 8.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 53,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 13.0,
+        "pierce_seconds": 4.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 53,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.8,
+        "pierce_seconds": 9.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 53,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 99.0,
+        "pierce_seconds": 22.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 54,
+      "thickness": 14.0,
+      "thickness_label": "14 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 14.0,
+        "pierce_seconds": 62.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 54,
+      "thickness": 14.0,
+      "thickness_label": "14 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 4.5,
+        "pierce_seconds": 18.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 54,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.7,
+        "pierce_seconds": 50.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 54,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 62.0,
+        "pierce_seconds": 41.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 55,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 55,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.4,
+        "pierce_seconds": 41.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 55,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 55,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 40.0,
+        "pierce_seconds": 73.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 56,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 56,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.6,
+        "pierce_seconds": 73.0
+      },
+      "material": "Borosilicate Glass",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 56,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Borosilicate Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 56,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 57,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1136.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 57,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 2.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 57,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 2.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 57,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1490.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 58,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 402.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 58,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 2.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 58,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 22.1,
+        "pierce_seconds": 2.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 58,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 841.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 59,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 219.0,
+        "pierce_seconds": 3.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 59,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 30.6,
+        "pierce_seconds": 2.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 59,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 7.9,
+        "pierce_seconds": 3.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 59,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 316.0,
+        "pierce_seconds": 4.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 60,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 77.0,
+        "pierce_seconds": 9.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 60,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 11.5,
+        "pierce_seconds": 5.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 60,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.8,
+        "pierce_seconds": 10.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 60,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 106.0,
+        "pierce_seconds": 15.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 61,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 24.0,
+        "pierce_seconds": 43.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 61,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 4.3,
+        "pierce_seconds": 15.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 61,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.0,
+        "pierce_seconds": 41.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 61,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 58.0,
+        "pierce_seconds": 36.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 62,
+      "thickness": 20.0,
+      "thickness_label": "20 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 13.0,
+        "pierce_seconds": 105.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 62,
+      "thickness": 20.0,
+      "thickness_label": "20 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.4,
+        "pierce_seconds": 32.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 62,
+      "thickness": 0.75,
+      "thickness_label": "0.75″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 95.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 62,
+      "thickness": 0.75,
+      "thickness_label": "0.75″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 51.0,
+        "pierce_seconds": 43.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 63,
+      "thickness": 22.0,
+      "thickness_label": "22 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 63,
+      "thickness": 22.0,
+      "thickness_label": "22 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.0,
+        "pierce_seconds": 44.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 63,
+      "thickness": 0.875,
+      "thickness_label": "0.875″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 63,
+      "thickness": 0.875,
+      "thickness_label": "0.875″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 41.0,
+        "pierce_seconds": 57.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 64,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 64,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.6,
+        "pierce_seconds": 57.0
+      },
+      "material": "Soda Lime Glass",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 64,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Soda Lime Glass",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 64,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 65,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 478.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 65,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 65,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 25.6,
+        "pierce_seconds": 2.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 65,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 694.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 66,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 196.0,
+        "pierce_seconds": 3.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 66,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 36.9,
+        "pierce_seconds": 1.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 66,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 10.3,
+        "pierce_seconds": 3.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 66,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 401.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 67,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 116.0,
+        "pierce_seconds": 5.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 67,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 14.6,
+        "pierce_seconds": 2.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 67,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 4.2,
+        "pierce_seconds": 6.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 67,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 157.0,
+        "pierce_seconds": 8.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 68,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 47.0,
+        "pierce_seconds": 18.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 68,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 5.7,
+        "pierce_seconds": 9.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 68,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.7,
+        "pierce_seconds": 20.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 68,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 55.0,
+        "pierce_seconds": 40.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 69,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 17.0,
+        "pierce_seconds": 85.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 69,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.2,
+        "pierce_seconds": 38.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 69,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.7,
+        "pierce_seconds": 81.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 69,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 38.0,
+        "pierce_seconds": 71.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 70,
+      "thickness": 17.0,
+      "thickness_label": "17 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 12.0,
+        "pierce_seconds": 147.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 70,
+      "thickness": 17.0,
+      "thickness_label": "17 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.7,
+        "pierce_seconds": 61.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 70,
+      "thickness": 0.625,
+      "thickness_label": "0.625″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 128.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 70,
+      "thickness": 0.625,
+      "thickness_label": "0.625″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 33.0,
+        "pierce_seconds": 90.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 71,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 71,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.3,
+        "pierce_seconds": 90.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 71,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 71,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 22.0,
+        "pierce_seconds": 164.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 72,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 72,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.9,
+        "pierce_seconds": 164.0
+      },
+      "material": "Acrylic",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 72,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Acrylic",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 72,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 73,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 363.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 73,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 73,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 18.8,
+        "pierce_seconds": 2.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 73,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1387.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 74,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 163.0,
+        "pierce_seconds": 4.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 74,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 74,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 8.3,
+        "pierce_seconds": 3.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 74,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 707.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 75,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 102.0,
+        "pierce_seconds": 7.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 75,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 25.3,
+        "pierce_seconds": 2.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 75,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.8,
+        "pierce_seconds": 8.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 75,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 224.0,
+        "pierce_seconds": 10.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 76,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 46.0,
+        "pierce_seconds": 23.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 76,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 8.0,
+        "pierce_seconds": 11.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 76,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.7,
+        "pierce_seconds": 25.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 76,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 62.0,
+        "pierce_seconds": 54.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 77,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 19.0,
+        "pierce_seconds": 97.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 77,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.5,
+        "pierce_seconds": 51.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 77,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.8,
+        "pierce_seconds": 93.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 77,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 36.0,
+        "pierce_seconds": 105.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 78,
+      "thickness": 18.0,
+      "thickness_label": "18 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 13.0,
+        "pierce_seconds": 183.0
+      },
+      "material": "HDPE",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 78,
+      "thickness": 18.0,
+      "thickness_label": "18 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.3,
+        "pierce_seconds": 118.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 78,
+      "thickness": 0.75,
+      "thickness_label": "0.75″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 204.0
+      },
+      "material": "HDPE",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 78,
+      "thickness": 0.75,
+      "thickness_label": "0.75″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 26.0,
+        "pierce_seconds": 159.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 79,
+      "thickness": 22.0,
+      "thickness_label": "22 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 79,
+      "thickness": 22.0,
+      "thickness_label": "22 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.0,
+        "pierce_seconds": 162.0
+      },
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 79,
+      "thickness": 0.875,
+      "thickness_label": "0.875″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 79,
+      "thickness": 0.875,
+      "thickness_label": "0.875″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 20.0,
+        "pierce_seconds": 213.0
+      },
+      "material": "HDPE",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 80,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 80,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.8,
+        "pierce_seconds": 213.0
+      },
+      "material": "HDPE",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 80,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "HDPE",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 80,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1415.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 81,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 267.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 81,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 81,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 14.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 81,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 521.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 82,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 118.0,
+        "pierce_seconds": 4.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 82,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 28.3,
+        "pierce_seconds": 1.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 82,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 6.0,
+        "pierce_seconds": 3.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 82,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 291.0,
+        "pierce_seconds": 5.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 83,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 73.0,
+        "pierce_seconds": 8.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 83,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 10.5,
+        "pierce_seconds": 6.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 83,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.7,
+        "pierce_seconds": 9.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 83,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 107.0,
+        "pierce_seconds": 24.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 84,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 32.0,
+        "pierce_seconds": 36.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 84,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.9,
+        "pierce_seconds": 27.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 84,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.2,
+        "pierce_seconds": 41.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 84,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 35.0,
+        "pierce_seconds": 93.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 85,
+      "thickness": 13.0,
+      "thickness_label": "13 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 13.0,
+        "pierce_seconds": 185.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 85,
+      "thickness": 13.0,
+      "thickness_label": "13 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.4,
+        "pierce_seconds": 89.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 85,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 176.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 85,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 20.0,
+        "pierce_seconds": 178.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 86,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 86,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.8,
+        "pierce_seconds": 179.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 86,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 86,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 13.0,
+        "pierce_seconds": 295.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 87,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 87,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 295.0
+      },
+      "material": "Polycarbonate",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 87,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Polycarbonate",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 87,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 88,
+      "thickness": 0.5,
+      "thickness_label": "0.5 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 209.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 88,
+      "thickness": 0.5,
+      "thickness_label": "0.5 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 88,
+      "thickness": 0.016,
+      "thickness_label": "0.016″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 10.7,
+        "pierce_seconds": 2.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 88,
+      "thickness": 0.016,
+      "thickness_label": "0.016″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 89,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 106.0,
+        "pierce_seconds": 4.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 89,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 89,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 5.2,
+        "pierce_seconds": 3.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 89,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 742.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 90,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 52.0,
+        "pierce_seconds": 12.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 90,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 38.3,
+        "pierce_seconds": 1.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 90,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.6,
+        "pierce_seconds": 8.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 90,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 455.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 91,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 34.0,
+        "pierce_seconds": 26.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 91,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 16.7,
+        "pierce_seconds": 1.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 91,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.3,
+        "pierce_seconds": 29.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 91,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 197.0,
+        "pierce_seconds": 4.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 92,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 16.0,
+        "pierce_seconds": 103.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 92,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 7.2,
+        "pierce_seconds": 4.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 92,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.6,
+        "pierce_seconds": 115.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 92,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 139.0,
+        "pierce_seconds": 8.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 93,
+      "thickness": 8.0,
+      "thickness_label": "8 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 12.0,
+        "pierce_seconds": 183.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 93,
+      "thickness": 8.0,
+      "thickness_label": "8 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 5.5,
+        "pierce_seconds": 8.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 93,
+      "thickness": 0.313,
+      "thickness_label": "0.313″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 181.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 93,
+      "thickness": 0.313,
+      "thickness_label": "0.313″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 77.0,
+        "pierce_seconds": 25.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 94,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 94,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.1,
+        "pierce_seconds": 23.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 94,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 94,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 34.0,
+        "pierce_seconds": 99.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 95,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 95,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.4,
+        "pierce_seconds": 99.0
+      },
+      "material": "Carbon Fiber",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 95,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Carbon Fiber",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 95,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 942.0,
+        "pierce_seconds": 3.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 96,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 91.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 96,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 33.6,
+        "pierce_seconds": 3.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 96,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.4,
+        "pierce_seconds": 2.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 96,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 286.0,
+        "pierce_seconds": 5.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 97,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 50.0,
+        "pierce_seconds": 7.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 97,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 10.2,
+        "pierce_seconds": 6.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 97,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.9,
+        "pierce_seconds": 7.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 97,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 119.0,
+        "pierce_seconds": 14.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 98,
+      "thickness": 10.0,
+      "thickness_label": "10 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 32.0,
+        "pierce_seconds": 16.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 98,
+      "thickness": 10.0,
+      "thickness_label": "10 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 5.1,
+        "pierce_seconds": 12.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 98,
+      "thickness": 0.375,
+      "thickness_label": "0.375″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.3,
+        "pierce_seconds": 12.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 98,
+      "thickness": 0.375,
+      "thickness_label": "0.375″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 76.0,
+        "pierce_seconds": 26.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 99,
+      "thickness": 13.0,
+      "thickness_label": "13 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 26.0,
+        "pierce_seconds": 106.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 99,
+      "thickness": 13.0,
+      "thickness_label": "13 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.1,
+        "pierce_seconds": 24.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 99,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.0,
+        "pierce_seconds": 89.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 99,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 39.0,
+        "pierce_seconds": 65.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 100,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 100,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.5,
+        "pierce_seconds": 66.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 100,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 100,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 24.0,
+        "pierce_seconds": 123.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 101,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 101,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.9,
+        "pierce_seconds": 123.0
+      },
+      "material": "Ceramic Tile",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 101,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Ceramic Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 101,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 942.0,
+        "pierce_seconds": 3.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 102,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 91.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 102,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 33.6,
+        "pierce_seconds": 3.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 102,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.4,
+        "pierce_seconds": 2.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 102,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 286.0,
+        "pierce_seconds": 5.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 103,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 50.0,
+        "pierce_seconds": 7.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 103,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 10.2,
+        "pierce_seconds": 6.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 103,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.9,
+        "pierce_seconds": 7.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 103,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 119.0,
+        "pierce_seconds": 14.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 104,
+      "thickness": 10.0,
+      "thickness_label": "10 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 32.0,
+        "pierce_seconds": 16.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 104,
+      "thickness": 10.0,
+      "thickness_label": "10 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 5.1,
+        "pierce_seconds": 12.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 104,
+      "thickness": 0.375,
+      "thickness_label": "0.375″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.3,
+        "pierce_seconds": 12.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 104,
+      "thickness": 0.375,
+      "thickness_label": "0.375″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 76.0,
+        "pierce_seconds": 26.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 105,
+      "thickness": 13.0,
+      "thickness_label": "13 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 26.0,
+        "pierce_seconds": 106.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 105,
+      "thickness": 13.0,
+      "thickness_label": "13 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.1,
+        "pierce_seconds": 24.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 105,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.0,
+        "pierce_seconds": 89.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 105,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 39.0,
+        "pierce_seconds": 65.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 106,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 106,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.5,
+        "pierce_seconds": 66.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 106,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 106,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 24.0,
+        "pierce_seconds": 123.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 107,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 107,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.9,
+        "pierce_seconds": 123.0
+      },
+      "material": "Porcelain Tile",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 107,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Porcelain Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 107,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1139.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 108,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 91.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 108,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 40.5,
+        "pierce_seconds": 1.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 108,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.4,
+        "pierce_seconds": 2.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 108,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 331.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 109,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 50.0,
+        "pierce_seconds": 7.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 109,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 11.8,
+        "pierce_seconds": 1.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 109,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.9,
+        "pierce_seconds": 7.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 109,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 133.0,
+        "pierce_seconds": 8.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 110,
+      "thickness": 10.0,
+      "thickness_label": "10 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 32.0,
+        "pierce_seconds": 16.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 110,
+      "thickness": 10.0,
+      "thickness_label": "10 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 5.7,
+        "pierce_seconds": 7.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 110,
+      "thickness": 0.375,
+      "thickness_label": "0.375″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.3,
+        "pierce_seconds": 12.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 110,
+      "thickness": 0.375,
+      "thickness_label": "0.375″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 84.0,
+        "pierce_seconds": 16.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 111,
+      "thickness": 13.0,
+      "thickness_label": "13 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 26.0,
+        "pierce_seconds": 106.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 111,
+      "thickness": 13.0,
+      "thickness_label": "13 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.4,
+        "pierce_seconds": 15.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 111,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.0,
+        "pierce_seconds": 89.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 111,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 43.0,
+        "pierce_seconds": 35.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 112,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 112,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.7,
+        "pierce_seconds": 35.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 112,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 112,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 25.0,
+        "pierce_seconds": 60.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 113,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 113,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.0,
+        "pierce_seconds": 60.0
+      },
+      "material": "Marble Tile",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 113,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Marble Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 113,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 430.0,
+        "pierce_seconds": 9.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 114,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 91.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 114,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 15.5,
+        "pierce_seconds": 9.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 114,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.4,
+        "pierce_seconds": 2.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 114,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 151.0,
+        "pierce_seconds": 12.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 115,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 50.0,
+        "pierce_seconds": 7.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 115,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 5.4,
+        "pierce_seconds": 12.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 115,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.9,
+        "pierce_seconds": 7.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 115,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 70.0,
+        "pierce_seconds": 19.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 116,
+      "thickness": 10.0,
+      "thickness_label": "10 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 32.0,
+        "pierce_seconds": 16.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 116,
+      "thickness": 10.0,
+      "thickness_label": "10 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.0,
+        "pierce_seconds": 18.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 116,
+      "thickness": 0.375,
+      "thickness_label": "0.375″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.3,
+        "pierce_seconds": 12.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 116,
+      "thickness": 0.375,
+      "thickness_label": "0.375″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 47.0,
+        "pierce_seconds": 27.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 117,
+      "thickness": 13.0,
+      "thickness_label": "13 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 26.0,
+        "pierce_seconds": 106.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 117,
+      "thickness": 13.0,
+      "thickness_label": "13 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.9,
+        "pierce_seconds": 26.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 117,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.0,
+        "pierce_seconds": 89.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 117,
+      "thickness": 0.5,
+      "thickness_label": "0.5″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 26.0,
+        "pierce_seconds": 52.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 118,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 118,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.0,
+        "pierce_seconds": 53.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 118,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 118,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 17.0,
+        "pierce_seconds": 91.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 119,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 119,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.7,
+        "pierce_seconds": 91.0
+      },
+      "material": "Granite Tile",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 119,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "Granite Tile",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 119,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 120,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 120,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 120,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 120,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 121,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 994.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 121,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 121,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 33.9,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 121,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 122,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 173.0,
+        "pierce_seconds": 2.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 122,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 2.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 122,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 5.9,
+        "pierce_seconds": 2.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 122,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 254.0,
+        "pierce_seconds": 6.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 123,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 24.0,
+        "pierce_seconds": 48.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 123,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 10.7,
+        "pierce_seconds": 5.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 123,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.0,
+        "pierce_seconds": 43.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 123,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 116.0,
+        "pierce_seconds": 9.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 124,
+      "thickness": 17.0,
+      "thickness_label": "17 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 12.0,
+        "pierce_seconds": 182.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 124,
+      "thickness": 17.0,
+      "thickness_label": "17 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 5.6,
+        "pierce_seconds": 8.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 124,
+      "thickness": 0.625,
+      "thickness_label": "0.625″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.6,
+        "pierce_seconds": 131.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 124,
+      "thickness": 0.625,
+      "thickness_label": "0.625″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 84.0,
+        "pierce_seconds": 12.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 125,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 125,
+      "thickness": 19.0,
+      "thickness_label": "19 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.3,
+        "pierce_seconds": 12.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 125,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 125,
+      "thickness": 0.75,
+      "thickness_label": "0.75″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 36.0,
+        "pierce_seconds": 25.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 126,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 126,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1.4,
+        "pierce_seconds": 25.0
+      },
+      "material": "50A Neoprene",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 126,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "50A Neoprene",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 126,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 127,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 127,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 127,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 127,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 128,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 128,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 128,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 128,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 129,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 643.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 129,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 129,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 21.2,
+        "pierce_seconds": 1.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 129,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 686.0,
+        "pierce_seconds": 5.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 130,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 56.0,
+        "pierce_seconds": 38.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 130,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 29.1,
+        "pierce_seconds": 4.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 130,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 2.4,
+        "pierce_seconds": 33.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 130,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 142.0,
+        "pierce_seconds": 52.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 131,
+      "thickness": 21.0,
+      "thickness_label": "21 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 12.0,
+        "pierce_seconds": 551.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 131,
+      "thickness": 21.0,
+      "thickness_label": "21 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 7.7,
+        "pierce_seconds": 32.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 131,
+      "thickness": 0.75,
+      "thickness_label": "0.75″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.7,
+        "pierce_seconds": 333.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 131,
+      "thickness": 0.75,
+      "thickness_label": "0.75″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 105.0,
+        "pierce_seconds": 80.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 132,
+      "thickness": 23.0,
+      "thickness_label": "23 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 132,
+      "thickness": 23.0,
+      "thickness_label": "23 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 4.6,
+        "pierce_seconds": 68.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 132,
+      "thickness": 0.875,
+      "thickness_label": "0.875″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 132,
+      "thickness": 0.875,
+      "thickness_label": "0.875″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 76.0,
+        "pierce_seconds": 125.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 133,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 133,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.0,
+        "pierce_seconds": 125.0
+      },
+      "material": "50A Silicone",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 133,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "50A Silicone",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 133,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 134,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 134,
+      "thickness": 1.0,
+      "thickness_label": "1 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 134,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 134,
+      "thickness": 0.031,
+      "thickness_label": "0.031″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 135,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 135,
+      "thickness": 2.0,
+      "thickness_label": "2 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 135,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 135,
+      "thickness": 0.063,
+      "thickness_label": "0.063″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 136,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 989.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 136,
+      "thickness": 3.0,
+      "thickness_label": "3 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 136,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 32.2,
+        "pierce_seconds": 1.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 136,
+      "thickness": 0.125,
+      "thickness_label": "0.125″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 137,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 95.0,
+        "pierce_seconds": 6.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 137,
+      "thickness": 6.0,
+      "thickness_label": "6 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 1.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 137,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.1,
+        "pierce_seconds": 5.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 137,
+      "thickness": 0.25,
+      "thickness_label": "0.25″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1186.0,
+        "pierce_seconds": 3.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 138,
+      "thickness": 11.0,
+      "thickness_label": "11 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 12.0,
+        "pierce_seconds": 56.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 138,
+      "thickness": 11.0,
+      "thickness_label": "11 mm (Max Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 45.0,
+        "pierce_seconds": 3.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 138,
+      "thickness": 0.438,
+      "thickness_label": "0.438″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 0.5,
+        "pierce_seconds": 62.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": true,
+      "model": "desktop",
+      "source_row": 138,
+      "thickness": 0.438,
+      "thickness_label": "0.438″ (Max Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 686.0,
+        "pierce_seconds": 5.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 139,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 139,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 29.1,
+        "pierce_seconds": 4.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 139,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 139,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 76.0,
+        "pierce_seconds": 125.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 140,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 140,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 3.0,
+        "pierce_seconds": 125.0
+      },
+      "material": "60A Polyurethane",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 140,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": null,
+      "material": "60A Polyurethane",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 140,
+      "thickness": 1.0,
+      "thickness_label": "1″ (Max Pro)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 5.0
+      },
+      "material": "Polyurethane Foam",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 141,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1000.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Polyurethane Foam",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 141,
+      "thickness": 13.0,
+      "thickness_label": "13 mm",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 5.0
+      },
+      "material": "Polyurethane Foam",
+      "maximum_marked": false,
+      "model": "pro",
+      "source_row": 141,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 39.4,
+        "pierce_seconds": 1.0
+      },
+      "material": "Polyurethane Foam",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 141,
+      "thickness": 0.5,
+      "thickness_label": "0.5″",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 1500.0,
+        "pierce_seconds": 5.0
+      },
+      "material": "Polyurethane Foam",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 142,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro/Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 960.0,
+        "pierce_seconds": 1.0
+      },
+      "material": "Polyurethane Foam",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 142,
+      "thickness": 25.4,
+      "thickness_label": "25.4 mm (Max Pro/Desktop)",
+      "units": "metric",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 59.1,
+        "pierce_seconds": 5.0
+      },
+      "material": "Polyurethane Foam",
+      "maximum_marked": true,
+      "model": "pro",
+      "source_row": 142,
+      "thickness": 1.0,
+      "thickness_label": "1.0″ (Max Pro/Desktop)",
+      "units": "imperial",
+      "warnings": []
+    },
+    {
+      "cut": {
+        "feed": 36.8,
+        "pierce_seconds": 1.0
+      },
+      "material": "Polyurethane Foam",
+      "maximum_marked": false,
+      "model": "desktop",
+      "source_row": 142,
+      "thickness": 1.0,
+      "thickness_label": "1.0″ (Max Pro/Desktop)",
+      "units": "imperial",
+      "warnings": []
+    }
+  ],
+  "schema": "reversal.wazer-cutting-tables.v1",
+  "specifications": [
+    {
+      "desktop": "12 x 18 in 305 x 460 mm",
+      "label": "Cutting Area (D x W)",
+      "pro": "12 x 18 in 305 x 460 mm"
+    },
+    {
+      "desktop": "0.044 in 1.1 mm",
+      "label": "Kerf (width of cut)",
+      "pro": "0.044 in 1.1 mm"
+    },
+    {
+      "desktop": "0.33 lb/min 0.15 kg/min",
+      "label": "Abrasive Rate",
+      "pro": "0.33 lb/min 0.15 kg/min"
+    },
+    {
+      "desktop": "12 x 18 in 305 x 460 mm",
+      "label": "Cutting Area (D x W)",
+      "pro": "12 x 18 in 305 x 460 mm"
+    },
+    {
+      "desktop": "13 x 19 in 330 x 485 mm",
+      "label": "Cut Bed Size (D x W)",
+      "pro": "13 x 19 in 330 x 485 mm"
+    },
+    {
+      "desktop": "0.044 in 1.1 mm",
+      "label": "Kerf (width of cut)",
+      "pro": "0.044 in 1.1 mm"
+    },
+    {
+      "desktop": "60 min (prior to refilling the abrasive hopper)",
+      "label": "Continuous Cutting Time",
+      "pro": "90 min (prior to refilling the abrasive hopper)"
+    },
+    {
+      "desktop": "59 IPM 1,500 mm/min",
+      "label": "Gantry Max Speed",
+      "pro": "59 IPM 1,500 mm/min"
+    },
+    {
+      "desktop": "0.003 in 0.08 mm",
+      "label": "Gantry Positional Accuracy",
+      "pro": "0.003 in 0.08 mm"
+    },
+    {
+      "desktop": "0.33 lb/min 0.15 kg/min",
+      "label": "Abrasive Rate",
+      "pro": "0.33 lb/min 0.15 kg/min"
+    },
+    {
+      "desktop": "30 lb 13.5 kg",
+      "label": "Abrasive Hopper Capacity",
+      "pro": "42 lb 19.1 kg"
+    },
+    {
+      "desktop": "80 Mesh Alluvial Garnet",
+      "label": "Abrasive Material",
+      "pro": "80 Mesh Alluvial Garnet"
+    },
+    {
+      "desktop": "0.019 in 0.48 mm",
+      "label": "Orifice Diameter",
+      "pro": "0.021 in 0.51 mm"
+    },
+    {
+      "desktop": "0.045 in 1.1 mm",
+      "label": "Mixing Tube Diameter (internal)",
+      "pro": "0.045 in 1.1 mm"
+    }
+  ],
+  "specs_source": {
+    "checked_on": "2026-10-06",
+    "sha256": "9768e44bbe2ca695e06c764ea5808e9531a438d96110eab45b1dbd6e42df04c2",
+    "url": "https://wazer.com/waterjets/tech-specs/"
+  }
+}
