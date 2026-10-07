@@ -216,13 +216,32 @@ pub fn replay(
     catalog: &Catalog,
     fault: FaultSpec,
 ) -> Result<Replay> {
+    let job = bridge::verified_integration(original, integration, catalog)?;
+    replay_draft(
+        &job.swarf,
+        format!("{:x}", Sha256::digest(original)),
+        format!("{:x}", Sha256::digest(integration)),
+        job.planning.tables_canonical_sha256,
+        fault,
+        "Straight-line kinematic preview at nominal table feed; no acceleration, step generation, kerf, leads, tabs or qualified postprocessor.",
+    )
+}
+
+/// Internal runner for drafts already independently verified by the source adapter.
+pub(crate) fn replay_draft(
+    draft: &swarf_waterjet::Draft,
+    source_sha256: String,
+    integration_sha256: String,
+    tables_canonical_sha256: String,
+    fault: FaultSpec,
+    motion_scope: &'static str,
+) -> Result<Replay> {
     ensure!(
         fault.at_ms <= MAX_TIME_MS && (fault.kind != FaultKind::None || fault.at_ms == 0),
         "invalid fault schedule"
     );
-    let job = bridge::verified_integration(original, integration, catalog)?;
     ensure!(
-        job.swarf.operations.len() <= MAX_OPERATIONS,
+        draft.operations.len() <= MAX_OPERATIONS,
         "simulation operation bound exceeded"
     );
     let model = Model::default();
@@ -236,7 +255,7 @@ pub fn replay(
     };
     let mut completed = 0;
     let mut outcome = Outcome::Completed;
-    for (i, operation) in job.swarf.operations.iter().enumerate() {
+    for (i, operation) in draft.operations.iter().enumerate() {
         r.inject(i);
         r.host(Command::Poll);
         r.frame(i, "start");
@@ -258,7 +277,7 @@ pub fn replay(
                 } else {
                     r.wait(
                         i,
-                        millis(distance / job.swarf.request.max_feed_mm_min * 60.0)?,
+                        millis(distance / draft.request.max_feed_mm_min * 60.0)?,
                         Some(to_mm),
                         false,
                     )?
@@ -313,12 +332,12 @@ pub fn replay(
     );
     Ok(Replay {
         schema: "reversal.waterjet-job-simulation.v1",
-        source_sha256: format!("{:x}", Sha256::digest(original)),
-        integration_sha256: format!("{:x}", Sha256::digest(integration)),
-        tables_canonical_sha256: job.planning.tables_canonical_sha256,
+        source_sha256,
+        integration_sha256,
+        tables_canonical_sha256,
         fault,
         model: serde_json::json!({"input_age_ms":model.input_age_ms,"watchdog_ms":model.watchdog_ms,"pressure_capacity_units":model.pressure_capacity,"pressure_rise_per_ms":model.pressure_rise_per_ms,"pressure_fall_per_ms":model.pressure_fall_per_ms,"poll_interval_ms":20,"release_wait_budget_ms":1000}),
-        operation_count: job.swarf.operations.len(),
+        operation_count: draft.operations.len(),
         completed_operations: completed,
         virtual_elapsed_ms: r.sim.snapshot().at_ms,
         simulated_cut_length_mm: r.cut_length,
@@ -328,7 +347,7 @@ pub fn replay(
         hardware_qualified: false,
         limitations: vec![
             "Synthetic plant/supervisor; physical WAZER wiring and hydraulic shutdown are unqualified.",
-            "Straight-line kinematic preview at nominal table feed; no acceleration, step generation, kerf, leads, tabs or qualified postprocessor.",
+            motion_scope,
             "Durations rounded up per operation to milliseconds. Rapids use nominal gantry limit. Pierce values are public table estimates.",
             "No automatic resume after faults; pressure release is modeled, not a proven installed sensor.",
         ],

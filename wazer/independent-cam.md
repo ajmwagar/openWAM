@@ -129,8 +129,8 @@ unit tests independently check analytic dimensions rather than claiming bit-exac
 SVG geometry.
 
 CAM artifacts are separate from existing project/research-G-code artifacts.
-The current simulator and vendor research postprocessor do not consume this new
-CAM artifact yet. Multiasset placement, automatic tab selection, alternative
+The [CAM loop](cam-loop.md) feeds verified CAM moves into the shared simulator
+and historical research postprocessor. Multiasset placement, automatic tab selection, alternative
 lead shapes and qualified controller export remain tracked integration work.
 The future Svelte/Coherence client can consume this API and generated intent
 schema; no ad-hoc UI was added.

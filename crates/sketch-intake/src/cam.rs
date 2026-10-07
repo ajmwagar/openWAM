@@ -34,6 +34,13 @@ pub fn prepare(
     })
 }
 pub fn verified(artifact: &Artifact, catalog: &cutting::Catalog) -> Result<Plan> {
+    let rebuilt = canonical(artifact, catalog)?;
+    let (_, report) = openwam::reopen(&serde_json::to_vec(&rebuilt.project)?, catalog)?;
+    Ok(cam::plan(&report.swarf.request, &rebuilt.intent)?)
+}
+
+/// Return source/owner-rebuilt canonical bytes for downstream artifact binding.
+pub(crate) fn canonical(artifact: &Artifact, catalog: &cutting::Catalog) -> Result<Artifact> {
     ensure!(
         artifact.schema == "reversal.openwam-cam.v1" && !artifact.machine_output_enabled,
         "unsupported CAM artifact/authority"
@@ -45,8 +52,7 @@ pub fn verified(artifact: &Artifact, catalog: &cutting::Catalog) -> Result<Plan>
             && json_identity::equivalent(&artifact.plan, &rebuilt.plan),
         "CAM artifact differs from independently rebuilt source/intent/table/owner plan"
     );
-    let (_, report) = openwam::reopen(&serde_json::to_vec(&rebuilt.project)?, catalog)?;
-    Ok(cam::plan(&report.swarf.request, &rebuilt.intent)?)
+    Ok(rebuilt)
 }
 pub fn verify(artifact: &Artifact, catalog: &cutting::Catalog) -> Result<serde_json::Value> {
     let plan = verified(artifact, catalog)?;

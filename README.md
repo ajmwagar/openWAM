@@ -17,8 +17,9 @@ and applications.
 - Synthetic control/plant fault replay and explicit research G-code profiles.
 
 The CAM planner currently supports simple closed flattened polygons with bounded
-miter offsets. Unsupported topology fails explicitly. CAM artifacts are not yet
-connected to the simulator/research postprocessor. All machine-output flags remain
+miter offsets. Unsupported topology fails explicitly. Verified CAM artifacts feed
+the simulator and multi-span historical research postprocessor, with independently
+recomputed retained replay/export artifacts. All machine-output flags remain
 false; no machine transfer or qualified controller export is implemented.
 
 ## Start with the CLI

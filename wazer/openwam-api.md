@@ -56,6 +56,10 @@ Requests use `reversal.openwam-request.v1`:
 | `plan_cam` | Project and exact per-contour cut intent | Retained independent compensated CAM artifact with tabs and waste-side leads |
 | `verify_cam` | CAM artifact | Source/intent/table/owner plan recomputation receipt |
 | `preview_cam` | CAM artifact | Standalone SVG of independently verified compensated cuts, uncut gaps and rapids |
+| `simulate_cam` | CAM artifact and explicit fault kind/time | CAM-bound synthetic replay executing compensated cut spans and non-cutting travel |
+| `verify_cam_simulation` | CAM artifact and retained replay | Independent source/intent/plan/fault replay recomputation |
+| `research_cam_gcode` | CAM artifact and explicit `historical_wam16` profile | CAM-bound multi-span research candidate; controller qualification stays false |
+| `verify_cam_gcode` | CAM artifact and candidate | Independent source/intent/table/postprocessor regeneration |
 | `simulate` | Project and explicit fault kind/time | Synthetic motion/controller/plant replay |
 | `verify_simulation` | Project and retained replay | Independent recomputation receipt |
 | `inspect_gcode` | G-code text | Typed observed-dialect program, canonical serialization, digest and feed/dwell summary |
@@ -111,8 +115,9 @@ differences and report verification without inferring reference provenance.
 
 The [independent contour CAM runbook](independent-cam.md) adds our own SVG import,
 kerf compensation, holes-first ordering, explicit starts, uncut tabs and leads.
-Its retained CAM artifact is independently verified; it is not yet connected to
-the simulator or research postprocessor.
+Its retained CAM artifact is independently verified. The [CAM loop](cam-loop.md)
+connects it to fault replay and multi-span historical research exports without
+changing the older project-only operations.
 
 The [CLI demonstration receipt](openwam-api-demonstration.json) records retained
 request/response hashes, independently verified project and replay, and nominal

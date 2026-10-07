@@ -49,6 +49,22 @@ pub struct Request {
 #[derive(Debug, Serialize, Deserialize, JsonSchema)]
 #[serde(tag = "operation", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Operation {
+    SimulateCam {
+        artifact: crate::cam::Artifact,
+        fault: simulation::FaultSpec,
+    },
+    VerifyCamSimulation {
+        artifact: crate::cam::Artifact,
+        replay: serde_json::Value,
+    },
+    ResearchCamGcode {
+        artifact: crate::cam::Artifact,
+        profile: wazer::Profile,
+    },
+    VerifyCamGcode {
+        artifact: crate::cam::Artifact,
+        candidate: Box<crate::cam_loop::Candidate>,
+    },
     PlanCam {
         project: openwam::Project,
         intent: swarf_waterjet::cam::Intent,
@@ -119,6 +135,12 @@ pub enum Operation {
 #[derive(Debug, Serialize, JsonSchema)]
 #[serde(tag = "kind", rename_all = "snake_case")]
 pub enum Output {
+    CamSimulation {
+        replay: Box<crate::cam_loop::Replay>,
+    },
+    CamResearchGcode {
+        candidate: Box<crate::cam_loop::Candidate>,
+    },
     Cam {
         artifact: Box<crate::cam::Artifact>,
     },
@@ -294,6 +316,31 @@ pub fn execute(request: Request, catalog: &cutting::Catalog) -> Result<Output, A
         .validate()
         .map_err(|e| ApiError::from_error(ErrorCode::CatalogInvalid, e))?;
     match request.request {
+        Operation::SimulateCam { artifact, fault } => {
+            crate::cam_loop::simulate(&artifact, catalog, fault)
+                .map(|replay| Output::CamSimulation {
+                    replay: Box::new(replay),
+                })
+                .map_err(|e| ApiError::from_error(ErrorCode::SimulationFailed, e))
+        }
+        Operation::VerifyCamSimulation { artifact, replay } => {
+            crate::cam_loop::verify_simulation(&artifact, catalog, &replay)
+                .map(|verification| Output::Verification { verification })
+                .map_err(|e| ApiError::from_error(ErrorCode::InvalidReplay, e))
+        }
+        Operation::ResearchCamGcode { artifact, profile } => {
+            crate::cam_loop::research_gcode(&artifact, catalog, profile)
+                .map(|candidate| Output::CamResearchGcode {
+                    candidate: Box::new(candidate),
+                })
+                .map_err(|e| ApiError::from_error(ErrorCode::PostprocessingFailed, e))
+        }
+        Operation::VerifyCamGcode {
+            artifact,
+            candidate,
+        } => crate::cam_loop::verify_gcode(&artifact, catalog, &candidate)
+            .map(|verification| Output::Verification { verification })
+            .map_err(|e| ApiError::from_error(ErrorCode::InvalidCandidate, e)),
         Operation::PlanCam { project, intent } => crate::cam::prepare(&project, intent, catalog)
             .map(|artifact| Output::Cam {
                 artifact: Box::new(artifact),

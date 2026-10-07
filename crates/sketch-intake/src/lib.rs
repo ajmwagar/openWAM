@@ -6,6 +6,7 @@ use usvg::tiny_skia_path::{PathSegment, Point, Transform};
 
 pub mod bridge;
 pub mod cam;
+pub mod cam_loop;
 pub mod cutting;
 pub mod dxf_intake;
 mod json_identity;

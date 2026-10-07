@@ -1,0 +1,153 @@
+{
+  "schema": "openwam.cam-loop-demonstration.v1",
+  "inputs": {
+    "source": "wazer/fixtures/cam-panel.svg",
+    "intent": "wazer/fixtures/cam-panel.intent.json",
+    "model": "pro",
+    "material": "Aluminum",
+    "thickness_mm": 3,
+    "kerf_mm": 1.1,
+    "tolerance_mm": 0.02
+  },
+  "cam_sha256": "fe51a6dcc92932e72d078d894d81f046f9cac46f4fd4c9320e278ac834e543fd",
+  "nominal": {
+    "operation_count": 108,
+    "completed_operations": 108,
+    "virtual_elapsed_ms": 366250,
+    "simulated_cut_length_mm": 578.3937529722191,
+    "outcome": "completed"
+  },
+  "fault": {
+    "fault": {
+      "at_ms": 10000,
+      "kind": "enclosure_open"
+    },
+    "operation_count": 108,
+    "completed_operations": 3,
+    "virtual_elapsed_ms": 10000,
+    "outcome": "faulted"
+  },
+  "export": {
+    "profile": "historical_wam16",
+    "summary": {
+      "command_count": 155,
+      "declared_version": "1.6",
+      "known_feed_cut_seconds": 321.3298627623026,
+      "linear_count": 90,
+      "path_count": 6,
+      "rapid_count": 6,
+      "total_dwell_seconds": 54.0,
+      "unresolved_feed_moves": 0
+    },
+    "cam_limitations": [
+      "Simple closed polygon miter offsets; topology splitting/collapsed edges and sharp miters are refused.",
+      "Uncut tab widths are nominal centerline gaps, not measured holding strength; leads on every repierced cut span are checked geometrically.",
+      "Even-odd nested material boundaries are explicit cut policy; no artwork fill/stroke inference.",
+      "Planning operations only; cut quality, pressure/abrasive timing, mechanical stock and controller compatibility unqualified."
+    ]
+  },
+  "verifications": {
+    "simulation": {
+      "cam_sha256": "fe51a6dcc92932e72d078d894d81f046f9cac46f4fd4c9320e278ac834e543fd",
+      "completed_operations": 108,
+      "hardware_qualified": false,
+      "machine_output_enabled": false,
+      "outcome": "completed",
+      "schema": "reversal.openwam-cam-simulation-verification.v1",
+      "verified": true
+    },
+    "fault": {
+      "cam_sha256": "fe51a6dcc92932e72d078d894d81f046f9cac46f4fd4c9320e278ac834e543fd",
+      "completed_operations": 3,
+      "hardware_qualified": false,
+      "machine_output_enabled": false,
+      "outcome": "faulted",
+      "schema": "reversal.openwam-cam-simulation-verification.v1",
+      "verified": true
+    },
+    "export": {
+      "cam_sha256": "fe51a6dcc92932e72d078d894d81f046f9cac46f4fd4c9320e278ac834e543fd",
+      "controller_qualified": false,
+      "gcode_sha256": "dc4b8e72bb2b638fe1da879df8aa41dfed73754e5796a41c64502cb12f0bd45e",
+      "machine_output_enabled": false,
+      "schema": "reversal.openwam-cam-research-verification.v1",
+      "verified": true
+    }
+  },
+  "retained_files": [
+    {
+      "sha256": "3e8edb0ed723c6f41753d6171631c4b878fa794fa46bd838587e7d02dbe7b248",
+      "path": "wazer/private/independent-cam-1/export.request.json"
+    },
+    {
+      "sha256": "6e133cbd9de1b6b0bb90d3f2c10a7556a334e3d4956ae39e4059a77d8b6749b1",
+      "path": "wazer/private/independent-cam-1/fault.request.json"
+    },
+    {
+      "sha256": "814d25b414627fcad9356d8d6a47f1e6b6aec292c0ae482b57c922621584b221",
+      "path": "wazer/private/independent-cam-1/plan.request.json"
+    },
+    {
+      "sha256": "c4a12b61b35182e7677808d37f3ff53ac50c7345aef4541710fbe56bbaeb88c6",
+      "path": "wazer/private/independent-cam-1/prepare.request.json"
+    },
+    {
+      "sha256": "e5d0a885a745ea6423e642f95bd5e0a4d8d8bd910edead021fb2ad1c24c618d8",
+      "path": "wazer/private/independent-cam-1/simulate.request.json"
+    },
+    {
+      "sha256": "df41ab7a3a8c3c108fbfc4da84cb610dfdbb66436687e352fa4924af652fcc94",
+      "path": "wazer/private/independent-cam-1/verify-export.request.json"
+    },
+    {
+      "sha256": "049f01b5ce5f7857b9c583875379a1d0d1f9431337f803feea9fbff8416a0afd",
+      "path": "wazer/private/independent-cam-1/verify-fault.request.json"
+    },
+    {
+      "sha256": "4d9c293340732ee8ae5b82de81b12e2c7d037d5eb892ba4b9848ee4df0df29da",
+      "path": "wazer/private/independent-cam-1/verify-simulation.request.json"
+    },
+    {
+      "sha256": "988d09dcaf3dde170a535ffd60cd05370ceb95602b2f35939fa81402010d2f7b",
+      "path": "wazer/private/independent-cam-1/export.response.json"
+    },
+    {
+      "sha256": "72d36779811a04846fcef167c60d05e6c999509b28d8a2ac97d1ca3bd11ede38",
+      "path": "wazer/private/independent-cam-1/fault.response.json"
+    },
+    {
+      "sha256": "0a74620c8096d167082f69adddd11ce18aa8802985e6339c872a797a19627e7b",
+      "path": "wazer/private/independent-cam-1/plan.response.json"
+    },
+    {
+      "sha256": "d1884cfd026756f978cd4f6f4f4ba23667dd1446392714ae7f02b65ce54964bf",
+      "path": "wazer/private/independent-cam-1/prepare.response.json"
+    },
+    {
+      "sha256": "c3e9d97bd0af61dffcb562b2295ee0e27cc853a6d40c619b63bf277f7f3a22e8",
+      "path": "wazer/private/independent-cam-1/simulate.response.json"
+    },
+    {
+      "sha256": "2187573f1281ed0f5d209b8befeb9cd2adfce0f36189c614f010b7c2e97d0f8c",
+      "path": "wazer/private/independent-cam-1/verify-export.response.json"
+    },
+    {
+      "sha256": "fcf348a4355fa7c038db60fc8da2e514cd15871cde4da5c360270ee33cc9c8dc",
+      "path": "wazer/private/independent-cam-1/verify-fault.response.json"
+    },
+    {
+      "sha256": "26d1720162fc7f5c5ca8c21353a36179cf5467c4430223251b58c01a831b92b8",
+      "path": "wazer/private/independent-cam-1/verify-simulation.response.json"
+    },
+    {
+      "sha256": "46a4cb954d854576eab448b33452ec6bf7b7f4a136d12d3ec9bf7a510643f2cd",
+      "path": "wazer/private/independent-cam-1/panel.research.gcode"
+    }
+  ],
+  "qualification": {
+    "machine_output_enabled": false,
+    "controller_qualified": false,
+    "hardware_qualified": false,
+    "scope": "Synthetic CAM operation replay and historical research syntax; exported peripheral dwell timing is not simulated or hardware calibrated"
+  }
+}
