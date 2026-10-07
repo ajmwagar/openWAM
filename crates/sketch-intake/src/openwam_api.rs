@@ -49,6 +49,17 @@ pub struct Request {
 #[derive(Debug, Serialize, Deserialize, JsonSchema)]
 #[serde(tag = "operation", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Operation {
+    ReplayShutdown {
+        input: crate::shutdown::Input,
+    },
+    VerifyShutdownReplay {
+        input: crate::shutdown::Input,
+        replay: serde_json::Value,
+    },
+    CompareShutdownTrace {
+        input: crate::shutdown::Input,
+        reference: Vec<crate::shutdown::TraceEntry>,
+    },
     SimulateCamGcode {
         artifact: crate::cam::Artifact,
         candidate: Box<crate::cam_loop::Candidate>,
@@ -145,6 +156,12 @@ pub enum Operation {
 #[derive(Debug, Serialize, JsonSchema)]
 #[serde(tag = "kind", rename_all = "snake_case")]
 pub enum Output {
+    ShutdownReplay {
+        replay: Box<crate::shutdown::Replay>,
+    },
+    ShutdownComparison {
+        comparison: serde_json::Value,
+    },
     CamGcodeSimulation {
         replay: Box<crate::gcode_simulation::Replay>,
     },
@@ -329,6 +346,21 @@ pub fn execute(request: Request, catalog: &cutting::Catalog) -> Result<Output, A
         .validate()
         .map_err(|e| ApiError::from_error(ErrorCode::CatalogInvalid, e))?;
     match request.request {
+        Operation::ReplayShutdown { input } => crate::shutdown::simulate(&input)
+            .map(|replay| Output::ShutdownReplay {
+                replay: Box::new(replay),
+            })
+            .map_err(|e| ApiError::from_error(ErrorCode::SimulationFailed, e)),
+        Operation::VerifyShutdownReplay { input, replay } => {
+            crate::shutdown::verify(&input, &replay)
+                .map(|verification| Output::Verification { verification })
+                .map_err(|e| ApiError::from_error(ErrorCode::InvalidReplay, e))
+        }
+        Operation::CompareShutdownTrace { input, reference } => {
+            crate::shutdown::compare(&input, &reference)
+                .map(|comparison| Output::ShutdownComparison { comparison })
+                .map_err(|e| ApiError::from_error(ErrorCode::ComparisonFailed, e))
+        }
         Operation::SimulateCamGcode {
             artifact,
             candidate,
@@ -588,8 +620,10 @@ pub fn capabilities() -> serde_json::Value {
         "schema": "reversal.openwam-capabilities.v1", "package_version": env!("CARGO_PKG_VERSION"),
         "request_schema": schemars::schema_for!(Request), "response_schema": schemars::schema_for!(Response),
         "request_version": REQUEST_SCHEMA, "response_version": RESPONSE_SCHEMA,
-        "limits": {"request_bytes": MAX_REQUEST_BYTES, "response_bytes": MAX_RESPONSE_BYTES, "source_bytes": MAX_INPUT_BYTES, "project_bytes": openwam::MAX_PROJECT_BYTES},
+        "limits": {"request_bytes": MAX_REQUEST_BYTES, "response_bytes": MAX_RESPONSE_BYTES, "source_bytes": MAX_INPUT_BYTES, "project_bytes": openwam::MAX_PROJECT_BYTES,
+            "shutdown_events":crate::shutdown::MAX_EVENTS, "shutdown_time_us":crate::shutdown::MAX_TIME_US, "shutdown_switch_bindings":crate::shutdown::MAX_SWITCHES},
         "machine_output_enabled": false, "hardware_qualified": false,
+        "shutdown_example": serde_json::from_str::<serde_json::Value>(include_str!("../../../wazer/fixtures/shutdown-completion.request.json")).expect("valid retained shutdown example"),
         "prepare_example": Request { schema: REQUEST_SCHEMA.into(), request: Operation::Prepare {
             source_text: include_str!("../examples/plate.svg").into(), source_format: bridge::SourceFormat::Svg,
             settings: Settings { model: cutting::Model::Pro, material: "Aluminum".into(), units: cutting::Units::Metric, thickness: 3.0, tolerance_mm: 0.02, placement_xy_down_mm: [0.0, 0.0] },

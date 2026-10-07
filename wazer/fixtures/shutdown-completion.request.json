@@ -1,0 +1,28 @@
+{
+  "schema": "reversal.openwam-request.v1",
+  "request": {
+    "operation": "replay_shutdown",
+    "input": {
+      "config": {
+        "normal_threshold_seconds": 1.0,
+        "door_threshold_seconds": 0.1,
+        "pins": [
+          {"connected": true, "inverted": false, "initial_logical": true},
+          {"connected": true, "inverted": false, "initial_logical": true},
+          {"connected": true, "inverted": false, "initial_logical": true},
+          {"connected": true, "inverted": false, "initial_logical": true},
+          {"connected": true, "inverted": false, "initial_logical": true},
+          {"connected": true, "inverted": false, "initial_logical": true}
+        ],
+        "switches": []
+      },
+      "fault": {"kind": "none"},
+      "events": [
+        {"at_us": 0, "event": {"kind": "begin_completion"}},
+        {"at_us": 0, "event": {"kind": "poll"}},
+        {"at_us": 1000000, "event": {"kind": "poll"}},
+        {"at_us": 1000001, "event": {"kind": "poll"}}
+      ]
+    }
+  }
+}

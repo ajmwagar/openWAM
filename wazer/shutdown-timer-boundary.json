@@ -1,0 +1,20 @@
+{
+  "schema": "openwam.shutdown-timer-boundary.v1",
+  "firmware_receipt": "wazer/shutdown-research.json#/firmware",
+  "handlers": ["0x20264", "0x20650"],
+  "timer_read": "0x3f6e4",
+  "integer_to_float": "0x418d0",
+  "float_divide": "0x41ae0",
+  "divisor_literal": "0x3f704",
+  "divisor_f32_bits": "0x49742400",
+  "divisor": 1000000,
+  "comparison": "0x41cf0",
+  "argument_swap": "0x41c88",
+  "float_compare_flags": "0x41c90",
+  "observation": "Handlers pass elapsed in r0 and threshold in r1. Comparator swaps the arguments and returns 1 on carry clear. For finite nonnegative inputs this selects threshold < elapsed; equality returns 0. First handler entry starts timer and returns before comparison.",
+  "execution_scope": "Static interpretation of original Thumb disassembly, not vendor execution.",
+  "captures": [
+    {"path":"wazer/private/shutdown-replay/float-comparison-disassembly.txt","sha256":"7f0938ed79e5540bf7bb935d1114e366f4d2c19c2746fd5a2ad10ca56e8ce02f"},
+    {"path":"wazer/private/shutdown-replay/timer-read-disassembly.txt","sha256":"999542364d5ca514ddf528d5e0fbc6545fbddf199c842f9894158e116d5c1cdf"}
+  ]
+}

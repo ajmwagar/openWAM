@@ -14,6 +14,7 @@ mod json_identity;
 pub mod openwam;
 pub mod openwam_api;
 pub mod parity;
+pub mod shutdown;
 pub mod simulation;
 #[cfg(feature = "ui")]
 pub mod ui;
