@@ -95,12 +95,14 @@ remain explicit synthetic assumptions. Keep this model identified separately
 from a future firmware sequence model; do not silently replace its constants
 with the constructor or config values above.
 
-The next bounded comparison is a Rust sequence model covering normal completion,
-door pause and abort, with six logical output groups and separate emitted/internal
-timers. The Switch/HALT trace supplies command and ordered callback boundaries;
-runtime config precedence and debugger execution remain unresolved. Compare event
-traces and inject delayed, missing and false observations in that separate model.
-No machine/controller/hardware qualification follows from matching static paths.
+The [bounded Rust replay](shutdown-replay.md) now covers normal completion,
+door pause and explicitly supplied abort events, with six logical output groups
+and synthetic output faults. [G-code integration](gcode-shutdown.md) derives
+completion from retained command replay. The [shared timer trace](shared-shutdown-timer.md)
+pins mode application as a third owner of the completion/pause timer; Player
+callbacks, full state guards, runtime config precedence and debugger execution
+remain outside the delivered replay. No machine/controller/hardware qualification
+follows from matching static paths.
 
 ## Reproduce the evidence
 

@@ -100,6 +100,9 @@ completion-to-pause/abort transitions are explicitly rejected. It also excludes
 operating-mode application, PWM Switches, configuration parsing or
 debugger execution. Waterjet HALT has unresolved guards: supply a separate resolved
 `abort` event rather than automatically inventing that transition from Switch HALT.
+The [shared timer trace](shared-shutdown-timer.md) now pins mode application as
+another owner of that timer and identifies state overrides and Player callbacks
+that must be resolved before extending these transitions.
 The trace is independently authored Rust based on observations; private vendor
 decompilation is not linked into it.
 

@@ -1,0 +1,246 @@
+{
+  "schema": "openwam.shared-shutdown-timer-research.v1",
+  "bead": "reversal-3ym.1.1",
+  "firmware_receipt": "wazer/shutdown-research.json",
+  "tools": {
+    "ghidra": "12.1.2",
+    "bridge": "GhidraMCP 7.0.0-headless",
+    "program": "firmware-v2.32-base4000.bin",
+    "objdump": "GNU Binutils 2.47.20260726"
+  },
+  "execution_scope": "Static original-image interpretation; no vendor execution or installed configuration inference.",
+  "findings": {
+    "shared_timer_offset": "0x124",
+    "shared_started_flag": {
+      "offset": "0x185",
+      "mask": "0x20"
+    },
+    "owners": [
+      "0x1f0bc",
+      "0x20264",
+      "0x20650"
+    ],
+    "state_change": "0x1f580",
+    "prepare_pause": "0x20f94",
+    "mode_cleanup": "0x1f1b2",
+    "mode_cleanup_flag_mask": "0xcf",
+    "state_override": {
+      "word_offset": "0x50",
+      "mask": "0x00ff00ff",
+      "equals": "0x00010058",
+      "replacement_state": "0x5a"
+    },
+    "dispatcher": "0x23520",
+    "dispatcher_enable_flag": {
+      "offset": "0x182",
+      "mask": "0x20"
+    },
+    "unresolved_player_callbacks": [
+      "0x28598:Player+0x190",
+      "0x28474:stream vtable +0x14/+0x10"
+    ]
+  },
+  "replay_behavior_added": false,
+  "memory_spans": [
+    {
+      "address": "0x0001d19c",
+      "length": 88,
+      "sha256": "868a029a99f1f309b2d24cdd69febadcafac94a944b0046aeebf5fce3ba07686",
+      "ghidra_memory_capture": "wazer/private/shared-timer-v232/memory-1d19c.json"
+    },
+    {
+      "address": "0x0001f06c",
+      "length": 80,
+      "sha256": "7aac13f293d6649bd202dc1ed616108ec6cd37b362e9b7313521408844bf5547",
+      "ghidra_memory_capture": "wazer/private/shared-timer-v232/memory-1f06c.json"
+    },
+    {
+      "address": "0x0001f0bc",
+      "length": 980,
+      "sha256": "b5b47877b6fe3b9d30bcde6458eeb65e012a352033ef42026422d3f30368370d",
+      "ghidra_memory_capture": "wazer/private/shared-timer-v232/memory-1f0bc.json"
+    },
+    {
+      "address": "0x0001f490",
+      "length": 136,
+      "sha256": "e50173981636471508db9b883d037dbe159b84103e8d76f04447ed958df19158",
+      "ghidra_memory_capture": "wazer/private/shared-timer-v232/memory-1f490.json"
+    },
+    {
+      "address": "0x0001f518",
+      "length": 104,
+      "sha256": "287ec04853daf7dcb05304633433c8903df65c80a354c39b60172a36dbe7380c",
+      "ghidra_memory_capture": "wazer/private/shared-timer-v232/memory-1f518.json"
+    },
+    {
+      "address": "0x0001f580",
+      "length": 488,
+      "sha256": "b8f1d3088e2a8414fe5a0a5af5672f6c03a23eb580b00649898b4fd7d80f6ff8",
+      "ghidra_memory_capture": "wazer/private/shared-timer-v232/memory-1f580.json"
+    },
+    {
+      "address": "0x00020264",
+      "length": 388,
+      "sha256": "3b5e3c039df5a5aaf5a51a5fb56adf58b948b353096a01c74e5c8029062e6dfa",
+      "ghidra_memory_capture": "wazer/private/shared-timer-v232/memory-20264.json"
+    },
+    {
+      "address": "0x00020650",
+      "length": 352,
+      "sha256": "23fbf0706c24985710860aa72d60eef5dccddd70638d2dd7e57f2a54a845fdd3",
+      "ghidra_memory_capture": "wazer/private/shared-timer-v232/memory-20650.json"
+    },
+    {
+      "address": "0x00020f94",
+      "length": 196,
+      "sha256": "d9309a7097b56ff43e08f79e948e378e8e04834e6d7a59126bdaf2dcca99fd23",
+      "ghidra_memory_capture": "wazer/private/shared-timer-v232/memory-20f94.json"
+    },
+    {
+      "address": "0x00023520",
+      "length": 1128,
+      "sha256": "6bc51755e5661164a7d881078205d638a562e960f6ed7610d70f0331686e8e22",
+      "ghidra_memory_capture": "wazer/private/shared-timer-v232/memory-23520.json"
+    },
+    {
+      "address": "0x00028474",
+      "length": 144,
+      "sha256": "6987e8e8b4e159f52dd8f1802a2d25d35871b54f76efe19f0cde8df2ee005ef0",
+      "ghidra_memory_capture": "wazer/private/shared-timer-v232/memory-28474.json"
+    },
+    {
+      "address": "0x00028598",
+      "length": 100,
+      "sha256": "7bcaf4cf9ef680f00aa153f76ac2396fa6f0820b74775f8019762d5945bd087f",
+      "ghidra_memory_capture": "wazer/private/shared-timer-v232/memory-28598.json"
+    },
+    {
+      "address": "0x00028a38",
+      "length": 20,
+      "sha256": "375b917980f5b1b926fef9bfbfa02917304b2953bf9cfca6bd9e4080c8ead00b",
+      "ghidra_memory_capture": "wazer/private/shared-timer-v232/memory-28a38.json"
+    }
+  ],
+  "captures": [
+    {
+      "path": "wazer/private/shared-timer-v232/decompile-1d19c.json",
+      "sha256": "3c850347e259aa6e5412309633df95c07553210756dd51ece523b05c086a7305"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/decompile-1f06c.json",
+      "sha256": "4a9f0f9475687b0d6225135b0e25c6e75f94f326c6fbb9cf3e4a221d75cd2963"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/decompile-1f0bc.json",
+      "sha256": "d5921f0367fb0d2da25bff41191b1d0071748a4376d4727000224a8a7a5cf4e7"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/decompile-1f490.json",
+      "sha256": "ac667bb3f9539d17323e5ed342b54debe1dd448b44a64efa2ab4b0e7a3d52491"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/decompile-1f518.json",
+      "sha256": "2db4ecd875c6466a5dd6a46f675cc9917c19d4fa1b1af92a97ed62d771956373"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/decompile-1f580.json",
+      "sha256": "a9d18c7bcf4cfc18ef1227c74a702e2cb1d8d3307c53feac0700aab56a213c35"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/decompile-20264.json",
+      "sha256": "1c32d8de54a12587036bf3ce8d0e110aafa25e9cb18298c757210b0dac51fc28"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/decompile-20650.json",
+      "sha256": "b1b2258d7e82f1a8b91dfbf1a10b264d2c971adb3e0722e96debe4d723a2ca68"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/decompile-20f94.json",
+      "sha256": "95f8a06f8eb48cc5f1534ea26434f9563fc05091ec1465efad9a01a541642857"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/decompile-23520.json",
+      "sha256": "f3d2ed7bf382d5534a083f532e19b1c5f609a4be77a9bf05e9b00dc38dd774e8"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/decompile-28474.json",
+      "sha256": "43f6880f2d26d40788e93092a89a42eba849c08f7248e335f8b85bbf5eecba18"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/decompile-28598.json",
+      "sha256": "1733cc9fd55c5b1d0d3cf2a5b723cff6b7737c65a8b6d654d5d5079d9076c12f"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/decompile-28a38.json",
+      "sha256": "b2559c3b5d34c8a3d5621110c81a97a48fd1b2588938d0c5909159a7683be95f"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/dispatcher-disassembly.txt",
+      "sha256": "8943251822ea42111f15629328009628cc6e134f245ebea75b051828b3550f86"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/memory-1d19c.json",
+      "sha256": "703a79758a7b301a67c13b27c1bddfb6fb7f3719523681a0e82897f57aa3651a"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/memory-1f06c.json",
+      "sha256": "13548f7a7c96e4938cf76729f1e4491f9b6e0576b56321417510867ea52dbbe1"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/memory-1f0bc.json",
+      "sha256": "5e5a85764a5604dc9ec942d7e2629f57b41e9f84c23dd657f13042cb3b961bc4"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/memory-1f490.json",
+      "sha256": "f11fb6ab899601302ee4aa2c91d61d192fc94b31c308b321c390b9df431e0d49"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/memory-1f518.json",
+      "sha256": "57ad4507175b9e3ef146ea90c045e6e7caf481e276ab4440c0a0134745e10154"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/memory-1f580.json",
+      "sha256": "36e3ddad6c80dcc6f32a7f2820ac940915b9417190fab85c894c6863c82f7914"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/memory-20264.json",
+      "sha256": "0f583f6c0a13bd494a598e8f51f909be93d6b389260f48c7487cc7cc38f87050"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/memory-20650.json",
+      "sha256": "3d7d7012398dbb42bfa5e6af3d1643bc2068aaa1c93be84c98bd22c136084780"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/memory-20f94.json",
+      "sha256": "e293472bc4aef17bae29390031c802ee16f0e63664bd924853b5054f5c70bb5f"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/memory-23520.json",
+      "sha256": "f1bc7bba0d4fbddc2e5444970a4f5b43f193e51a800a59963c17925993a9b047"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/memory-28474.json",
+      "sha256": "a39c59b00965dfdc27782c2c527d32d3ac1fdf1f73f5da0427521158626b775b"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/memory-28598.json",
+      "sha256": "4d8b4a1cdcfe41c7762e5c57359b3219a3457269a640a8aa7fe1430a5e4adaf5"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/memory-28a38.json",
+      "sha256": "768f3185afc143060cee58bcff9afc3f27bc7ac0042cb5d4dffe0a16f3376ca5"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/mode-application-disassembly.txt",
+      "sha256": "b56715d9fcf4ac7a2711a4b78d2bed78f19e4a54700ab0ba6a440f568e8f1803"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/prepare-pause-disassembly.txt",
+      "sha256": "9dc74ca7380037851a368ce09934f36b8b8fdcd68fee25d403d1532ef262dbfb"
+    },
+    {
+      "path": "wazer/private/shared-timer-v232/state-feedhold-disassembly.txt",
+      "sha256": "9162de20324e0998fadbedaf3c486aa3caccbb59ffc9bb83688a39b3edb4ba46"
+    }
+  ]
+}
