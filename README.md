@@ -23,6 +23,8 @@ and applications.
   ordered HALT writes, config defaults and the watchdog/debugger evidence boundary.
 - [Offline shutdown replay](wazer/shutdown-replay.md) with six-channel traces,
   strict timer boundaries, output faults and agent API comparison/verification.
+- [G-code completion integration](wazer/gcode-shutdown.md) derives M1404 dispatch
+  from verified command replay and retains emitted dwells and internal timers separately.
 
 The CAM planner currently supports simple closed flattened polygons with bounded
 miter offsets. Unsupported topology fails explicitly. Verified CAM artifacts feed

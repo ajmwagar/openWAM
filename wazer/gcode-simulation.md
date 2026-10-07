@@ -74,3 +74,7 @@ The [firmware shutdown trace](shutdown-research.md) identifies additional intern
 timers and pump/motor/dump channels, including an M1404 completion handler absent
 from this synthetic replay. Its static defaults are retained as research evidence;
 they do not calibrate this plant.
+
+[G-code completion integration](gcode-shutdown.md) now adds that static completion
+subset alongside the unchanged synthetic trace, with an explicit output snapshot
+and poll schedule at M1404 dispatch.

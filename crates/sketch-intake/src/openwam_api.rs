@@ -49,6 +49,19 @@ pub struct Request {
 #[derive(Debug, Serialize, Deserialize, JsonSchema)]
 #[serde(tag = "operation", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Operation {
+    SimulateCamGcodeShutdown {
+        artifact: crate::cam::Artifact,
+        candidate: Box<crate::cam_loop::Candidate>,
+        fault: simulation::FaultSpec,
+        completion: crate::gcode_simulation::CompletionSettings,
+    },
+    VerifyCamGcodeShutdown {
+        artifact: crate::cam::Artifact,
+        candidate: Box<crate::cam_loop::Candidate>,
+        fault: simulation::FaultSpec,
+        completion: crate::gcode_simulation::CompletionSettings,
+        replay: serde_json::Value,
+    },
     ReplayShutdown {
         input: crate::shutdown::Input,
     },
@@ -156,6 +169,9 @@ pub enum Operation {
 #[derive(Debug, Serialize, JsonSchema)]
 #[serde(tag = "kind", rename_all = "snake_case")]
 pub enum Output {
+    CamGcodeShutdownSimulation {
+        replay: Box<crate::gcode_simulation::ShutdownReplay>,
+    },
     ShutdownReplay {
         replay: Box<crate::shutdown::Replay>,
     },
@@ -346,6 +362,38 @@ pub fn execute(request: Request, catalog: &cutting::Catalog) -> Result<Output, A
         .validate()
         .map_err(|e| ApiError::from_error(ErrorCode::CatalogInvalid, e))?;
     match request.request {
+        Operation::SimulateCamGcodeShutdown {
+            artifact,
+            candidate,
+            fault,
+            completion,
+        } => crate::gcode_simulation::simulate_shutdown(
+            &artifact,
+            catalog,
+            &candidate,
+            fault,
+            &completion,
+        )
+        .map(|replay| Output::CamGcodeShutdownSimulation {
+            replay: Box::new(replay),
+        })
+        .map_err(|e| ApiError::from_error(ErrorCode::SimulationFailed, e)),
+        Operation::VerifyCamGcodeShutdown {
+            artifact,
+            candidate,
+            fault,
+            completion,
+            replay,
+        } => crate::gcode_simulation::verify_shutdown(
+            &artifact,
+            catalog,
+            &candidate,
+            fault,
+            &completion,
+            &replay,
+        )
+        .map(|verification| Output::Verification { verification })
+        .map_err(|e| ApiError::from_error(ErrorCode::InvalidReplay, e)),
         Operation::ReplayShutdown { input } => crate::shutdown::simulate(&input)
             .map(|replay| Output::ShutdownReplay {
                 replay: Box::new(replay),

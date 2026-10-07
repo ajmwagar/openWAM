@@ -103,7 +103,8 @@ debugger execution. Waterjet HALT has unresolved guards: supply a separate resol
 The trace is independently authored Rust based on observations; private vendor
 decompilation is not linked into it.
 
-The next integration is to feed resolved shutdown events from exported-command
-replay while retaining emitted dwell time separately from internal handler time.
+The [G-code integration](gcode-shutdown.md) now derives completion dispatch from
+the verified exported-command replay, retaining emitted dwell time separately
+from internal handler time.
 Mode guards and the complete HALT/debugger path remain research prerequisites for
-a broader firmware behavior model, tracked under `reversal-faq`.
+a broader firmware behavior model, now tracked under `reversal-3ym.1`.

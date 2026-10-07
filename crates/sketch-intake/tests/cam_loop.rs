@@ -248,6 +248,100 @@ fn verify_commands(artifact: &Value, candidate: &Value, replay: &Value) -> (Valu
     )
 }
 
+fn completion_settings() -> Value {
+    let example: Value = serde_json::from_str(include_str!(
+        "../../../wazer/fixtures/shutdown-completion.request.json"
+    ))
+    .unwrap();
+    json!({"config_at_dispatch":example["request"]["input"]["config"],
+        "output_fault":{"kind":"none"},"poll_offsets_us":[0,1000000,1000001]})
+}
+
+#[test]
+fn exported_completion_keeps_emitted_dwells_and_internal_timers_separate() {
+    let artifact = artifact();
+    let candidate = exported(&artifact);
+    let completion = completion_settings();
+    let fault = json!({"kind":"none","at_ms":0});
+    let baseline = command_replay(&artifact, &candidate, "none", 0);
+    let replay = ok(
+        json!({"operation":"simulate_cam_gcode_shutdown","artifact":artifact,
+        "candidate":candidate,"fault":fault,"completion":completion}),
+    )["replay"]
+        .clone();
+    assert_eq!(replay["command_replay"], baseline);
+    assert_eq!(replay["completion_status"], "dispatched");
+    assert_eq!(replay["completion"]["dispatch_command_index"], 154);
+    assert_eq!(replay["completion"]["dispatch_at_program_us"], 383650000);
+    assert_eq!(
+        replay["completion"]["last_observation_at_program_us"],
+        384650001
+    );
+    assert_eq!(replay["command_replay"]["trace"]["dwell_elapsed_ms"], 54000);
+    assert_eq!(
+        replay["completion"]["relative_replay"]["final_state"],
+        "all_done"
+    );
+    assert!(
+        replay["completion"]["relative_replay"]["trace"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|entry| entry["at_us"] == 1000000 && entry["action"]["kind"] == "timer_waiting")
+    );
+    let verify = |replay: Value| {
+        invoke(
+            json!({"operation":"verify_cam_gcode_shutdown", "artifact":artifact,
+        "candidate":candidate,"fault":fault,"completion":completion,"replay":replay}),
+        )
+    };
+    assert!(verify(replay.clone()).1);
+    let mut forged = replay;
+    forged["completion"]["dispatch_at_program_us"] = json!(0);
+    let (rejected, success) = verify(forged);
+    assert!(!success && rejected["error"]["code"] == "invalid_replay");
+}
+
+#[test]
+fn interrupted_programs_do_not_invent_completion_and_output_faults_stay_visible() {
+    let artifact = artifact();
+    let candidate = exported(&artifact);
+    let mut completion = completion_settings();
+    let replay = ok(json!({"operation":"simulate_cam_gcode_shutdown","artifact":artifact,
+        "candidate":candidate,"fault":{"kind":"enclosure_open","at_ms":10000},"completion":completion}))["replay"].clone();
+    assert_eq!(replay["completion_status"], "not_dispatched");
+    assert!(replay["completion"].is_null());
+    assert_eq!(replay["command_replay"]["trace"]["outcome"], "faulted");
+    completion["output_fault"] =
+        json!({"kind":"hold_electrical","channel":"high_pressure_pump","level":true});
+    let replay = ok(
+        json!({"operation":"simulate_cam_gcode_shutdown","artifact":artifact,
+        "candidate":candidate,"fault":{"kind":"none","at_ms":0},"completion":completion}),
+    )["replay"]
+        .clone();
+    assert_eq!(
+        replay["completion"]["relative_replay"]["final_state"],
+        "all_done"
+    );
+    assert_eq!(
+        replay["completion"]["relative_replay"]["final_output_mismatches"],
+        json!(["high_pressure_pump"])
+    );
+    completion["poll_offsets_us"] = json!([0, 1000000]);
+    let replay = ok(
+        json!({"operation":"simulate_cam_gcode_shutdown","artifact":artifact,
+        "candidate":candidate,"fault":{"kind":"none","at_ms":0},"completion":completion}),
+    )["replay"]
+        .clone();
+    assert_eq!(
+        replay["completion"]["relative_replay"]["final_state"],
+        "completed_cut"
+    );
+    completion["poll_offsets_us"] = json!([2, 1]);
+    assert!(!invoke(json!({"operation":"simulate_cam_gcode_shutdown","artifact":artifact,
+        "candidate":candidate,"fault":{"kind":"enclosure_open","at_ms":10000},"completion":completion})).1);
+}
+
 #[test]
 fn exported_commands_replay_exact_dwells_moves_and_separate_output_channels() {
     let artifact = artifact();

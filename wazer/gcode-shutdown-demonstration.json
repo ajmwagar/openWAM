@@ -1,0 +1,106 @@
+{
+  "schema": "openwam.cam-gcode-shutdown-demonstration.v1",
+  "bead": "reversal-faq.3",
+  "remaining_research": "reversal-3ym.1",
+  "case_order": [
+    "nominal",
+    "interrupted",
+    "stuck_output"
+  ],
+  "cases": [
+    {
+      "completion_status": "dispatched",
+      "command_outcome": "completed",
+      "program_elapsed_ms": 383650,
+      "dwell_elapsed_ms": 54000,
+      "completed_commands": 155,
+      "dispatch_command_index": 154,
+      "dispatch_at_program_us": 383650000,
+      "last_observation_at_program_us": 384650001,
+      "shutdown_state": "all_done",
+      "output_mismatches": []
+    },
+    {
+      "completion_status": "not_dispatched",
+      "command_outcome": "faulted",
+      "program_elapsed_ms": 10000,
+      "dwell_elapsed_ms": 6000,
+      "completed_commands": 14,
+      "dispatch_command_index": null,
+      "dispatch_at_program_us": null,
+      "last_observation_at_program_us": null,
+      "shutdown_state": null,
+      "output_mismatches": null
+    },
+    {
+      "completion_status": "dispatched",
+      "command_outcome": "completed",
+      "program_elapsed_ms": 383650,
+      "dwell_elapsed_ms": 54000,
+      "completed_commands": 155,
+      "dispatch_command_index": 154,
+      "dispatch_at_program_us": 383650000,
+      "last_observation_at_program_us": 384650001,
+      "shutdown_state": "all_done",
+      "output_mismatches": [
+        "high_pressure_pump"
+      ]
+    }
+  ],
+  "cam_sha256": "fe51a6dcc92932e72d078d894d81f046f9cac46f4fd4c9320e278ac834e543fd",
+  "gcode_sha256": "dc4b8e72bb2b638fe1da879df8aa41dfed73754e5796a41c64502cb12f0bd45e",
+  "command_trace_matches_prior_retained_replay": true,
+  "repeated_responses_byte_identical": true,
+  "all_replays_independently_recomputed": true,
+  "captures": [
+    {
+      "sha256": "bedb4e89bb5fc985cbd2dbd785e25089e193fd054a4c6e87800feeaed235c33f",
+      "path": "wazer/private/gcode-shutdown/interrupted.request.json"
+    },
+    {
+      "sha256": "97784d2bb31f0dd1222d2cb8e46d89b8a59f47bec7df648bef7b0ae5ba42772a",
+      "path": "wazer/private/gcode-shutdown/interrupted.response.json"
+    },
+    {
+      "sha256": "07966c6ef267b9a7b676339d3b1f16fbcb0681b5e693cf5366511527061151bc",
+      "path": "wazer/private/gcode-shutdown/interrupted.verification.json"
+    },
+    {
+      "sha256": "1f1c1e5b3e181980091960d733e223aeb0887acb49662f109829dd02492c8345",
+      "path": "wazer/private/gcode-shutdown/interrupted.verify-request.json"
+    },
+    {
+      "sha256": "255f56be3339cbf98326fb210eb050182b09769b290e3392714ee5ec865e2733",
+      "path": "wazer/private/gcode-shutdown/nominal.request.json"
+    },
+    {
+      "sha256": "c6aaf20795ddbfe78b722b7a7bb92bc148c63c884d6fd29df93890768d23a7e3",
+      "path": "wazer/private/gcode-shutdown/nominal.response.json"
+    },
+    {
+      "sha256": "2da53ab5958a898f58941b25116b2238baff9fed8a8548e6d8d86ce54b9d3d82",
+      "path": "wazer/private/gcode-shutdown/nominal.verification.json"
+    },
+    {
+      "sha256": "5de7359d3a5733d801475da52a193a801c036f73c378f39f671f915c38874309",
+      "path": "wazer/private/gcode-shutdown/nominal.verify-request.json"
+    },
+    {
+      "sha256": "3f23d5938bd08524174a1a3dda1d45a298b1b558eab8a651f8e6ab51d1ccf05a",
+      "path": "wazer/private/gcode-shutdown/stuck-output.request.json"
+    },
+    {
+      "sha256": "97b0ac404bdd1e3b9e789fdbb280fbe637e1f195b23b7b02e77730d28078dfe3",
+      "path": "wazer/private/gcode-shutdown/stuck-output.response.json"
+    },
+    {
+      "sha256": "2da53ab5958a898f58941b25116b2238baff9fed8a8548e6d8d86ce54b9d3d82",
+      "path": "wazer/private/gcode-shutdown/stuck-output.verification.json"
+    },
+    {
+      "sha256": "7fae54dc02eaa14cfa0ac15b915c2194183d6cc23b02c46f20a1bf4eb0546b43",
+      "path": "wazer/private/gcode-shutdown/stuck-output.verify-request.json"
+    }
+  ],
+  "scope": "Actual CLI runs; unchanged synthetic command timing and separate static completion subset with caller-supplied snapshot/polls. No vendor execution parity."
+}
