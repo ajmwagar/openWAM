@@ -9,7 +9,7 @@
     },
     {
       "repository": "https://github.com/FuturePresentLabs/swarf",
-      "revision": "975ce24db4ce67565df0dedbfec752ed6769394b",
+      "revision": "7ce9126f318977da24050e295aaded31b1610947",
       "crate": "swarf-waterjet",
       "license": "AGPL-3.0"
     }
@@ -36,7 +36,7 @@
       "path": "vendor/swarf/crates/swarf-waterjet/LICENSE"
     },
     {
-      "sha256": "fbb27d591378d3f79c41699e56d5b222b2335e414a6e43004c694513f228dd94",
+      "sha256": "1ff029b16cf0608a1e486fc55595fd8b5127fcbb813c05a93b1ac70674e2e979",
       "path": "vendor/swarf/crates/swarf-waterjet/README.md"
     },
     {
@@ -48,7 +48,7 @@
       "path": "vendor/swarf/crates/swarf-waterjet/src/cam.rs"
     },
     {
-      "sha256": "e7217cc9fbd5351d1c80a9bd4db19a93dcc3b97e64c29cfbb989769aca9e9abd",
+      "sha256": "b2424b526f894f63fc7ce106b31ac12f03469a4a7d9428f10ee1472bff89f8d1",
       "path": "vendor/swarf/crates/swarf-waterjet/src/lib.rs"
     },
     {
@@ -94,6 +94,10 @@
     {
       "sha256": "4f6a24b09381a5bc96e9422e9f81002f04154af450bf92d93e4a0b93dfb121b7",
       "path": "vendor/transmog/crates/transmog-core/src/planar.rs"
+    },
+    {
+      "sha256": "88fba1555af91e6acb08e2608fd932de846baf098c1f5da44db8c0e82541275f",
+      "path": "vendor/swarf/crates/swarf-waterjet/src/linuxcnc.rs"
     }
   ]
 }

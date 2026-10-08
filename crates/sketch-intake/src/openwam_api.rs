@@ -49,6 +49,14 @@ pub struct Request {
 #[derive(Debug, Serialize, Deserialize, JsonSchema)]
 #[serde(tag = "operation", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Operation {
+    ExportCamLinuxcnc {
+        artifact: crate::cam::Artifact,
+        profile: swarf_waterjet::linuxcnc::Profile,
+    },
+    VerifyCamLinuxcnc {
+        artifact: crate::cam::Artifact,
+        candidate: Box<crate::cam_loop::LinuxCncCandidate>,
+    },
     SimulateCamGcodeShutdown {
         artifact: crate::cam::Artifact,
         candidate: Box<crate::cam_loop::Candidate>,
@@ -169,6 +177,9 @@ pub enum Operation {
 #[derive(Debug, Serialize, JsonSchema)]
 #[serde(tag = "kind", rename_all = "snake_case")]
 pub enum Output {
+    CamLinuxcncGcode {
+        candidate: Box<crate::cam_loop::LinuxCncCandidate>,
+    },
     CamGcodeShutdownSimulation {
         replay: Box<crate::gcode_simulation::ShutdownReplay>,
     },
@@ -444,6 +455,19 @@ pub fn execute(request: Request, catalog: &cutting::Catalog) -> Result<Output, A
                 })
                 .map_err(|e| ApiError::from_error(ErrorCode::PostprocessingFailed, e))
         }
+        Operation::ExportCamLinuxcnc { artifact, profile } => {
+            crate::cam_loop::linuxcnc_gcode(&artifact, catalog, profile)
+                .map(|candidate| Output::CamLinuxcncGcode {
+                    candidate: Box::new(candidate),
+                })
+                .map_err(|e| ApiError::from_error(ErrorCode::PostprocessingFailed, e))
+        }
+        Operation::VerifyCamLinuxcnc {
+            artifact,
+            candidate,
+        } => crate::cam_loop::verify_linuxcnc_gcode(&artifact, catalog, &candidate)
+            .map(|verification| Output::Verification { verification })
+            .map_err(|e| ApiError::from_error(ErrorCode::InvalidCandidate, e)),
         Operation::VerifyCamGcode {
             artifact,
             candidate,

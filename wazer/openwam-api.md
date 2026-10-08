@@ -48,6 +48,8 @@ Requests use `reversal.openwam-request.v1`:
 
 | Operation | Inputs | Result |
 |---|---|---|
+| `export_cam_linuxcnc` | Verified CAM artifact and explicit LinuxCNC waterjet profile | Source-bound XY research G-code, jet/abrasive sequencing and export digest |
+| `verify_cam_linuxcnc` | CAM artifact and retained LinuxCNC candidate | Independent source/intent/table/profile/export recomputation; see [runbook](linuxcnc-waterjet.md) |
 | `simulate_cam_gcode_shutdown` | CAM artifact, candidate, command fault and explicit completion snapshot/polls | Original command trace plus M1404-derived shutdown trace with separate clocks |
 | `verify_cam_gcode_shutdown` | Same independent inputs plus retained combined replay | Full source/export/command/completion recomputation; see [runbook](gcode-shutdown.md) |
 | `replay_shutdown` | Explicit shutdown config, fault and timed events | Separate six-channel offline shutdown trace |

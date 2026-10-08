@@ -1,0 +1,26 @@
+{
+  "schema": "openwam.linuxcnc-waterjet-demonstration.v1",
+  "scope": "source-bound research G-code export, no native interpreter/HAL or hardware execution",
+  "cam_sha256": "fe51a6dcc92932e72d078d894d81f046f9cac46f4fd4c9320e278ac834e543fd",
+  "gcode_sha256": "48db49eab69042d93e216b99bbe577097a4ad61ca4ea8472183832ed1d164811",
+  "profile": {
+    "abrasive_flush_seconds": 0.25,
+    "abrasive_output": 1,
+    "digital_output_count": 4,
+    "jet_output": 0,
+    "jet_settle_seconds": 0.5,
+    "max_feed_mm_min": 1500.0,
+    "x_limits_mm": [
+      0.0,
+      460.0
+    ],
+    "y_limits_mm": [
+      -305.0,
+      0.0
+    ]
+  },
+  "span_count": 6,
+  "cut_move_count": 90,
+  "machine_output_enabled": false,
+  "controller_qualified": false
+}

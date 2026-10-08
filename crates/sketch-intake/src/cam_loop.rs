@@ -34,6 +34,56 @@ fn bound(artifact: &cam::Artifact, catalog: &Catalog) -> Result<(cam::Artifact, 
     Ok((canonical, digest))
 }
 
+#[derive(Debug, Serialize, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct LinuxCncCandidate {
+    pub schema: String,
+    pub cam_sha256: String,
+    pub gcode_sha256: String,
+    pub code: swarf_waterjet::linuxcnc::Code,
+    pub cam_limitations: Vec<String>,
+    pub machine_output_enabled: bool,
+}
+
+pub fn linuxcnc_gcode(
+    artifact: &cam::Artifact,
+    catalog: &Catalog,
+    profile: swarf_waterjet::linuxcnc::Profile,
+) -> Result<LinuxCncCandidate> {
+    let (canonical, cam_sha256) = bound(artifact, catalog)?;
+    let plan = cam::verified(&canonical, catalog)?;
+    let code = swarf_waterjet::linuxcnc::research_post(&plan.draft, profile)?;
+    Ok(LinuxCncCandidate {
+        schema: "reversal.openwam-cam-linuxcnc-candidate.v1".into(),
+        cam_sha256,
+        gcode_sha256: format!("{:x}", Sha256::digest(code.gcode.as_bytes())),
+        code,
+        cam_limitations: plan.limitations.into_iter().map(str::to_owned).collect(),
+        machine_output_enabled: false,
+    })
+}
+
+pub fn verify_linuxcnc_gcode(
+    artifact: &cam::Artifact,
+    catalog: &Catalog,
+    candidate: &LinuxCncCandidate,
+) -> Result<serde_json::Value> {
+    let rebuilt = linuxcnc_gcode(artifact, catalog, candidate.code.profile.clone())?;
+    ensure!(
+        json_identity::equivalent(
+            &serde_json::to_value(candidate)?,
+            &serde_json::to_value(&rebuilt)?
+        ),
+        "LinuxCNC candidate differs from independently rebuilt source/intent/table/profile/postprocessor"
+    );
+    Ok(
+        serde_json::json!({"schema":"reversal.openwam-cam-linuxcnc-verification.v1",
+        "verified":true,"cam_sha256":rebuilt.cam_sha256,"gcode_sha256":rebuilt.gcode_sha256,
+        "span_count":rebuilt.code.span_count,"cut_move_count":rebuilt.code.cut_move_count,
+        "machine_output_enabled":false,"controller_qualified":false}),
+    )
+}
+
 pub fn simulate(
     artifact: &cam::Artifact,
     catalog: &Catalog,

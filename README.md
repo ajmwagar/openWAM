@@ -15,6 +15,8 @@ and applications.
 - Portable source/intent/table-bound artifacts, independent recomputation and
   standalone SVG previews.
 - Synthetic control/plant fault replay and explicit research G-code profiles.
+- Verified CAM to [LinuxCNC waterjet research G-code](wazer/linuxcnc-waterjet.md),
+  with explicit jet/abrasive outputs, process delays and target travel/feed limits.
 - Source-bound exported-command replay with explicit dwells and separate jet /
   abrasive sequencing; see [the replay runbook](wazer/gcode-simulation.md).
 - Pinned Pro firmware [shutdown research](wazer/shutdown-research.md) with

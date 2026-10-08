@@ -49,6 +49,103 @@ fn artifact() -> Value {
     ok(json!({"operation":"plan_cam","project":project,"intent":intent}))["artifact"].clone()
 }
 
+fn linuxcnc_profile() -> Value {
+    json!({"digital_output_count":4,"jet_output":0,"abrasive_output":1,
+        "jet_settle_seconds":0.5,"abrasive_flush_seconds":0.25,
+        "x_limits_mm":[0,460],"y_limits_mm":[-305,0],"max_feed_mm_min":1500})
+}
+
+#[test]
+fn linuxcnc_export_preserves_compensated_spans_and_verifies_source_bound_output() {
+    let artifact = artifact();
+    let candidate = ok(
+        json!({"operation":"export_cam_linuxcnc","artifact":artifact,
+        "profile":linuxcnc_profile()}),
+    )["candidate"]
+        .clone();
+    let operations = artifact["plan"]["draft"]["operations"].as_array().unwrap();
+    let code = candidate["code"]["gcode"].as_str().unwrap();
+    let motion: Vec<_> = code
+        .lines()
+        .filter(|line| line.starts_with("G0 ") || line.starts_with("G1 "))
+        .collect();
+    let expected: Vec<_> = operations
+        .iter()
+        .filter(|op| op["kind"] == "rapid" || op["kind"] == "cut")
+        .collect();
+    assert_eq!(motion.len(), expected.len());
+    for (line, op) in motion.iter().zip(expected) {
+        let words: Vec<_> = line.split_whitespace().collect();
+        assert_eq!(words[0], if op["kind"] == "rapid" { "G0" } else { "G1" });
+        for (axis, index) in [('X', 0), ('Y', 1)] {
+            let value = words
+                .iter()
+                .find_map(|word| word.strip_prefix(axis))
+                .unwrap()
+                .parse::<f64>()
+                .unwrap();
+            assert!((value - op["to_mm"][index].as_f64().unwrap()).abs() <= 0.000000006);
+        }
+        if op["kind"] == "cut" {
+            let feed = words
+                .iter()
+                .find_map(|word| word.strip_prefix('F'))
+                .unwrap()
+                .parse::<f64>()
+                .unwrap();
+            assert!((feed - op["feed_mm_min"].as_f64().unwrap()).abs() <= 0.000000006);
+        }
+    }
+    let spans = operations
+        .iter()
+        .filter(|op| op["kind"] == "pierce")
+        .count();
+    assert!(
+        spans > artifact["plan"]["paths"].as_array().unwrap().len(),
+        "tabs must produce separate pierced spans"
+    );
+    assert_eq!(candidate["code"]["span_count"], spans);
+    assert_eq!(code.lines().filter(|line| *line == "M64 P0").count(), spans);
+    assert_eq!(
+        code.lines().filter(|line| *line == "M65 P0").count(),
+        spans + 1
+    );
+    assert_eq!(candidate["machine_output_enabled"], false);
+    let verified =
+        ok(json!({"operation":"verify_cam_linuxcnc","artifact":artifact,"candidate":candidate}));
+    assert_eq!(verified["verification"]["verified"], true);
+    for pointer in [
+        "/code/gcode",
+        "/gcode_sha256",
+        "/cam_sha256",
+        "/machine_output_enabled",
+        "/code/controller_qualified",
+        "/code/profile/jet_output",
+    ] {
+        let mut forged = candidate.clone();
+        *forged.pointer_mut(pointer).unwrap() = match pointer {
+            "/machine_output_enabled" | "/code/controller_qualified" => json!(true),
+            "/code/profile/jet_output" => json!(2),
+            _ => json!("forged"),
+        };
+        let (response, success) = invoke(
+            json!({"operation":"verify_cam_linuxcnc","artifact":artifact,"candidate":forged}),
+        );
+        assert!(
+            !success && response["error"]["code"] == "invalid_candidate",
+            "{response}"
+        );
+    }
+    let mut forged = artifact.clone();
+    forged["plan"]["kerf_mm"] = json!(9.0);
+    assert!(!invoke(json!({"operation":"export_cam_linuxcnc","artifact":forged,"profile":linuxcnc_profile()})).1);
+    let mut profile = linuxcnc_profile();
+    profile["abrasive_output"] = json!(0);
+    assert!(
+        !invoke(json!({"operation":"export_cam_linuxcnc","artifact":artifact,"profile":profile})).1
+    );
+}
+
 #[test]
 fn panel_cam_replay_and_export_preserve_every_span_cut_and_tab_gap() {
     let artifact = artifact();
@@ -237,7 +334,9 @@ fn changed_intent_outputs_authority_and_unsupported_profiles_fail() {
 }
 
 fn exported(artifact: &Value) -> Value {
-    ok(json!({"operation":"research_cam_gcode","artifact":artifact,"profile":"historical_wam16"}))["candidate"].clone()
+    ok(json!({"operation":"research_cam_gcode","artifact":artifact,"profile":"historical_wam16"}))
+        ["candidate"]
+        .clone()
 }
 fn command_replay(artifact: &Value, candidate: &Value, kind: &str, at_ms: u64) -> Value {
     ok(json!({"operation":"simulate_cam_gcode","artifact":artifact,"candidate":candidate,"fault":{"kind":kind,"at_ms":at_ms}}))["replay"].clone()

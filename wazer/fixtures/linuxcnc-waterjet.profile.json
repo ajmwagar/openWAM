@@ -1,0 +1,10 @@
+{
+  "digital_output_count": 4,
+  "jet_output": 0,
+  "abrasive_output": 1,
+  "jet_settle_seconds": 0.5,
+  "abrasive_flush_seconds": 0.25,
+  "x_limits_mm": [0.0, 460.0],
+  "y_limits_mm": [-305.0, 0.0],
+  "max_feed_mm_min": 1500.0
+}
