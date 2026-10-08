@@ -56,6 +56,78 @@ fn linuxcnc_profile() -> Value {
 }
 
 #[test]
+fn pro_cam_preserves_all_open_tab_spans_feeds_and_source_bound_replay() {
+    let artifact = artifact();
+    let candidate = ok(json!({"operation":"research_cam_gcode","artifact":artifact,
+        "profile":"wam24_pro_cam"}))["candidate"]
+        .clone();
+    let commands = candidate["code"]["program"]["commands"].as_array().unwrap();
+    let operations = artifact["plan"]["draft"]["operations"].as_array().unwrap();
+    let moves: Vec<_> = commands
+        .iter()
+        .filter(|c| c["command"] == "rapid" || c["command"] == "linear")
+        .collect();
+    let expected: Vec<_> = operations
+        .iter()
+        .filter(|o| o["kind"] == "rapid" || o["kind"] == "cut")
+        .collect();
+    assert_eq!(moves.len(), expected.len());
+    for (command, operation) in moves.iter().zip(expected) {
+        assert_eq!(command["xy_mm"], operation["to_mm"]);
+        assert_eq!(command["command"] == "rapid", operation["kind"] == "rapid");
+        if command["command"] == "linear" {
+            assert_eq!(command["feed_mm_min"], operation["feed_mm_min"]);
+        }
+    }
+    assert_eq!(candidate["code"]["summary"]["path_count"], 6);
+    assert_eq!(candidate["code"]["summary"]["linear_count"], 90);
+    assert_eq!(candidate["code"]["summary"]["declared_version"], "2.4.0");
+    assert_eq!(candidate["code"]["controller_qualified"], false);
+    let verified =
+        ok(json!({"operation":"verify_cam_gcode","artifact":artifact,"candidate":candidate}));
+    assert_eq!(verified["verification"]["verified"], true);
+    let replay = command_replay(&artifact, &candidate, "none", 0);
+    assert_eq!(replay["trace"]["outcome"], "completed");
+    assert!(
+        (replay["trace"]["simulated_cut_length_mm"].as_f64().unwrap()
+            - artifact["plan"]["draft"]["raw_centerline_length_mm"]
+                .as_f64()
+                .unwrap())
+        .abs()
+            < 1e-8
+    );
+    assert!(verify_commands(&artifact, &candidate, &replay).1);
+    for pointer in [
+        "/code/profile",
+        "/source_sha256",
+        "/tables_canonical_sha256",
+        "/post_profile_sha256",
+        "/gcode_sha256",
+        "/code/gcode",
+        "/code/controller_qualified",
+    ] {
+        let mut forged = candidate.clone();
+        *forged.pointer_mut(pointer).unwrap() = match pointer {
+            "/code/profile" => json!("historical_wam16"),
+            "/code/controller_qualified" => json!(true),
+            _ => json!("forged"),
+        };
+        assert!(
+            !invoke(json!({"operation":"verify_cam_gcode","artifact":artifact,"candidate":forged}))
+                .1
+        );
+    }
+    let mut request = api::capabilities()["prepare_example"]["request"].clone();
+    request["settings"]["model"] = json!("desktop");
+    let project = ok(request)["project"].clone();
+    // Raw project export also refuses a Desktop recipe for the Pro target.
+    assert!(
+        !invoke(json!({"operation":"research_gcode","project":project,"profile":"wam24_pro_cam"}))
+            .1
+    );
+}
+
+#[test]
 fn linuxcnc_export_preserves_compensated_spans_and_verifies_source_bound_output() {
     let artifact = artifact();
     let candidate = ok(

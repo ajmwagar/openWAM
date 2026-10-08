@@ -9,7 +9,7 @@
     },
     {
       "repository": "https://github.com/FuturePresentLabs/swarf",
-      "revision": "7ce9126f318977da24050e295aaded31b1610947",
+      "revision": "d555b24573494db4a377b96725a31db17f093719",
       "crate": "swarf-waterjet",
       "license": "AGPL-3.0"
     }
@@ -36,7 +36,7 @@
       "path": "vendor/swarf/crates/swarf-waterjet/LICENSE"
     },
     {
-      "sha256": "1ff029b16cf0608a1e486fc55595fd8b5127fcbb813c05a93b1ac70674e2e979",
+      "sha256": "89d663249c44ea46a9887c12321d64ec858b7b4704eee078dfbbcf9f51420dd9",
       "path": "vendor/swarf/crates/swarf-waterjet/README.md"
     },
     {
@@ -52,11 +52,11 @@
       "path": "vendor/swarf/crates/swarf-waterjet/src/lib.rs"
     },
     {
-      "sha256": "7f3813c793b58d3e2e35be819ecc2d57a6767f55a43dcc015ac03bf2ca1b9608",
+      "sha256": "cdd72a24fd66b8d6424edba0e1fd71278ad085d7c0d1c6089ae5c3378a147e80",
       "path": "vendor/swarf/crates/swarf-waterjet/src/wam_pro.rs"
     },
     {
-      "sha256": "a61e3be66f53082823b726eded73058eb69f5628d66f036acdbc082c32f7bc6a",
+      "sha256": "635d0994f51b2d4585eadc467c53adf997295869574ac8c8582244d221e92c10",
       "path": "vendor/swarf/crates/swarf-waterjet/src/wazer.rs"
     },
     {

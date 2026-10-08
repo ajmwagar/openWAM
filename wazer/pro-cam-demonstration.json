@@ -1,0 +1,80 @@
+{
+  "schema": "openwam.pro-cam-demonstration.v1",
+  "owner_revision": "d555b24",
+  "profile": "wam24_pro_cam",
+  "cam_sha256": "fe51a6dcc92932e72d078d894d81f046f9cac46f4fd4c9320e278ac834e543fd",
+  "project_sha256": "a5598d5a3a71d99c9be35a6722b3beada1f7228f2efdf2b0f1b3263f1bf8fb6f",
+  "source_sha256": "f262d143067e9ae63fab5e8a3dfbe1833fb0d7a746d2149bce321e2bcc24a6ec",
+  "tables_canonical_sha256": "a25bdbff7866d76e8751a045c6db23b7d064552d6d2d8cd472808e918af4c72a",
+  "post_profile_sha256": "d7c2c286856f8ac56388e83cafc20a5cfc5df1fa8edeb73b2fb1464f7b1e0de4",
+  "gcode_sha256": "df8e576d81a54db0428d8254d060c03bd0ea16b5f6401856f00643e8fb689fa9",
+  "summary": {
+    "command_count": 155,
+    "declared_version": "2.4.0",
+    "known_feed_cut_seconds": 321.3298627623026,
+    "linear_count": 90,
+    "path_count": 6,
+    "rapid_count": 6,
+    "total_dwell_seconds": 54.0,
+    "unresolved_feed_moves": 0
+  },
+  "candidate_verified": true,
+  "command_replay_verification": {
+    "cam_sha256": "fe51a6dcc92932e72d078d894d81f046f9cac46f4fd4c9320e278ac834e543fd",
+    "completed_commands": 155,
+    "controller_qualified": false,
+    "gcode_sha256": "df8e576d81a54db0428d8254d060c03bd0ea16b5f6401856f00643e8fb689fa9",
+    "hardware_qualified": false,
+    "machine_output_enabled": false,
+    "outcome": "completed",
+    "schema": "reversal.openwam-cam-gcode-simulation-verification.v1",
+    "verified": true
+  },
+  "original_node_service": {
+    "executed": true,
+    "response_identical_to_pinned_corpus": true,
+    "response_sha256": "d16555a9fee8f33fa8e9e2907395d64b542d3dd16211c144c070bb4e6f994bbf",
+    "entry_sha256": "fedb6866a874fb606c0fa3469ee669ab25f028d459c3dd8554306db9df42d23c",
+    "shutdown_probes": [
+      {
+        "pierce_seconds": 6,
+        "gcode": "G4 S1.\r\nM9\r\nG4 S1.\r\nM5\r\nG4 S1.\r\n",
+        "reported_seconds": 2.9
+      },
+      {
+        "pierce_seconds": 10,
+        "gcode": "G4 S1.\r\nM9\r\nG4 S1.\r\nM5\r\nG4 S1.\r\n",
+        "reported_seconds": 3.5
+      },
+      {
+        "pierce_seconds": 27,
+        "gcode": "G4 S4.\r\nM9\r\nG4 S1.\r\nM5\r\nG4 S1.\r\n",
+        "reported_seconds": 6.05
+      }
+    ]
+  },
+  "intentional_square_differences": {
+    "authored_linear_moves": 4,
+    "vendor_linear_moves": 5,
+    "authored_feeds_mm_min": [
+      108
+    ],
+    "vendor_effective_feeds_mm_min": [
+      108,
+      70.2,
+      54
+    ],
+    "authored_display_seconds": 76,
+    "vendor_display_seconds": 98,
+    "scope": "Same nominal square and table feed; original supplied-path oracle and source-imported authored draft intentionally differ in coordinates, metadata, corner factors, duplicate endpoint and displayed time. This is not full WAM parity."
+  },
+  "validation": {
+    "owner_tests": 17,
+    "workspace_tests": 118,
+    "strict_clippy": true,
+    "format_check": true
+  },
+  "machine_output_enabled": false,
+  "controller_qualified": false,
+  "hardware_qualified": false
+}

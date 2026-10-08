@@ -65,7 +65,7 @@ Requests use `reversal.openwam-request.v1`:
 | `preview_cam` | CAM artifact | Standalone SVG of independently verified compensated cuts, uncut gaps and rapids |
 | `simulate_cam` | CAM artifact and explicit fault kind/time | CAM-bound synthetic replay executing compensated cut spans and non-cutting travel |
 | `verify_cam_simulation` | CAM artifact and retained replay | Independent source/intent/plan/fault replay recomputation |
-| `research_cam_gcode` | CAM artifact and explicit `historical_wam16` profile | CAM-bound multi-span research candidate; controller qualification stays false |
+| `research_cam_gcode` | CAM artifact and explicit `historical_wam16` or `wam24_pro_cam` profile | CAM-bound multi-span research candidate; Pro requires a Pro recipe; controller qualification stays false |
 | `verify_cam_gcode` | CAM artifact and candidate | Independent source/intent/table/postprocessor regeneration |
 | `simulate_cam_gcode` | CAM artifact, research candidate and fault kind/time | Source/export-bound parsed command replay with all emitted dwells and output channels |
 | `verify_cam_gcode_simulation` | CAM artifact, candidate and retained command replay | Independent regeneration, parsing and synthetic plant replay |

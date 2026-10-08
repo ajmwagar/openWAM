@@ -17,6 +17,8 @@ and applications.
 - Synthetic control/plant fault replay and explicit research G-code profiles.
 - Verified CAM to [LinuxCNC waterjet research G-code](wazer/linuxcnc-waterjet.md),
   with explicit jet/abrasive outputs, process delays and target travel/feed limits.
+- Complete authored CAM spans in the [WAZER Pro research dialect](wazer/pro-cam.md),
+  preserving open leads/tab gaps, source feeds and independently verified bindings.
 - Source-bound exported-command replay with explicit dwells and separate jet /
   abrasive sequencing; see [the replay runbook](wazer/gcode-simulation.md).
 - Pinned Pro firmware [shutdown research](wazer/shutdown-research.md) with
@@ -32,7 +34,7 @@ and applications.
 
 The CAM planner currently supports simple closed flattened polygons with bounded
 miter offsets. Unsupported topology fails explicitly. Verified CAM artifacts feed
-the simulator and multi-span historical research postprocessor, with independently
+the simulator and multi-span historical/Pro research postprocessors, with independently
 recomputed retained replay/export artifacts. All machine-output flags remain
 false; no machine transfer or qualified controller export is implemented.
 

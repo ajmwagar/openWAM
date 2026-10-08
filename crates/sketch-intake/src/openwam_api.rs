@@ -341,8 +341,10 @@ fn research_candidate(
     let bytes = project_bytes(project)?;
     let (canonical, report) = openwam::reopen(&bytes, catalog)
         .map_err(|e| ApiError::from_error(ErrorCode::InvalidProject, e))?;
-    if profile == wazer::Profile::Wam24ProPresegmented
-        && report.planning.selected_row.model != cutting::Model::Pro
+    if matches!(
+        profile,
+        wazer::Profile::Wam24ProPresegmented | wazer::Profile::Wam24ProCam
+    ) && report.planning.selected_row.model != cutting::Model::Pro
     {
         return Err(ApiError::new(
             ErrorCode::PostprocessingFailed,

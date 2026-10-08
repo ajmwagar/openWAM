@@ -23,6 +23,8 @@ pub struct Candidate {
     pub project_sha256: String,
     pub source_sha256: String,
     pub tables_canonical_sha256: String,
+    pub post_profile_sha256: String,
+    pub gcode_sha256: String,
     pub code: wazer::ResearchCode,
     pub cam_limitations: Vec<String>,
     pub machine_output_enabled: bool,
@@ -137,11 +139,21 @@ pub fn research_gcode(
 ) -> Result<Candidate> {
     let (canonical, cam_sha256) = bound(artifact, catalog)?;
     ensure!(
-        profile == wazer::Profile::HistoricalWam16,
-        "CAM spans currently require historical_wam16; current Pro service accepts only one closed supplied path"
+        profile != wazer::Profile::Wam24ProPresegmented,
+        "use wam24_pro_cam for authored CAM spans; the service parity profile accepts only one closed supplied path"
     );
+    if profile == wazer::Profile::Wam24ProCam {
+        let (_, report) =
+            crate::openwam::reopen(&serde_json::to_vec(&canonical.project)?, catalog)?;
+        ensure!(
+            report.planning.selected_row.model == crate::cutting::Model::Pro,
+            "wam24_pro_cam requires a Pro material/recipe project"
+        );
+    }
     let plan = cam::verified(&canonical, catalog)?;
     let code = wazer::research_post(&plan.draft, profile)?;
+    let post_profile_sha256 = format!("{:x}", Sha256::digest(serde_json::to_vec(&profile)?));
+    let gcode_sha256 = format!("{:x}", Sha256::digest(code.gcode.as_bytes()));
     Ok(Candidate {
         schema: "reversal.openwam-cam-research-candidate.v1".into(),
         cam_sha256,
@@ -151,6 +163,8 @@ pub fn research_gcode(
             Sha256::digest(canonical.project.source_text.as_bytes())
         ),
         tables_canonical_sha256: canonical.tables_canonical_sha256,
+        post_profile_sha256,
+        gcode_sha256,
         code,
         cam_limitations: plan.limitations.into_iter().map(str::to_owned).collect(),
         machine_output_enabled: false,
