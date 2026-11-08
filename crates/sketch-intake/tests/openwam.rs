@@ -20,6 +20,7 @@ fn project(source: &[u8], format: SourceFormat) -> Vec<u8> {
         },
         0.02,
         [5.0, 7.0],
+        None,
     )
     .unwrap();
     serde_json::to_vec_pretty(&openwam::create(source, &report).unwrap()).unwrap()

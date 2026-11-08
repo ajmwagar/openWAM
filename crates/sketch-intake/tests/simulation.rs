@@ -21,6 +21,7 @@ fn integration() -> Vec<u8> {
             },
             0.02,
             [0.0, 0.0],
+            None,
         )
         .unwrap(),
     )

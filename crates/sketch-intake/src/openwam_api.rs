@@ -23,6 +23,8 @@ pub struct GcodeInspection {
     pub summary: wazer::Summary,
 }
 
+pub use crate::bridge::{Layout, LayoutInstance, MAX_INSTANCES};
+
 pub const REQUEST_SCHEMA: &str = "reversal.openwam-request.v1";
 pub const RESPONSE_SCHEMA: &str = "reversal.openwam-response.v1";
 pub const MAX_REQUEST_BYTES: usize = openwam::MAX_PROJECT_BYTES + 2 * 1024 * 1024;
@@ -37,6 +39,10 @@ pub struct Settings {
     pub thickness: f64,
     pub tolerance_mm: f64,
     pub placement_xy_down_mm: [f64; 2],
+    /// Omitted means exactly one copy at `placement_xy_down_mm`, unchanged from
+    /// the single-instance contract. Present means one placed copy per instance.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub layout: Option<bridge::Layout>,
 }
 
 #[derive(Debug, Serialize, Deserialize, JsonSchema)]
@@ -317,6 +323,7 @@ pub fn prepare(
         },
         settings.tolerance_mm,
         settings.placement_xy_down_mm,
+        settings.layout.as_ref(),
     )?;
     openwam::create(source, &report)
 }
@@ -695,12 +702,13 @@ pub fn capabilities() -> serde_json::Value {
         "request_schema": schemars::schema_for!(Request), "response_schema": schemars::schema_for!(Response),
         "request_version": REQUEST_SCHEMA, "response_version": RESPONSE_SCHEMA,
         "limits": {"request_bytes": MAX_REQUEST_BYTES, "response_bytes": MAX_RESPONSE_BYTES, "source_bytes": MAX_INPUT_BYTES, "project_bytes": openwam::MAX_PROJECT_BYTES,
-            "shutdown_events":crate::shutdown::MAX_EVENTS, "shutdown_time_us":crate::shutdown::MAX_TIME_US, "shutdown_switch_bindings":crate::shutdown::MAX_SWITCHES},
+            "shutdown_events":crate::shutdown::MAX_EVENTS, "shutdown_time_us":crate::shutdown::MAX_TIME_US, "shutdown_switch_bindings":crate::shutdown::MAX_SWITCHES,
+            "layout_instances": bridge::MAX_INSTANCES},
         "machine_output_enabled": false, "hardware_qualified": false,
         "shutdown_example": serde_json::from_str::<serde_json::Value>(include_str!("../../../wazer/fixtures/shutdown-completion.request.json")).expect("valid retained shutdown example"),
         "prepare_example": Request { schema: REQUEST_SCHEMA.into(), request: Operation::Prepare {
             source_text: include_str!("../examples/plate.svg").into(), source_format: bridge::SourceFormat::Svg,
-            settings: Settings { model: cutting::Model::Pro, material: "Aluminum".into(), units: cutting::Units::Metric, thickness: 3.0, tolerance_mm: 0.02, placement_xy_down_mm: [0.0, 0.0] },
+            settings: Settings { model: cutting::Model::Pro, material: "Aluminum".into(), units: cutting::Units::Metric, thickness: 3.0, tolerance_mm: 0.02, placement_xy_down_mm: [0.0, 0.0], layout: None },
         }},
     })
 }

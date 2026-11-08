@@ -122,6 +122,7 @@ fn main() -> Result<()> {
                 },
                 number(6)?,
                 [number(7)?, number(8)?],
+                None,
             )?;
             if args[0] == "--openwam-create" {
                 serde_json::to_value(reversal_sketch_intake::openwam::create(

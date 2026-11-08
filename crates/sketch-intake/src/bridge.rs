@@ -5,13 +5,37 @@ use crate::{
 };
 use anyhow::{Context, Result, ensure};
 use kurbo::{CubicBez, ParamCurve, Point};
-use serde::Serialize;
+use schemars::JsonSchema;
+use serde::{Deserialize, Serialize};
 use transmog_core::{
     geometry::Point2,
     ir::{Feature, PlaneRef, SketchSegment},
 };
 
 const MAX_LINES: usize = 100_000;
+
+/// Expanded copies are bounded so a layout cannot exhaust the byte, point,
+/// line or operation budgets before the owners see it.
+pub const MAX_INSTANCES: usize = 64;
+
+/// Explicit multi-copy layout. Omitting it keeps the single-instance contract.
+#[derive(Clone, Debug, Serialize, Deserialize, JsonSchema, PartialEq)]
+#[serde(deny_unknown_fields)]
+pub struct Layout {
+    pub instances: Vec<LayoutInstance>,
+}
+
+/// One placed copy of the retained source, never a copy of the source bytes.
+/// `q = R(rotation_deg) * scale * (p - c) + c + placement`, where `p` and `c`
+/// are the contour point and source bounding-box centre in the local CAD frame
+/// (Y negative down) and rotation is counterclockwise about +Z.
+#[derive(Clone, Debug, Serialize, Deserialize, JsonSchema, PartialEq)]
+#[serde(deny_unknown_fields)]
+pub struct LayoutInstance {
+    pub rotation_deg: f64,
+    pub scale: f64,
+    pub placement_xy_down_mm: [f64; 2],
+}
 
 #[derive(Debug, Serialize)]
 pub struct ContourIdentity {
@@ -25,6 +49,8 @@ pub struct Geometry {
     pub source_sha256: String,
     pub coordinate_system: &'static str,
     pub placement_xy_down_mm: [f64; 2],
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub layout: Option<Layout>,
     pub requested_curve_tolerance_mm: f64,
     pub max_bezier_chord_bound_mm: f64,
     pub features: Vec<Feature>,
@@ -77,26 +103,14 @@ impl Flatten {
     }
 }
 
-/// Reflect Y to CAD XY and apply only the explicitly supplied stock placement.
-pub fn to_transmog(sketch: &Sketch, tolerance: f64, placement: [f64; 2]) -> Result<Geometry> {
-    ensure!(
-        tolerance.is_finite() && (0.000001..=1.0).contains(&tolerance),
-        "curve tolerance must be 0.000001..1 mm"
-    );
-    ensure!(placement.iter().all(|v| v.is_finite()), "invalid placement");
-    ensure!(
-        sketch.units == "mm"
-            && sketch.coordinate_system == "svg_top_left_y_down"
-            && !sketch.machine_output_enabled,
-        "unsupported sketch contract"
-    );
-    let point = |p: [f64; 2]| Point::new(p[0] + placement[0], -p[1] - placement[1]);
-    let mut flatten = Flatten {
-        tolerance,
-        max_bound: 0.0,
-        count: 0,
-    };
-    let mut features = Vec::new();
+/// Flatten every retained contour into line segments, mapping source coordinates
+/// through `map` first. Nothing is snapped, joined or re-ordered here.
+fn flatten_contours(
+    sketch: &Sketch,
+    flatten: &mut Flatten,
+    map: impl Fn([f64; 2]) -> Point,
+) -> Result<(Vec<Vec<SketchSegment>>, Vec<ContourIdentity>)> {
+    let mut profiles = Vec::new();
     let mut identity = Vec::new();
     for c in &sketch.contours {
         let mut at = None;
@@ -106,18 +120,18 @@ pub fn to_transmog(sketch: &Sketch, tolerance: f64, placement: [f64; 2]) -> Resu
             match segment {
                 Segment::Move { to } => {
                     ensure!(at.is_none(), "multiple moves in contour");
-                    at = Some(point(*to));
+                    at = Some(map(*to));
                     start = at;
                 }
                 Segment::Line { to } => {
-                    let next = point(*to);
+                    let next = map(*to);
                     flatten.line(at.context("missing contour start")?, next, &mut profile)?;
                     at = Some(next);
                 }
                 Segment::Quadratic { control, to } => {
                     let a = at.context("missing contour start")?;
-                    let b = point(*to);
-                    let q = point(*control);
+                    let b = map(*to);
+                    let q = map(*control);
                     flatten.cubic(
                         CubicBez::new(a, a + (q - a) * (2.0 / 3.0), b + (q - b) * (2.0 / 3.0), b),
                         0,
@@ -126,12 +140,12 @@ pub fn to_transmog(sketch: &Sketch, tolerance: f64, placement: [f64; 2]) -> Resu
                     at = Some(b);
                 }
                 Segment::Cubic { controls, to } => {
-                    let next = point(*to);
+                    let next = map(*to);
                     flatten.cubic(
                         CubicBez::new(
                             at.context("missing contour start")?,
-                            point(controls[0]),
-                            point(controls[1]),
+                            map(controls[0]),
+                            map(controls[1]),
                             next,
                         ),
                         0,
@@ -148,23 +162,177 @@ pub fn to_transmog(sketch: &Sketch, tolerance: f64, placement: [f64; 2]) -> Resu
         }
         ensure!(!profile.is_empty(), "degenerate contour");
         ensure!(!c.closed || at == start, "closed contour has endpoint gap");
-        features.push(Feature::Sketch {
-            plane: PlaneRef::Xy,
-            profile,
-        });
+        profiles.push(profile);
         identity.push(ContourIdentity {
             source_id: c.source_id.clone(),
             closed: c.closed,
         });
     }
-    ensure!(!features.is_empty(), "empty sketch");
-    Ok(Geometry{schema:"reversal.transmog-sketch-bridge.v1",source_sha256:sketch.source_sha256.clone(),
-        coordinate_system:"xy_mm_top_left_y_negative_down",placement_xy_down_mm:placement,
-        requested_curve_tolerance_mm:tolerance,max_bezier_chord_bound_mm:flatten.max_bound,
-        features,contour_identity:identity,diagnostics:vec![
-            "Bezier bound is relative to normalized SVG curves; source SVG arc normalization and float32 transforms are additional upstream errors.".into(),
-            "Each contour remains separate. No endpoint snapping, hole classification, topology certification or kerf offset is performed.".into(),
-        ]})
+    ensure!(!profiles.is_empty(), "empty sketch");
+    Ok((profiles, identity))
+}
+
+/// Reject unusable layouts instead of repairing them. Mirroring, non-finite
+/// transforms and an ambiguous stock placement are not silently reinterpreted.
+fn validate_layout(layout: &Layout, placement: [f64; 2]) -> Result<()> {
+    ensure!(
+        !layout.instances.is_empty(),
+        "layout requires at least one instance"
+    );
+    ensure!(
+        layout.instances.len() <= MAX_INSTANCES,
+        "layout exceeds {MAX_INSTANCES} instances"
+    );
+    ensure!(
+        placement == [0.0, 0.0],
+        "layout requires placement_xy_down_mm [0,0]; per-instance placement is authoritative"
+    );
+    for (index, instance) in layout.instances.iter().enumerate() {
+        ensure!(
+            instance.rotation_deg.is_finite(),
+            "instance {index}: rotation must be finite degrees"
+        );
+        ensure!(
+            instance.scale.is_finite() && instance.scale > 0.0,
+            "instance {index}: scale must be finite and greater than zero; mirroring is unsupported"
+        );
+        ensure!(
+            instance.placement_xy_down_mm.iter().all(|v| v.is_finite()),
+            "instance {index}: placement must be finite millimetres"
+        );
+    }
+    Ok(())
+}
+
+/// Centre of the flattened bounding box in the local CAD frame (Y negative down).
+fn bounding_box_centre(profiles: &[Vec<SketchSegment>]) -> Result<[f64; 2]> {
+    let mut min = [f64::INFINITY; 2];
+    let mut max = [f64::NEG_INFINITY; 2];
+    for segment in profiles.iter().flatten() {
+        let SketchSegment::Line { start, end } = segment else {
+            continue;
+        };
+        for p in [start, end] {
+            min = [min[0].min(p.x), min[1].min(p.y)];
+            max = [max[0].max(p.x), max[1].max(p.y)];
+        }
+    }
+    ensure!(
+        min.iter().chain(&max).all(|v| v.is_finite()),
+        "layout source has no finite bounds"
+    );
+    Ok([(min[0] + max[0]) / 2.0, (min[1] + max[1]) / 2.0])
+}
+
+/// One placed copy: uniform scale and rotation about `centre`, then placement.
+fn place_profile(
+    profile: &[SketchSegment],
+    instance: &LayoutInstance,
+    centre: [f64; 2],
+) -> Result<Vec<SketchSegment>> {
+    let (sin, cos) = instance.rotation_deg.to_radians().sin_cos();
+    let scale = instance.scale;
+    let [placement_x, placement_y] = instance.placement_xy_down_mm;
+    let map = |p: Point2| -> Result<Point2> {
+        let dx = p.x - centre[0];
+        let dy = p.y - centre[1];
+        let x = centre[0] + scale * (cos * dx - sin * dy) + placement_x;
+        let y = centre[1] + scale * (sin * dx + cos * dy) - placement_y;
+        ensure!(x.is_finite() && y.is_finite(), "nonfinite placed geometry");
+        Ok(Point2::new(x, y))
+    };
+    profile
+        .iter()
+        .map(|segment| {
+            let SketchSegment::Line { start, end } = segment else {
+                anyhow::bail!("adapter emits only line profiles")
+            };
+            Ok(SketchSegment::Line {
+                start: map(*start)?,
+                end: map(*end)?,
+            })
+        })
+        .collect()
+}
+
+/// Reflect Y to CAD XY and apply only the explicitly supplied stock placement.
+/// With a layout, one placed copy per instance replaces the single placement.
+pub fn to_transmog(
+    sketch: &Sketch,
+    tolerance: f64,
+    placement: [f64; 2],
+    layout: Option<&Layout>,
+) -> Result<Geometry> {
+    ensure!(
+        tolerance.is_finite() && (0.000001..=1.0).contains(&tolerance),
+        "curve tolerance must be 0.000001..1 mm"
+    );
+    ensure!(placement.iter().all(|v| v.is_finite()), "invalid placement");
+    ensure!(
+        sketch.units == "mm"
+            && sketch.coordinate_system == "svg_top_left_y_down"
+            && !sketch.machine_output_enabled,
+        "unsupported sketch contract"
+    );
+    let mut flatten = Flatten {
+        tolerance,
+        max_bound: 0.0,
+        count: 0,
+    };
+    let (features, identity) = match layout {
+        None => flatten_contours(sketch, &mut flatten, |p: [f64; 2]| {
+            Point::new(p[0] + placement[0], -p[1] - placement[1])
+        })?,
+        Some(layout) => {
+            validate_layout(layout, placement)?;
+            // The expansion is the whole retained source repeated per instance,
+            // so the flattened-line and operation budgets apply after expansion.
+            ensure!(
+                sketch.contours.len().saturating_mul(layout.instances.len()) <= MAX_LINES,
+                "layout expansion exceeds {MAX_LINES} flattened lines"
+            );
+            let (local, source) =
+                flatten_contours(sketch, &mut flatten, |p: [f64; 2]| Point::new(p[0], -p[1]))?;
+            let centre = bounding_box_centre(&local)?;
+            let mut features = Vec::with_capacity(local.len() * layout.instances.len());
+            let mut identity = Vec::with_capacity(source.len() * layout.instances.len());
+            for (index, instance) in layout.instances.iter().enumerate() {
+                for (profile, source) in local.iter().zip(&source) {
+                    features.push(place_profile(profile, instance, centre)?);
+                    identity.push(ContourIdentity {
+                        source_id: format!("{}#{index}", source.source_id),
+                        closed: source.closed,
+                    });
+                }
+            }
+            (features, identity)
+        }
+    };
+    let mut diagnostics = vec![
+        "Bezier bound is relative to normalized SVG curves; source SVG arc normalization and float32 transforms are additional upstream errors.".to_string(),
+        "Each contour remains separate. No endpoint snapping, hole classification, topology certification or kerf offset is performed.".to_string(),
+    ];
+    if layout.is_some() {
+        diagnostics.push("Layout copies are expanded geometry from the retained source: the reported Bezier chord bound is the unplaced flattening bound and per-instance scale multiplies it.".to_string());
+    }
+    Ok(Geometry {
+        schema: "reversal.transmog-sketch-bridge.v1",
+        source_sha256: sketch.source_sha256.clone(),
+        coordinate_system: "xy_mm_top_left_y_negative_down",
+        placement_xy_down_mm: placement,
+        layout: layout.cloned(),
+        requested_curve_tolerance_mm: tolerance,
+        max_bezier_chord_bound_mm: flatten.max_bound,
+        features: features
+            .into_iter()
+            .map(|profile| Feature::Sketch {
+                plane: PlaneRef::Xy,
+                profile,
+            })
+            .collect(),
+        contour_identity: identity,
+        diagnostics,
+    })
 }
 
 #[derive(Debug, Serialize)]
@@ -199,12 +367,13 @@ pub fn integrate_source(
     selection: Selection<'_>,
     tolerance: f64,
     placement: [f64; 2],
+    layout: Option<&Layout>,
 ) -> Result<Integration> {
     let sketch = match format {
         SourceFormat::Svg => crate::inspect_svg(bytes)?,
         SourceFormat::Dxf => crate::dxf_intake::inspect_dxf(bytes, tolerance)?,
     };
-    let geometry = to_transmog(&sketch, tolerance, placement)?;
+    let geometry = to_transmog(&sketch, tolerance, placement, layout)?;
     let planning = cutting::plan(
         sketch,
         catalog,
@@ -279,6 +448,9 @@ pub fn verified_integration(
         .context("missing tolerance")?;
     let placement: [f64; 2] =
         serde_json::from_value(recorded["transmog"]["placement_xy_down_mm"].clone())?;
+    // The applied layout is retained, so reopen expands the same copies from the
+    // retained source and typed intent rather than trusting stored geometry.
+    let layout: Option<Layout> = serde_json::from_value(recorded["transmog"]["layout"].clone())?;
     let rebuilt = integrate_source(
         original,
         format,
@@ -291,6 +463,7 @@ pub fn verified_integration(
         },
         tolerance,
         placement,
+        layout.as_ref(),
     )?;
     ensure!(
         crate::json_identity::equivalent(&recorded, &serde_json::to_value(&rebuilt)?),
