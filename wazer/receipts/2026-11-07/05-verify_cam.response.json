@@ -1,0 +1,1 @@
+{"machine_output_enabled":false,"result":{"kind":"verification","verification":{"machine_output_enabled":false,"operation_count":90,"path_count":2,"project_sha256":"9d8f20cadfffa0d8bea625d68d5218bf5e5877966beab4077fe494d78771a66c","schema":"reversal.openwam-cam-verification.v1","verified":true}},"schema":"reversal.openwam-response.v1","status":"ok"}
