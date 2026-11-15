@@ -14,7 +14,9 @@ mod check;
 pub mod export;
 pub mod json;
 pub mod model;
+pub mod open;
 pub mod summary;
+pub mod svg;
 
 pub use json::{WzrError, read, write};
 
@@ -26,7 +28,8 @@ pub fn capabilities() -> serde_json::Value {
         "wzr_file_export": true,
         "machine_output_enabled": false,
         "hardware_qualified": false,
-        "operations": ["capabilities", "read", "roundtrip", "export_wzr"],
+        "operations": ["capabilities", "read", "roundtrip", "material", "open", "paths_only", "export_wzr"],
+        "export_files": "one file entry per source; one group per copy; rotation other than 0 is refused",
         "export_gate": "export_wzr runs `openwam request` verify_cam itself and refuses unless verified:true for the same project_sha256",
     })
 }

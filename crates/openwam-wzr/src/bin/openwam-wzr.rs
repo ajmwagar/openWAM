@@ -5,7 +5,7 @@
 //! refuses unless that receipt verifies the same artifact. It writes a project
 //! file only; it never drives, uploads to or talks to a machine.
 
-use openwam_wzr::{capabilities, export, json, summary};
+use openwam_wzr::{capabilities, export, json, open, summary, svg};
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::io::{Read, Write};
@@ -13,7 +13,7 @@ use std::path::{Path, PathBuf};
 use std::process::{Command, ExitCode, Stdio};
 
 const MAX_ARTIFACT_BYTES: u64 = 64 << 20;
-const USAGE: &str = "usage: openwam-wzr capabilities | read FILE.wzr | roundtrip FILE.wzr | export_wzr --artifact (FILE|-) --out FILE.wzr [--name NAME.svg] [--openwam PATH]";
+const USAGE: &str = "usage: openwam-wzr capabilities | read FILE.wzr | roundtrip FILE.wzr | material FILE.wzr | open FILE.wzr | paths_only (FILE.svg|-) | export_wzr --artifact (FILE|-) --out FILE.wzr [--name NAME.svg] [--openwam PATH]";
 
 struct Fail(&'static str, String);
 
@@ -77,6 +77,45 @@ fn run(args: &[String]) -> Result<Value, Fail> {
             Ok(
                 json!({"status": "ok", "identical": first_diff.is_none(), "bytes_in": input.len(),
                       "bytes_out": output.len(), "first_diff_offset": first_diff}),
+            )
+        }
+        Some("material") => {
+            let path = args.get(1).ok_or_else(|| fail("usage", USAGE))?;
+            let project = json::read(&read_file(path)?).map_err(|e| fail("wzr_invalid", e))?;
+            let origin = Path::new(path)
+                .file_name()
+                .map_or_else(|| path.clone(), |n| n.to_string_lossy().into_owned());
+            let material = open::material_recipe(&project, &origin)
+                .map_err(|e| fail("material_invalid", e))?;
+            Ok(json!({
+                "status": "ok", "kind": "wzr_material", "material": material,
+                "wzr_user_def": project.selected_material.material.user_def,
+                "quality": project.cut_quality, "abrasive_mode": open::abrasive_mode(&project),
+                "machine_output_enabled": false, "hardware_qualified": false,
+            }))
+        }
+        Some("open") => {
+            let path = args.get(1).ok_or_else(|| fail("usage", USAGE))?;
+            let project = json::read(&read_file(path)?).map_err(|e| fail("wzr_invalid", e))?;
+            let origin = Path::new(path)
+                .file_name()
+                .map_or_else(|| path.clone(), |n| n.to_string_lossy().into_owned());
+            Ok(json!({
+                "status": "ok", "kind": "wzr_open", "wam_version": project.wam_version,
+                "files": open::designs(&project).map_err(|e| fail("wzr_invalid", e))?,
+                "material": open::material_recipe(&project, &origin).map_err(|e| fail("material_invalid", e))?,
+                "wzr_user_def": project.selected_material.material.user_def,
+                "quality": project.cut_quality, "abrasive_mode": open::abrasive_mode(&project),
+                "machine_output_enabled": false, "hardware_qualified": false,
+            }))
+        }
+        Some("paths_only") => {
+            let path = args.get(1).ok_or_else(|| fail("usage", USAGE))?;
+            let text = String::from_utf8(read_file(path)?).map_err(|e| fail("svg_invalid", e))?;
+            let r = svg::paths_only(&text).map_err(|e| fail("svg_invalid", e))?;
+            Ok(
+                json!({"status": "ok", "kind": "paths_only", "svg": r.svg, "paths": r.paths,
+                "ignored_shapes": r.ignored_shapes, "machine_output_enabled": false, "hardware_qualified": false}),
             )
         }
         Some("export_wzr") => export_wzr(&args[1..]),

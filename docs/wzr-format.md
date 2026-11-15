@@ -124,29 +124,58 @@ nothing is repaired.
 
 Input: a `plan_cam` artifact. The command runs `openwam request -` `verify_cam`
 itself (separate process; the AGPL crate is never linked) and refuses unless
-`verified: true` for the same `project_sha256`. Output: one file, one instance.
+`verified: true` for the same `project_sha256`.
+
+Output: **one file entry per source** (a `prepare_sources` bundle) or one entry
+for a single source; **one group per placed copy** (file F: three groups, E: five
+groups over two files). Group IDs are numbered 0.. in file then copy order; file
+IDs 0.. with `fileIDCounter` = file count.
 
 | Field | Source |
 |---|---|
-| `svgString` | cut contours only (no-cut contours dropped), as `<path>` in mm, `width/height` in mm |
+| `filename` | the source's name (bundle) or `--name` |
+| `svgString` | that source's cut contours only (no-cut contours dropped), as `<path>` in mm, size from the source's own viewport |
 | `fileBB`/`baseBB` | rule above on that SVG |
-| offset `type` | `Outside` when every contour keeps the part (even depth outside, odd inside), `Inside` for the inverse, else refused (`MixedSides`) |
+| offset `type` (per group) | `Outside` when every cut contour of the copy keeps the part, `Inside` for the inverse, `Centerline` when all are centreline; a copy mixing them is refused (`MixedSides`) |
 | offset `distance` | WAM's `0.019` |
-| material | openWAM catalog row: speed feeds = row feed for rough/medium/fine, pierce = row, abrasive = machine `abrasive_kg_min`, lead = intent max, `userDef: true`, `uId: null`, category `openWAM` |
-| tabs | `none`, `[[]]`, `enableLeads` when the intent has leads |
-| position | openWAM `placement_xy_down_mm` + box centre, inches |
+| instance `scale` | the layout copy's scale (WAM stores it per instance, E: 1 vs 1.639) |
+| instance `position` | centre of the copy's placed cut geometry (bed frame, y down), inches |
+| `RSTBB` | the file box scaled by instance 0's scale, centred on the origin |
+| material | a user recipe when `planning.user_material` is present (name, category, thickness, all six speed/eco rates, abrasive rate, `uId`, `maxTab`, lead and tab defaults, quality from `cut_rate`); otherwise an openWAM catalog row as before |
+| tabs | `none`, `[[]]`, `enableLeads` per group when its contours have leads |
+
+Refused, never guessed: a copy with `rotation` other than 0 (no sample shows how
+WAM stores it), copies of one file that cut different contours (a WAM file holds
+one drawing), and `splitGroups: true`. A source with nothing to cut is left out
+and listed in `omitted_files`.
 
 ### Unknowns (flagged in every export report)
 
-1. `uId: null` with `userDef: true` has not been opened by WAM.
+1. `uId: null` with `userDef: true` (a recipe WAM did not write) has not been
+   opened by WAM. A recipe read from a `.wzr` keeps its own `uId`.
 2. Bed origin/axis direction of `position` (assumed top-left, y down).
 3. `Outside` offset type is unseen in a WAM file.
-4. Eco-mode feeds = speed feed × 0.0947 (F's Pro ratio), only to keep eco slower.
+4. Eco-mode feeds of a recipe WAM did not write = speed feed x 0.0947.
 5. openWAM tabs are not carried (WAM's tab cache needs WAM's own path geometry).
-6. `splitGroups: true`, rotation ≠ 0 and non-`standard` cut types are rejected.
+6. Rotation, `splitGroups: true` and non-`standard` cut types are rejected.
+7. Group ID numbering order (WAM numbers in creation order).
 
-One WAM-saved file would close 1–3: export a part, open it in WAM, move nothing,
+One WAM-saved file would close 1-3: export a part, open it in WAM, move nothing,
 save it again, and diff it with `openwam-wzr read`.
+
+## Reads for clients
+
+```sh
+openwam-wzr material FILE.wzr   # the recipe as an openWAM settings.user_material
+openwam-wzr open FILE.wzr       # designs (paths-only SVG, what WAM imports), copies, material
+openwam-wzr paths_only FILE.svg # SVG reduced to WAM's view: root size + <path> only
+```
+
+`material` returns `feed` = the speed-mode rate of the file's cut quality, with
+the eco rates, abrasive rate, `uId` and `maxTab` under `wam` so the recipe can be
+written back unchanged. `open` keeps WAM's rule that only `<path>` elements
+exist: `rect`/`circle`/... are counted in `ignored_shapes` and left out (Foam
+Insert: 1 path, 4 ignored shapes).
 
 ## Usage
 
@@ -154,6 +183,7 @@ save it again, and diff it with `openwam-wzr read`.
 cargo build --release -p openwam-wzr -p reversal-sketch-intake --bin openwam --bin openwam-wzr
 target/release/openwam-wzr read  sample.wzr        # normalised summary + fileBB recomputation
 target/release/openwam-wzr roundtrip sample.wzr    # identical: true|false, first_diff_offset
+target/release/openwam-wzr material sample.wzr     # recipe for openWAM
 target/release/openwam-wzr export_wzr --artifact plan_cam.json --out part.wzr --name part.svg
 OPENWAM_WZR_SAMPLES=dir OPENWAM_CLI=target/release/openwam cargo test -p openwam-wzr
 ```

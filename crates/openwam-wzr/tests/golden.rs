@@ -181,7 +181,7 @@ fn openwam_export_matches_wam_samples() {
             let wam_offset = wam.offsets.iter().find(|x| x.file_id == f.file_id).unwrap();
             eprintln!(
                 "GOLDEN {tag}: openWAM contours {n_paths} | fileBB max|d| {max:.3e} in | offset ours {:?} {} vs WAM {:?} {} | tabs ours none vs WAM {:?} | instances ours 1 vs WAM {}",
-                report.offset_type,
+                report.files[0].groups[0].offset_type,
                 ours.offsets[0].distance,
                 wam_offset.kind,
                 wam_offset.distance,
@@ -204,7 +204,7 @@ fn openwam_export_matches_wam_samples() {
             let path_only = !f.svg_string.contains("<rect") && !f.svg_string.contains("<circle");
             if path_only {
                 assert!(max < 1e-6, "{tag}: fileBB deviates {max:e} in");
-                assert_eq!(report.cut_contours.len(), 1);
+                assert_eq!(report.files[0].cut_contours.len(), 1);
             }
             let rst = &ours.placements[0].rst_bb;
             assert!(

@@ -67,6 +67,25 @@ pub fn wam_file_bb(svg: &str) -> Result<Rect, BBoxError> {
     Ok(Rect::new(b.x0 * k, b.y0 * k, b.x1 * k, b.y1 * k))
 }
 
+/// Accumulated `transform` of `node` and its ancestors, and whether it sits in a
+/// non-rendered container (`defs`, `clipPath`, ...).
+pub(crate) fn node_ctm(node: &roxmltree::Node<'_, '_>) -> Result<(Affine, bool), BBoxError> {
+    let mut ctm = Affine::IDENTITY;
+    let mut hidden = false;
+    for anc in node.ancestors().filter(|n| n.is_element()) {
+        if matches!(
+            anc.tag_name().name(),
+            "defs" | "clipPath" | "mask" | "symbol" | "pattern" | "marker"
+        ) {
+            hidden = true;
+        }
+        if let Some(t) = anc.attribute("transform") {
+            ctm = parse_transform(t)? * ctm;
+        }
+    }
+    Ok((ctm, hidden))
+}
+
 fn parse_transform(t: &str) -> Result<Affine, BBoxError> {
     let tr = svgtypes::Transform::from_str(t).map_err(|_| BBoxError::Transform(t.into()))?;
     Ok(Affine::new([tr.a, tr.b, tr.c, tr.d, tr.e, tr.f]))
