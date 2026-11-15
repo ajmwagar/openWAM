@@ -324,12 +324,9 @@ fn a_long_curve_with_ends_almost_touching_is_closed_not_dropped() {
     // tiny, the path is not, so the gap rules must close it (never drop it).
     let drop =
         stroked(r#"<path id="tear" fill="none" stroke="black" d="M20 45 C0 10 40 10 20 44.999"/>"#);
-    let both = format!(
-        "{}",
-        drop.replace(
-            "</svg>",
-            "<path id=\"sq\" fill=\"none\" stroke=\"black\" d=\"M45 5 H55 V15 H45 Z\"/></svg>"
-        )
+    let both = drop.replace(
+        "</svg>",
+        r#"<path id="sq" fill="none" stroke="black" d="M45 5 H55 V15 H45 Z"/></svg>"#,
     );
     let r = prepare(
         json!([source("a", "tear.svg", &both, [0.0, 0.0])]),
