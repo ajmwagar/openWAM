@@ -124,6 +124,8 @@ pub struct SourceRecord {
     /// True when contour ids carry a `#<copy>` suffix because a layout was applied.
     pub layout_applied: bool,
     pub contour_ids: Vec<String>,
+    /// Gap-rule changes made while importing this source (merged, closed, dropped).
+    pub normalized: Vec<String>,
     pub instances: Vec<InstanceRecord>,
 }
 
@@ -453,6 +455,144 @@ fn bbox_down(features: &[Feature]) -> Result<([f64; 2], [f64; 2])> {
     Ok((min, max))
 }
 
+/// WAM import gap rules (mm): open fragments whose ends are this close are merged.
+pub const GAP_MERGE_MM: f64 = 0.025;
+/// A path whose own ends are closer than this is closed.
+pub const GAP_CLOSE_MM: f64 = 0.051;
+/// Unconnected segments shorter than this are dropped.
+pub const GAP_DROP_MM: f64 = 0.0025;
+
+fn seg_end(s: &Segment) -> Option<[f64; 2]> {
+    match s {
+        Segment::Move { to }
+        | Segment::Line { to }
+        | Segment::Quadratic { to, .. }
+        | Segment::Cubic { to, .. } => Some(*to),
+        Segment::Close => None,
+    }
+}
+
+fn dist(a: [f64; 2], b: [f64; 2]) -> f64 {
+    (a[0] - b[0]).hypot(a[1] - b[1])
+}
+
+fn open_ends(c: &crate::Contour) -> Option<([f64; 2], [f64; 2])> {
+    if c.closed || c.segments.iter().any(|s| matches!(s, Segment::Close)) {
+        return None;
+    }
+    let start = c.segments.first().and_then(seg_end)?;
+    let end = c.segments.last().and_then(seg_end)?;
+    Some((start, end))
+}
+
+fn open_length(c: &crate::Contour) -> f64 {
+    let mut at = None;
+    let mut len = 0.0;
+    for s in &c.segments {
+        if let Some(to) = seg_end(s) {
+            if let Some(a) = at {
+                len += dist(a, to);
+            }
+            at = Some(to);
+        }
+    }
+    len
+}
+
+fn reversed(c: &crate::Contour) -> crate::Contour {
+    let mut points = Vec::new();
+    for s in &c.segments {
+        if let Some(p) = seg_end(s) {
+            points.push(p);
+        }
+    }
+    let n = points.len();
+    let mut segments = vec![Segment::Move { to: points[n - 1] }];
+    for i in (1..n).rev() {
+        let to = points[i - 1];
+        segments.push(match &c.segments[i] {
+            Segment::Quadratic { control, .. } => Segment::Quadratic {
+                control: *control,
+                to,
+            },
+            Segment::Cubic { controls, .. } => Segment::Cubic {
+                controls: [controls[1], controls[0]],
+                to,
+            },
+            _ => Segment::Line { to },
+        });
+    }
+    crate::Contour {
+        source_id: c.source_id.clone(),
+        closed: false,
+        segments,
+    }
+}
+
+/// Apply WAM's import gap rules to a sketch: drop unconnected pieces shorter
+/// than 0.0025 mm, merge open fragments whose ends are within 0.025 mm, and
+/// close paths whose own ends are within 0.051 mm. Returns one line per change.
+pub fn apply_gap_rules(sketch: &mut Sketch) -> Vec<String> {
+    let mut log = Vec::new();
+    sketch.contours.retain(|c| {
+        let tiny = open_ends(c).is_some() && open_length(c) < GAP_DROP_MM;
+        if tiny {
+            log.push(format!(
+                "dropped {} (shorter than {GAP_DROP_MM} mm)",
+                c.source_id
+            ));
+        }
+        !tiny
+    });
+    loop {
+        let mut best: Option<(usize, usize, bool, bool, f64)> = None;
+        for i in 0..sketch.contours.len() {
+            for j in 0..sketch.contours.len() {
+                if i == j {
+                    continue;
+                }
+                let (Some((_, ae)), Some((bs, be))) = (
+                    open_ends(&sketch.contours[i]),
+                    open_ends(&sketch.contours[j]),
+                ) else {
+                    continue;
+                };
+                // Join end of i to start of j, or to end of j (reversing j).
+                for (rev_j, p) in [(false, bs), (true, be)] {
+                    let d = dist(ae, p);
+                    if d <= GAP_MERGE_MM && best.is_none_or(|b| d < b.4) {
+                        best = Some((i, j, false, rev_j, d));
+                    }
+                }
+            }
+        }
+        let Some((i, j, _, rev_j, d)) = best else {
+            break;
+        };
+        let removed = sketch.contours.remove(j);
+        let ai = if j < i { i - 1 } else { i };
+        let b = if rev_j { reversed(&removed) } else { removed };
+        log.push(format!(
+            "merged {} into {} (gap {d:.4} mm)",
+            b.source_id, sketch.contours[ai].source_id
+        ));
+        sketch.contours[ai]
+            .segments
+            .extend(b.segments.into_iter().skip(1));
+    }
+    for c in &mut sketch.contours {
+        if let Some((start, end)) = open_ends(c) {
+            let d = dist(start, end);
+            if d < GAP_CLOSE_MM && c.segments.len() > 2 {
+                c.segments.push(Segment::Close);
+                c.closed = true;
+                log.push(format!("closed {} (gap {d:.4} mm)", c.source_id));
+            }
+        }
+    }
+    log
+}
+
 /// Combine several sources into one sketch/geometry pair. Each source keeps its
 /// own placement or layout; contour identities are prefixed with the source id
 /// so the CAM intent can address every contour of every copy.
@@ -502,6 +642,7 @@ fn bundle_geometry(bytes: &[u8], tolerance: f64) -> Result<(Sketch, Geometry)> {
             SourceFormat::Bundle => anyhow::bail!("bundles do not nest"),
         };
         let source_sha256 = sketch.source_sha256.clone();
+        let normalized = apply_gap_rules(&mut sketch);
         if let Some(keep) = &spec.contours {
             ensure!(
                 !keep.is_empty(),
@@ -584,6 +725,7 @@ fn bundle_geometry(bytes: &[u8], tolerance: f64) -> Result<(Sketch, Geometry)> {
             viewport_mm: sketch.viewport_mm,
             layout_applied: spec.layout.is_some(),
             contour_ids,
+            normalized,
             instances,
         });
     }

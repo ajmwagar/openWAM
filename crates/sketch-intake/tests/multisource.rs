@@ -252,3 +252,68 @@ fn single_source_prepare_is_unchanged_and_has_no_bundle_fields() {
             .is_none()
     );
 }
+
+fn stroked(paths: &str) -> String {
+    format!(
+        r#"<svg xmlns="http://www.w3.org/2000/svg" width="60mm" height="60mm" viewBox="0 0 60 60">{paths}</svg>"#
+    )
+}
+
+#[test]
+fn gap_rules_close_merge_and_drop_like_wam_import() {
+    // Square whose ends miss by 0.01 mm: closed, so it plans as a cut contour.
+    let near = stroked(r#"<path id="sq" fill="none" stroke="black" d="M5 5 H35 V35 H5 V5.01"/>"#);
+    let r = prepare(
+        json!([source("a", "near.svg", &near, [0.0, 0.0])]),
+        settings(),
+    );
+    let p = project(&r);
+    let src = &p["integration"]["transmog"]["sources"][0];
+    assert_eq!(
+        p["integration"]["transmog"]["contour_identity"][0]["closed"],
+        true
+    );
+    assert!(
+        src["normalized"][0]
+            .as_str()
+            .unwrap()
+            .starts_with("closed sq")
+    );
+    assert_eq!(plan(p)["status"], "ok");
+
+    // Two halves 0.02 mm apart are merged, then closed.
+    let halves = stroked(
+        r#"<path id="a" fill="none" stroke="black" d="M5 5 H35 V20"/><path id="b" fill="none" stroke="black" d="M35 20.02 V35 H5 V5.02"/>"#,
+    );
+    let r = prepare(
+        json!([source("a", "halves.svg", &halves, [0.0, 0.0])]),
+        settings(),
+    );
+    let p = project(&r);
+    let t = &p["integration"]["transmog"];
+    assert_eq!(t["contour_identity"].as_array().unwrap().len(), 1);
+    assert_eq!(t["contour_identity"][0]["closed"], true);
+    assert_eq!(t["sources"][0]["normalized"].as_array().unwrap().len(), 2);
+    assert_eq!(plan(p)["status"], "ok");
+
+    // A 0.5 mm gap stays open (no-cut by default); a 0.001 mm stub is dropped.
+    let wide = stroked(
+        r#"<path id="w" fill="none" stroke="black" d="M5 5 H35 V35 H5 V4.5"/><path id="t" fill="none" stroke="black" d="M50 50 L50.001 50"/>"#,
+    );
+    let r = prepare(
+        json!([source("a", "wide.svg", &wide, [0.0, 0.0])]),
+        settings(),
+    );
+    let p = project(&r);
+    let ids = p["integration"]["transmog"]["contour_identity"]
+        .as_array()
+        .unwrap();
+    assert_eq!(ids.len(), 1);
+    assert_eq!(ids[0]["closed"], false);
+    assert!(
+        p["integration"]["transmog"]["sources"][0]["normalized"][0]
+            .as_str()
+            .unwrap()
+            .starts_with("dropped t")
+    );
+}
