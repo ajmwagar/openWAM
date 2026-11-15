@@ -317,3 +317,73 @@ fn gap_rules_close_merge_and_drop_like_wam_import() {
             .starts_with("dropped t")
     );
 }
+
+#[test]
+fn a_long_curve_with_ends_almost_touching_is_closed_not_dropped() {
+    // One cubic teardrop about 30 mm long whose ends are 0.001 mm apart: the chord is
+    // tiny, the path is not, so the gap rules must close it (never drop it).
+    let drop =
+        stroked(r#"<path id="tear" fill="none" stroke="black" d="M20 45 C0 10 40 10 20 44.999"/>"#);
+    let both = format!(
+        "{}",
+        drop.replace(
+            "</svg>",
+            "<path id=\"sq\" fill=\"none\" stroke=\"black\" d=\"M45 5 H55 V15 H45 Z\"/></svg>"
+        )
+    );
+    let r = prepare(
+        json!([source("a", "tear.svg", &both, [0.0, 0.0])]),
+        settings(),
+    );
+    let p = project(&r);
+    let ids: Vec<_> = p["integration"]["transmog"]["contour_identity"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|c| c["source_id"].as_str().unwrap().to_string())
+        .collect();
+    assert!(
+        ids.contains(&"a:tear".to_string()),
+        "teardrop must survive: {ids:?}"
+    );
+    let norm = p["integration"]["transmog"]["sources"][0]["normalized"]
+        .as_array()
+        .unwrap();
+    assert!(
+        norm.iter()
+            .any(|n| n.as_str().unwrap().starts_with("closed tear")),
+        "{norm:?}"
+    );
+    assert!(
+        norm.iter()
+            .all(|n| !n.as_str().unwrap().starts_with("dropped"))
+    );
+    let closed = p["integration"]["transmog"]["contour_identity"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .all(|c| c["closed"] == true);
+    assert!(closed);
+}
+
+#[test]
+fn duplicate_overlapping_lines_are_reported_not_closed_into_nothing() {
+    let dup = stroked(
+        r#"<path id="l1" fill="none" stroke="black" d="M5 5 H35"/><path id="l2" fill="none" stroke="black" d="M5 5 H35"/>"#,
+    );
+    let r = prepare(
+        json!([source("a", "dup.svg", &dup, [0.0, 0.0])]),
+        settings(),
+    );
+    let p = project(&r);
+    let rec = &p["integration"]["transmog"]["sources"][0];
+    let deg = rec["degenerate"].as_array().unwrap();
+    assert_eq!(deg.len(), 1, "{rec}");
+    assert!(
+        deg[0].as_str().unwrap().contains("l1") && deg[0].as_str().unwrap().contains("zero-area")
+    );
+    assert_eq!(
+        p["integration"]["transmog"]["contour_identity"][0]["closed"],
+        false
+    );
+}

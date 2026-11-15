@@ -4,7 +4,7 @@ use crate::{
     cutting::{self, Catalog, Model, Units, UserMaterial},
 };
 use anyhow::{Context, Result, ensure};
-use kurbo::{CubicBez, ParamCurve, Point};
+use kurbo::{CubicBez, ParamCurve, ParamCurveArclen, Point, QuadBez};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use transmog_core::{
@@ -126,6 +126,8 @@ pub struct SourceRecord {
     pub contour_ids: Vec<String>,
     /// Gap-rule changes made while importing this source (merged, closed, dropped).
     pub normalized: Vec<String>,
+    /// Paths the gap rules could not close without a zero-area loop (blocking).
+    pub degenerate: Vec<String>,
     pub instances: Vec<InstanceRecord>,
 }
 
@@ -485,19 +487,68 @@ fn open_ends(c: &crate::Contour) -> Option<([f64; 2], [f64; 2])> {
     Some((start, end))
 }
 
+/// True length of the path: curves are measured along the curve, not by their chord.
 fn open_length(c: &crate::Contour) -> f64 {
-    let mut at = None;
+    let mut at: Option<[f64; 2]> = None;
     let mut len = 0.0;
     for s in &c.segments {
-        if let Some(to) = seg_end(s) {
-            if let Some(a) = at {
-                len += dist(a, to);
-            }
-            at = Some(to);
+        let Some(to) = seg_end(s) else { continue };
+        if let Some(a) = at {
+            let p = |q: [f64; 2]| Point::new(q[0], q[1]);
+            len += match s {
+                Segment::Quadratic { control, .. } => {
+                    QuadBez::new(p(a), p(*control), p(to)).arclen(1e-6)
+                }
+                Segment::Cubic { controls, .. } => {
+                    CubicBez::new(p(a), p(controls[0]), p(controls[1]), p(to)).arclen(1e-6)
+                }
+                _ => dist(a, to),
+            };
         }
+        at = Some(to);
     }
     len
 }
+
+/// Polygon of the path sampled along its curves, for an area test.
+fn sampled(c: &crate::Contour) -> Vec<[f64; 2]> {
+    let mut pts = Vec::new();
+    let mut at: Option<[f64; 2]> = None;
+    for s in &c.segments {
+        let Some(to) = seg_end(s) else { continue };
+        if let Some(a) = at {
+            let p = |q: [f64; 2]| Point::new(q[0], q[1]);
+            for k in 1..=16 {
+                let t = f64::from(k) / 16.0;
+                let q = match s {
+                    Segment::Quadratic { control, .. } => {
+                        QuadBez::new(p(a), p(*control), p(to)).eval(t)
+                    }
+                    Segment::Cubic { controls, .. } => {
+                        CubicBez::new(p(a), p(controls[0]), p(controls[1]), p(to)).eval(t)
+                    }
+                    _ => Point::new(a[0] + (to[0] - a[0]) * t, a[1] + (to[1] - a[1]) * t),
+                };
+                pts.push([q.x, q.y]);
+            }
+        } else {
+            pts.push(to);
+        }
+        at = Some(to);
+    }
+    pts
+}
+
+fn area(pts: &[[f64; 2]]) -> f64 {
+    let n = pts.len();
+    (0..n)
+        .map(|i| pts[i][0] * pts[(i + 1) % n][1] - pts[(i + 1) % n][0] * pts[i][1])
+        .sum::<f64>()
+        / 2.0
+}
+
+/// Smallest area (mm^2) a closed contour must enclose.
+const MIN_AREA_MM2: f64 = 1e-6;
 
 fn reversed(c: &crate::Contour) -> crate::Contour {
     let mut points = Vec::new();
@@ -532,8 +583,9 @@ fn reversed(c: &crate::Contour) -> crate::Contour {
 /// Apply WAM's import gap rules to a sketch: drop unconnected pieces shorter
 /// than 0.0025 mm, merge open fragments whose ends are within 0.025 mm, and
 /// close paths whose own ends are within 0.051 mm. Returns one line per change.
-pub fn apply_gap_rules(sketch: &mut Sketch) -> Vec<String> {
+pub fn apply_gap_rules(sketch: &mut Sketch) -> GapReport {
     let mut log = Vec::new();
+    let mut degenerate = Vec::new();
     sketch.contours.retain(|c| {
         let tiny = open_ends(c).is_some() && open_length(c) < GAP_DROP_MM;
         if tiny {
@@ -583,14 +635,29 @@ pub fn apply_gap_rules(sketch: &mut Sketch) -> Vec<String> {
     for c in &mut sketch.contours {
         if let Some((start, end)) = open_ends(c) {
             let d = dist(start, end);
-            if d < GAP_CLOSE_MM && c.segments.len() > 2 {
+            // Closing wins over dropping: only a path longer than the drop limit is closed.
+            if d < GAP_CLOSE_MM && open_length(c) >= GAP_DROP_MM {
+                if area(&sampled(c)).abs() < MIN_AREA_MM2 {
+                    degenerate.push(format!(
+                        "{}: closing it would give a zero-area loop (overlapping or duplicate lines); remove the duplicate in the drawing",
+                        c.source_id
+                    ));
+                    continue;
+                }
                 c.segments.push(Segment::Close);
                 c.closed = true;
                 log.push(format!("closed {} (gap {d:.4} mm)", c.source_id));
             }
         }
     }
-    log
+    GapReport { log, degenerate }
+}
+
+/// What the gap rules changed, and what they could not resolve.
+pub struct GapReport {
+    pub log: Vec<String>,
+    /// Contours the rules would have closed into a zero-area loop; left open, blocking.
+    pub degenerate: Vec<String>,
 }
 
 /// Combine several sources into one sketch/geometry pair. Each source keeps its
@@ -642,7 +709,8 @@ fn bundle_geometry(bytes: &[u8], tolerance: f64) -> Result<(Sketch, Geometry)> {
             SourceFormat::Bundle => anyhow::bail!("bundles do not nest"),
         };
         let source_sha256 = sketch.source_sha256.clone();
-        let normalized = apply_gap_rules(&mut sketch);
+        let gap = apply_gap_rules(&mut sketch);
+        let (normalized, degenerate) = (gap.log, gap.degenerate);
         if let Some(keep) = &spec.contours {
             ensure!(
                 !keep.is_empty(),
@@ -726,6 +794,7 @@ fn bundle_geometry(bytes: &[u8], tolerance: f64) -> Result<(Sketch, Geometry)> {
             layout_applied: spec.layout.is_some(),
             contour_ids,
             normalized,
+            degenerate,
             instances,
         });
     }
