@@ -3,7 +3,7 @@
 //! No `openwam` process is needed: the verify receipt is supplied directly.
 
 use openwam_wzr::{
-    export::{ExportError, export},
+    export::{ExportError, WAM_OFFSET_DISTANCE_IN, export},
     model::{LengthUnit, MachineType, OffsetType, Quality},
     open, read, write,
 };
@@ -184,4 +184,57 @@ fn two_file_sample_opens_with_both_designs_when_present() {
         .map(|d| d["filename"].as_str().unwrap())
         .collect();
     assert_eq!(names, ["Ellipse 1.svg", "wam.svg"]);
+}
+
+#[test]
+fn offset_distance_is_the_verified_kerf_or_the_export_is_refused() {
+    let a = artifact();
+    let (p, report) = export(&a, &receipt(&a), "x.svg").unwrap();
+    assert!(
+        p.offsets
+            .iter()
+            .all(|o| o.distance == WAM_OFFSET_DISTANCE_IN)
+    );
+    assert_eq!(report.offset_distance_in, WAM_OFFSET_DISTANCE_IN);
+    close(report.plan_kerf_mm, WAM_OFFSET_DISTANCE_IN * 25.4);
+
+    // A plan verified at another kerf (the machine's 1.118 mm nominal, or a user's 0.6 mm) is refused.
+    for kerf in [1.118, 0.6] {
+        let mut a = artifact();
+        a["plan"]["kerf_mm"] = json!(kerf);
+        match export(&a, &receipt(&a), "x.svg") {
+            Err(ExportError::KerfMismatch { kerf_mm, .. }) => assert_eq!(kerf_mm, kerf),
+            other => panic!("kerf {kerf}: {other:?}"),
+        }
+    }
+}
+
+#[test]
+fn only_an_unedited_recipe_keeps_its_wam_uid() {
+    let a = artifact();
+    assert_eq!(
+        export(&a, &receipt(&a), "x.svg")
+            .unwrap()
+            .0
+            .selected_material
+            .material
+            .u_id,
+        Some(257)
+    );
+    // An edited recipe is sent with uid null: it is written as a new, unverified custom material.
+    let mut a = artifact();
+    a["project"]["integration"]["planning"]["user_material"]["wam"]["uid"] = json!(null);
+    let (p, report) = export(&a, &receipt(&a), "x.svg").unwrap();
+    assert_eq!(p.selected_material.material.u_id, None);
+    assert!(report.unverified.iter().any(|u| u.contains("no uId")));
+}
+
+#[test]
+fn rotation_message_reports_clockwise_degrees() {
+    let mut a = artifact();
+    // openWAM stores counter-clockwise: -90 is a 90 degree clockwise turn on the page.
+    a["project"]["integration"]["transmog"]["sources"][0]["instances"][1]["rotation_deg"] =
+        json!(-90.0);
+    let e = export(&a, &receipt(&a), "x.svg").unwrap_err().to_string();
+    assert!(e.contains("rotated 90 deg clockwise"), "{e}");
 }

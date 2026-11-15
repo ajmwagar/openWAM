@@ -13,6 +13,11 @@ use serde_json::Value;
 
 /// Kerf offset WAM wrote in every sample (inches), independent of material.
 pub const WAM_OFFSET_DISTANCE_IN: f64 = 0.019;
+/// The same distance in millimetres: the only kerf a plan can have for its
+/// `.wzr` to describe the cut that was verified.
+pub const WAM_OFFSET_DISTANCE_MM: f64 = WAM_OFFSET_DISTANCE_IN * 25.4;
+/// Slack when comparing a plan kerf with the attested offset (inches).
+const KERF_MATCH_IN: f64 = 1e-4;
 /// Eco/Speed feed ratio of the only WAM-native Pro material in the samples
 /// (Polyurethane 0.5 in: 2.756 / 29.1). Used only to keep eco mode slower.
 pub const ECO_FEED_RATIO: f64 = 2.756 / 29.1;
@@ -30,7 +35,7 @@ pub enum ExportError {
     #[error("refused: no cut contours in the plan")]
     NothingToCut,
     #[error(
-        "refused: {file} copy {copy} has rotation {degrees} deg; no WAM sample shows how WAM stores a rotated group"
+        "refused: {file} copy {copy} is rotated {degrees} deg clockwise; no WAM sample shows how WAM stores a rotated group"
     )]
     Rotation {
         file: String,
@@ -41,6 +46,10 @@ pub enum ExportError {
         "refused: {file} cuts different contours in different copies; a WAM file holds one drawing for all of its groups"
     )]
     InconsistentCuts { file: String },
+    #[error(
+        "refused: the plan was verified with a {kerf_mm:.4} mm kerf but every WAM sample stores an offset distance of 0.019 in ({wam_mm:.4} mm). The manual says the offset defaults to the kerf, but no sample shows another value, so set the plan kerf to {wam_mm:.4} mm to export"
+    )]
+    KerfMismatch { kerf_mm: f64, wam_mm: f64 },
     #[error("refused: user material {0}")]
     Material(String),
     #[error(transparent)]
@@ -77,6 +86,9 @@ pub struct ExportReport {
     pub material_user_defined: bool,
     /// openWAM tabs that are not carried into the .wzr (WAM tab type `none`).
     pub dropped_tabs: usize,
+    /// Offset distance written to every group (inches), the plan kerf it stands for (mm).
+    pub offset_distance_in: f64,
+    pub plan_kerf_mm: f64,
     pub feed: f64,
     pub feed_unit: String,
     pub pierce_s: f64,
@@ -508,6 +520,14 @@ pub fn export(
             "sketch must be mm, svg_top_left_y_down".into(),
         ));
     }
+    // The verified plan's kerf must be the offset the file records.
+    let kerf_mm = num(artifact, &["plan", "kerf_mm"])?;
+    if (kerf_mm / 25.4 - WAM_OFFSET_DISTANCE_IN).abs() > KERF_MATCH_IN {
+        return Err(ExportError::KerfMismatch {
+            kerf_mm,
+            wam_mm: WAM_OFFSET_DISTANCE_MM,
+        });
+    }
     let specs = file_specs(integration, sketch, filename)?;
     let boxes = placed_boxes(get(integration, &["transmog"])?)?;
 
@@ -623,7 +643,7 @@ pub fn export(
                 return Err(ExportError::Rotation {
                     file: spec.name.clone(),
                     copy,
-                    degrees: *rotation,
+                    degrees: -*rotation,
                 });
             }
             // One offset per group: every cut contour of the copy must agree.
@@ -808,6 +828,8 @@ pub fn export(
         omitted_files: omitted,
         material_user_defined: recipe.user_defined,
         dropped_tabs,
+        offset_distance_in: WAM_OFFSET_DISTANCE_IN,
+        plan_kerf_mm: kerf_mm,
         feed: recipe.feed,
         feed_unit: recipe.rate_unit.into(),
         pierce_s: recipe.pierce,

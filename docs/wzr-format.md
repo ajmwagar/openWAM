@@ -137,7 +137,7 @@ IDs 0.. with `fileIDCounter` = file count.
 | `svgString` | that source's cut contours only (no-cut contours dropped), as `<path>` in mm, size from the source's own viewport |
 | `fileBB`/`baseBB` | rule above on that SVG |
 | offset `type` (per group) | `Outside` when every cut contour of the copy keeps the part, `Inside` for the inverse, `Centerline` when all are centreline; a copy mixing them is refused (`MixedSides`) |
-| offset `distance` | WAM's `0.019` |
+| offset `distance` | WAM's `0.019` in, written only when the verified plan's `kerf_mm` equals it (0.4826 mm; the manual says the offset defaults to the kerf). Any other plan kerf is refused (`KerfMismatch`): no sample shows another distance |
 | instance `scale` | the layout copy's scale (WAM stores it per instance, E: 1 vs 1.639) |
 | instance `position` | centre of the copy's placed cut geometry (bed frame, y down), inches |
 | `RSTBB` | the file box scaled by instance 0's scale, centred on the origin |

@@ -131,7 +131,7 @@ fn openwam_export_matches_wam_samples() {
             let inside = |a: &[f64; 4], b: &[f64; 4]| {
                 b[0] < a[0] && b[1] < a[1] && b[2] > a[2] && b[3] > a[3]
             };
-            let intent = json!({"kerf_override_mm": null, "contours": contours.iter().enumerate().map(|(i, c)| {
+            let intent = json!({"kerf_override_mm": 0.4826, "contours": contours.iter().enumerate().map(|(i, c)| {
                 let depth = boxes.iter().filter(|b| inside(&boxes[i], b)).count();
                 let side = if c["closed"] != true { "no_cut" } else if depth % 2 == 0 { "outside" } else { "inside" };
                 json!({"source_id": c["source_id"], "side": side, "start_fraction": 0, "tabs": [], "lead_in_mm": 2, "lead_out_mm": 2})
