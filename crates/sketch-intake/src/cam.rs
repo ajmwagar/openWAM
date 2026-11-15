@@ -33,7 +33,7 @@ pub struct Stock {
 /// Union of the expanded placed geometry. Reported alongside the owner's bed
 /// check; it is never used to clamp or clip the requested layout.
 fn stock(report: &bridge::Integration) -> Result<Option<Stock>> {
-    if report.transmog.layout.is_none() {
+    if report.transmog.layout.is_none() && report.transmog.sources.is_none() {
         return Ok(None);
     }
     let mut min = [f64::INFINITY; 2];

@@ -386,6 +386,7 @@ fn settings_with(layout: Option<Layout>, placement_xy_down_mm: [f64; 2]) -> api:
         tolerance_mm: 0.02,
         placement_xy_down_mm,
         layout,
+        user_material: None,
     }
 }
 

@@ -18,6 +18,7 @@ fn integration() -> Vec<u8> {
                 material: "Aluminum",
                 units: Units::Metric,
                 thickness: 3.0,
+                user_material: None,
             },
             0.02,
             [0.0, 0.0],

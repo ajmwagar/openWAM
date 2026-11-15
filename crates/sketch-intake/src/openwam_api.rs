@@ -43,6 +43,10 @@ pub struct Settings {
     /// the single-instance contract. Present means one placed copy per instance.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub layout: Option<bridge::Layout>,
+    /// An explicit user recipe replaces the catalog row. It must match
+    /// `model`, `units`, `thickness` and `material` (its name) exactly.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub user_material: Option<cutting::UserMaterial>,
 }
 
 #[derive(Debug, Serialize, Deserialize, JsonSchema)]
@@ -158,6 +162,12 @@ pub enum Operation {
     Prepare {
         source_text: String,
         source_format: bridge::SourceFormat,
+        settings: Settings,
+    },
+    /// Several designs at once, each with its own placement or copies. Equivalent
+    /// to `prepare` over a [`bridge::SourceBundle`] source.
+    PrepareSources {
+        sources: Vec<bridge::SourceSpec>,
         settings: Settings,
     },
     Revise {
@@ -320,6 +330,7 @@ pub fn prepare(
             material: &settings.material,
             units: settings.units,
             thickness: settings.thickness,
+            user_material: settings.user_material.as_ref(),
         },
         settings.tolerance_mm,
         settings.placement_xy_down_mm,
@@ -614,7 +625,12 @@ pub fn execute(request: Request, catalog: &cutting::Catalog) -> Result<Output, A
             source_format,
             settings,
         } => {
-            if source_text.len() > MAX_INPUT_BYTES {
+            let limit = if source_format == bridge::SourceFormat::Bundle {
+                bridge::MAX_BUNDLE_BYTES
+            } else {
+                MAX_INPUT_BYTES
+            };
+            if source_text.len() > limit {
                 return Err(ApiError::new(
                     ErrorCode::InputTooLarge,
                     "source exceeds 1 MiB",
@@ -623,6 +639,19 @@ pub fn execute(request: Request, catalog: &cutting::Catalog) -> Result<Output, A
             prepare(source_text.as_bytes(), source_format, &settings, catalog)
                 .map(|project| Output::Project { project })
                 .map_err(|e| ApiError::from_error(ErrorCode::PlanningFailed, e))
+        }
+        Operation::PrepareSources { sources, settings } => {
+            let text = bridge::SourceBundle::new(sources)
+                .to_text()
+                .map_err(|e| ApiError::from_error(ErrorCode::InputTooLarge, e))?;
+            prepare(
+                text.as_bytes(),
+                bridge::SourceFormat::Bundle,
+                &settings,
+                catalog,
+            )
+            .map(|project| Output::Project { project })
+            .map_err(|e| ApiError::from_error(ErrorCode::PlanningFailed, e))
         }
         Operation::Revise { project, settings } => {
             let (original, report) = openwam::reopen(&project_bytes(&project)?, catalog)
@@ -703,12 +732,12 @@ pub fn capabilities() -> serde_json::Value {
         "request_version": REQUEST_SCHEMA, "response_version": RESPONSE_SCHEMA,
         "limits": {"request_bytes": MAX_REQUEST_BYTES, "response_bytes": MAX_RESPONSE_BYTES, "source_bytes": MAX_INPUT_BYTES, "project_bytes": openwam::MAX_PROJECT_BYTES,
             "shutdown_events":crate::shutdown::MAX_EVENTS, "shutdown_time_us":crate::shutdown::MAX_TIME_US, "shutdown_switch_bindings":crate::shutdown::MAX_SWITCHES,
-            "layout_instances": bridge::MAX_INSTANCES},
+            "layout_instances": bridge::MAX_INSTANCES, "bundle_sources": bridge::MAX_SOURCES, "bundle_bytes": bridge::MAX_BUNDLE_BYTES},
         "machine_output_enabled": false, "hardware_qualified": false,
         "shutdown_example": serde_json::from_str::<serde_json::Value>(include_str!("../../../wazer/fixtures/shutdown-completion.request.json")).expect("valid retained shutdown example"),
         "prepare_example": Request { schema: REQUEST_SCHEMA.into(), request: Operation::Prepare {
             source_text: include_str!("../examples/plate.svg").into(), source_format: bridge::SourceFormat::Svg,
-            settings: Settings { model: cutting::Model::Pro, material: "Aluminum".into(), units: cutting::Units::Metric, thickness: 3.0, tolerance_mm: 0.02, placement_xy_down_mm: [0.0, 0.0], layout: None },
+            settings: Settings { model: cutting::Model::Pro, material: "Aluminum".into(), units: cutting::Units::Metric, thickness: 3.0, tolerance_mm: 0.02, placement_xy_down_mm: [0.0, 0.0], layout: None, user_material: None },
         }},
     })
 }

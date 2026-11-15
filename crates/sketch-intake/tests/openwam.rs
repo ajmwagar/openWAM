@@ -17,6 +17,7 @@ fn project(source: &[u8], format: SourceFormat) -> Vec<u8> {
             material: "Aluminum",
             units: Units::Metric,
             thickness: 3.0,
+            user_material: None,
         },
         0.02,
         [5.0, 7.0],

@@ -310,6 +310,7 @@ fn prepare_bytes(
             tolerance_mm: settings.tolerance,
             placement_xy_down_mm: [settings.x, settings.y],
             layout: None,
+            user_material: None,
         },
         &app.0.catalog,
     )?;

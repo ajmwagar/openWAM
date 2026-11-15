@@ -37,6 +37,7 @@ fn selection() -> Selection<'static> {
         material: "Aluminum",
         units: Units::Metric,
         thickness: 3.0,
+        user_material: None,
     }
 }
 fn dxf(entities: &str, units: i32) -> Vec<u8> {

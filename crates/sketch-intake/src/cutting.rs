@@ -64,6 +64,103 @@ pub struct Row {
     pub maximum_marked: bool,
     pub cut: Option<Cut>,
     pub warnings: Vec<String>,
+    /// True only for a row built from an explicit [`UserMaterial`]; catalog rows
+    /// never carry it and it is omitted from their serialized form.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub user_defined: bool,
+}
+
+/// Cut-rate class WAM records for a custom material.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize, schemars::JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub enum CutRate {
+    Coarse,
+    Medium,
+    Fine,
+}
+
+/// An explicit, user-supplied cutting recipe. It is never merged into the pinned
+/// WAZER catalog; planning marks it `user_defined` and records it in the job so
+/// the artifact hash covers every field.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, schemars::JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct UserMaterial {
+    /// Must be `true`; a recipe cannot pose as a catalog row.
+    pub user_defined: bool,
+    pub name: String,
+    pub category: String,
+    pub model: Model,
+    pub units: Units,
+    /// Thickness in `units` (mm or in).
+    pub thickness: f64,
+    /// Cutting feed per minute in `units`.
+    pub feed: f64,
+    pub pierce_seconds: f64,
+    /// Default lead length in `units`.
+    pub lead_length: f64,
+    /// Default tab width in `units` (0 = none).
+    pub tab_size: f64,
+    pub cut_rate: CutRate,
+    /// Free-text provenance, for example the .wzr the recipe was read from.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub origin: Option<String>,
+}
+
+impl UserMaterial {
+    pub fn validate(&self) -> Result<()> {
+        ensure!(
+            self.user_defined,
+            "a user material must set user_defined: true"
+        );
+        for (label, text) in [("name", &self.name), ("category", &self.category)] {
+            ensure!(
+                !text.trim().is_empty()
+                    && text.chars().count() <= 80
+                    && !text.chars().any(char::is_control),
+                "user material {label} must be 1..=80 printable characters"
+            );
+        }
+        if let Some(origin) = &self.origin {
+            ensure!(
+                origin.chars().count() <= 200 && !origin.chars().any(char::is_control),
+                "origin too long"
+            );
+        }
+        positive(self.thickness)?;
+        positive(self.feed)?;
+        for (label, v) in [
+            ("pierce_seconds", self.pierce_seconds),
+            ("lead_length", self.lead_length),
+            ("tab_size", self.tab_size),
+        ] {
+            ensure!(
+                v.is_finite() && (0.0..=10_000.0).contains(&v),
+                "user material {label} must be finite and non-negative"
+            );
+        }
+        Ok(())
+    }
+    fn row(&self) -> Row {
+        let unit = match self.units {
+            Units::Metric => "mm",
+            Units::Imperial => "in",
+        };
+        Row {
+            source_row: 0,
+            material: self.name.clone(),
+            model: self.model,
+            units: self.units,
+            thickness: self.thickness,
+            thickness_label: format!("{} {unit}", self.thickness),
+            maximum_marked: false,
+            cut: Some(Cut {
+                feed: self.feed,
+                pierce_seconds: self.pierce_seconds,
+            }),
+            warnings: Vec::new(),
+            user_defined: true,
+        }
+    }
 }
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -250,7 +347,7 @@ pub fn import_published(materials: &[u8], specs: &[u8], date: &str) -> Result<Ca
                     } else {
                         None
                     };
-                    rows.push(Row {source_row,material:material.clone(),model,units,thickness:first_number(&thickness_label)?,maximum_marked:thickness_label.contains(match model{Model::Pro=>"Max Pro",Model::Desktop=>"Max Desktop"}),thickness_label:thickness_label.clone(),cut,warnings:if ambiguous{vec!["paired thickness labels differ by more than a factor of two; source row requires correction".into()]}else{vec![]}});
+                    rows.push(Row {source_row,material:material.clone(),model,units,thickness:first_number(&thickness_label)?,maximum_marked:thickness_label.contains(match model{Model::Pro=>"Max Pro",Model::Desktop=>"Max Desktop"}),thickness_label:thickness_label.clone(),cut,warnings:if ambiguous{vec!["paired thickness labels differ by more than a factor of two; source row requires correction".into()]}else{vec![]},user_defined:false});
                 }
             }
         }
@@ -541,6 +638,9 @@ pub fn bundled() -> Result<Catalog> {
 pub struct Job {
     pub schema: &'static str,
     pub sketch: Sketch,
+    /// The explicit recipe when one replaced the catalog row; omitted otherwise.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub user_material: Option<UserMaterial>,
     pub tables_canonical_sha256: String,
     pub selected_row: Row,
     pub machine_limits: Limits,
@@ -563,6 +663,19 @@ pub fn plan(
     units: Units,
     thickness: f64,
 ) -> Result<Job> {
+    plan_with(sketch, catalog, model, material, units, thickness, None)
+}
+
+/// [`plan`] with an optional explicit user recipe replacing the catalog row.
+pub fn plan_with(
+    sketch: Sketch,
+    catalog: &Catalog,
+    model: Model,
+    material: &str,
+    units: Units,
+    thickness: f64,
+    user_material: Option<&UserMaterial>,
+) -> Result<Job> {
     ensure!(
         sketch.schema == "reversal.sketch-preview.v1"
             && sketch.units == "mm"
@@ -570,7 +683,20 @@ pub fn plan(
             && !sketch.machine_output_enabled,
         "unsupported sketch coordinate contract"
     );
-    let row = catalog.select(model, material, units, thickness)?.clone();
+    let row = match user_material {
+        Some(user) => {
+            user.validate()?;
+            ensure!(
+                user.model == model
+                    && user.units == units
+                    && user.name == material
+                    && user.thickness.to_bits() == thickness.to_bits(),
+                "user material must match the selected model, units, name and thickness"
+            );
+            user.row()
+        }
+        None => catalog.select(model, material, units, thickness)?.clone(),
+    };
     let tables_canonical_sha256 = catalog.canonical_sha256()?;
     let limits = catalog
         .limits
@@ -659,6 +785,7 @@ pub fn plan(
     Ok(Job {
         schema: "reversal.waterjet-job-estimate.v1",
         sketch,
+        user_material: user_material.cloned(),
         tables_canonical_sha256,
         selected_row: row,
         nominal_kerf_mm: limits.nominal_kerf_mm,
@@ -689,13 +816,20 @@ pub fn verify_job(svg: &[u8], report: &[u8], catalog: &Catalog) -> Result<serde_
             .context("missing selected row")?
             .clone(),
     )?;
-    let recomputed = plan(
+    let user_material: Option<UserMaterial> = serde_json::from_value(
+        recorded
+            .get("user_material")
+            .cloned()
+            .unwrap_or(serde_json::Value::Null),
+    )?;
+    let recomputed = plan_with(
         crate::inspect_svg(svg)?,
         catalog,
         selection.model,
         &selection.material,
         selection.units,
         selection.thickness,
+        user_material.as_ref(),
     )?;
     ensure!(
         crate::json_identity::equivalent(&recorded, &serde_json::to_value(&recomputed)?),

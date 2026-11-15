@@ -1,7 +1,7 @@
 //! Explicit adapter to the Transmog sketch contract and Swarf waterjet owner.
 use crate::{
     Segment, Sketch,
-    cutting::{self, Catalog, Model, Units},
+    cutting::{self, Catalog, Model, Units, UserMaterial},
 };
 use anyhow::{Context, Result, ensure};
 use kurbo::{CubicBez, ParamCurve, Point};
@@ -55,7 +55,81 @@ pub struct Geometry {
     pub max_bezier_chord_bound_mm: f64,
     pub features: Vec<Feature>,
     pub contour_identity: Vec<ContourIdentity>,
+    /// Present only for a multi-source bundle; absent keeps single-source JSON unchanged.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub sources: Option<Vec<SourceRecord>>,
     pub diagnostics: Vec<String>,
+}
+
+/// Maximum sources in one bundle.
+pub const MAX_SOURCES: usize = 16;
+/// Upper bound for the serialized bundle text (each source is still capped at 1 MiB).
+pub const MAX_BUNDLE_BYTES: usize = 16 * 1024 * 1024;
+pub const BUNDLE_SCHEMA: &str = "reversal.openwam-sources.v1";
+
+/// One imported design. `placement_xy_down_mm` / `layout` follow the single-source
+/// contract per source; `contours` keeps a subset (a split cut group).
+#[derive(Clone, Debug, Serialize, Deserialize, JsonSchema, PartialEq)]
+#[serde(deny_unknown_fields)]
+pub struct SourceSpec {
+    /// 1..=32 chars of `[A-Za-z0-9_-]`, unique in the bundle.
+    pub id: String,
+    /// File name for display and export; no path separators.
+    pub name: String,
+    pub format: SourceFormat,
+    pub text: String,
+    pub placement_xy_down_mm: [f64; 2],
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub layout: Option<Layout>,
+    /// Keep only these contours, named by the source's own contour ids.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub contours: Option<Vec<String>>,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize, JsonSchema, PartialEq)]
+#[serde(deny_unknown_fields)]
+pub struct SourceBundle {
+    pub schema: String,
+    pub sources: Vec<SourceSpec>,
+}
+
+impl SourceBundle {
+    pub fn new(sources: Vec<SourceSpec>) -> Self {
+        Self {
+            schema: BUNDLE_SCHEMA.into(),
+            sources,
+        }
+    }
+    pub fn to_text(&self) -> Result<String> {
+        let text = serde_json::to_string(self)?;
+        ensure!(
+            text.len() <= MAX_BUNDLE_BYTES,
+            "source bundle exceeds {MAX_BUNDLE_BYTES} bytes"
+        );
+        Ok(text)
+    }
+}
+
+/// Where one source's copies landed (bed frame, mm, Y down) and which contours
+/// belong to it. Contour ids are the combined `<source id>:<contour id>` form;
+/// a layout copy appends `#<instance>`.
+#[derive(Debug, Serialize)]
+pub struct SourceRecord {
+    pub id: String,
+    pub name: String,
+    pub format: SourceFormat,
+    pub source_sha256: String,
+    pub contour_ids: Vec<String>,
+    pub instances: Vec<InstanceRecord>,
+}
+
+#[derive(Debug, Serialize)]
+pub struct InstanceRecord {
+    pub rotation_deg: f64,
+    pub scale: f64,
+    pub placement_xy_down_mm: [f64; 2],
+    pub bbox_min_xy_down_mm: [f64; 2],
+    pub bbox_max_xy_down_mm: [f64; 2],
 }
 
 struct Flatten {
@@ -331,8 +405,208 @@ pub fn to_transmog(
             })
             .collect(),
         contour_identity: identity,
+        sources: None,
         diagnostics,
     })
+}
+
+fn valid_id(id: &str) -> bool {
+    (1..=32).contains(&id.len())
+        && id
+            .bytes()
+            .all(|b| b.is_ascii_alphanumeric() || b == b'_' || b == b'-')
+}
+
+fn valid_name(name: &str) -> bool {
+    !name.is_empty()
+        && name.chars().count() <= 128
+        && !name.contains(['/', '\\'])
+        && !name.contains("..")
+        && !name.chars().any(char::is_control)
+}
+
+fn bbox_down(features: &[Feature]) -> Result<([f64; 2], [f64; 2])> {
+    let mut min = [f64::INFINITY; 2];
+    let mut max = [f64::NEG_INFINITY; 2];
+    for feature in features {
+        let Feature::Sketch { profile, .. } = feature else {
+            continue;
+        };
+        for segment in profile {
+            let SketchSegment::Line { start, end } = segment else {
+                anyhow::bail!("adapter emits only line profiles")
+            };
+            for p in [start, end] {
+                min = [min[0].min(p.x), min[1].min(-p.y)];
+                max = [max[0].max(p.x), max[1].max(-p.y)];
+            }
+        }
+    }
+    ensure!(
+        min.iter().chain(&max).all(|v| v.is_finite()),
+        "source has no finite bounds"
+    );
+    Ok((min, max))
+}
+
+/// Combine several sources into one sketch/geometry pair. Each source keeps its
+/// own placement or layout; contour identities are prefixed with the source id
+/// so the CAM intent can address every contour of every copy.
+fn bundle_geometry(bytes: &[u8], tolerance: f64) -> Result<(Sketch, Geometry)> {
+    use sha2::{Digest, Sha256};
+    ensure!(
+        bytes.len() <= MAX_BUNDLE_BYTES,
+        "source bundle exceeds {MAX_BUNDLE_BYTES} bytes"
+    );
+    let bundle: SourceBundle =
+        serde_json::from_slice(bytes).context("invalid source bundle JSON")?;
+    ensure!(
+        bundle.schema == BUNDLE_SCHEMA,
+        "unsupported source bundle schema"
+    );
+    ensure!(
+        (1..=MAX_SOURCES).contains(&bundle.sources.len()),
+        "a bundle holds 1..={MAX_SOURCES} sources"
+    );
+    let mut ids = std::collections::BTreeSet::new();
+    let mut features = Vec::new();
+    let mut identity = Vec::new();
+    let mut records = Vec::new();
+    let mut contours = Vec::new();
+    let mut diagnostics = Vec::new();
+    let mut viewport = [0.0f64; 2];
+    let mut max_bound = 0.0f64;
+    let mut schema = "";
+    for spec in &bundle.sources {
+        ensure!(
+            valid_id(&spec.id),
+            "source id must be 1..=32 of [A-Za-z0-9_-]"
+        );
+        ensure!(
+            ids.insert(spec.id.clone()),
+            "duplicate source id {}",
+            spec.id
+        );
+        ensure!(
+            valid_name(&spec.name),
+            "invalid source name for {}",
+            spec.id
+        );
+        let mut sketch = match spec.format {
+            SourceFormat::Svg => crate::inspect_svg(spec.text.as_bytes())?,
+            SourceFormat::Dxf => crate::dxf_intake::inspect_dxf(spec.text.as_bytes(), tolerance)?,
+            SourceFormat::Bundle => anyhow::bail!("bundles do not nest"),
+        };
+        let source_sha256 = sketch.source_sha256.clone();
+        if let Some(keep) = &spec.contours {
+            ensure!(
+                !keep.is_empty(),
+                "source {}: empty contour selection",
+                spec.id
+            );
+            for want in keep {
+                ensure!(
+                    sketch.contours.iter().any(|c| &c.source_id == want),
+                    "source {}: unknown contour {want}",
+                    spec.id
+                );
+            }
+            sketch.contours.retain(|c| keep.contains(&c.source_id));
+        }
+        let geometry = to_transmog(
+            &sketch,
+            tolerance,
+            spec.placement_xy_down_mm,
+            spec.layout.as_ref(),
+        )?;
+        max_bound = max_bound.max(geometry.max_bezier_chord_bound_mm);
+        schema = sketch.schema;
+        viewport = [
+            viewport[0].max(sketch.viewport_mm[0]),
+            viewport[1].max(sketch.viewport_mm[1]),
+        ];
+        for d in sketch.diagnostics.iter().chain(&geometry.diagnostics) {
+            if !diagnostics.contains(d) {
+                diagnostics.push(d.clone());
+            }
+        }
+        let per = sketch.contours.len();
+        let count = spec.layout.as_ref().map_or(1, |l| l.instances.len());
+        ensure!(
+            per > 0 && geometry.features.len() == per * count,
+            "source {}: unexpected feature count",
+            spec.id
+        );
+        let instances = (0..count)
+            .map(|i| {
+                let (min, max) = bbox_down(&geometry.features[i * per..(i + 1) * per])?;
+                let (rotation_deg, scale, placement) = match &spec.layout {
+                    Some(l) => {
+                        let inst = &l.instances[i];
+                        (inst.rotation_deg, inst.scale, inst.placement_xy_down_mm)
+                    }
+                    None => (0.0, 1.0, spec.placement_xy_down_mm),
+                };
+                Ok(InstanceRecord {
+                    rotation_deg,
+                    scale,
+                    placement_xy_down_mm: placement,
+                    bbox_min_xy_down_mm: min,
+                    bbox_max_xy_down_mm: max,
+                })
+            })
+            .collect::<Result<Vec<_>>>()?;
+        let mut contour_ids = Vec::new();
+        for (feature, id) in geometry.features.into_iter().zip(geometry.contour_identity) {
+            let combined = format!("{}:{}", spec.id, id.source_id);
+            contour_ids.push(combined.clone());
+            features.push(feature);
+            identity.push(ContourIdentity {
+                source_id: combined,
+                closed: id.closed,
+            });
+        }
+        for c in sketch.contours {
+            contours.push(crate::Contour {
+                source_id: format!("{}:{}", spec.id, c.source_id),
+                ..c
+            });
+        }
+        records.push(SourceRecord {
+            id: spec.id.clone(),
+            name: spec.name.clone(),
+            format: spec.format,
+            source_sha256,
+            contour_ids,
+            instances,
+        });
+    }
+    let source_sha256 = format!("{:x}", Sha256::digest(bytes));
+    diagnostics.push("Multi-source bundle: contour ids are <source id>:<contour id>[#<copy>]; the planning sketch is the unplaced union of every source.".to_string());
+    let sketch = Sketch {
+        schema,
+        source_sha256: source_sha256.clone(),
+        units: "mm",
+        coordinate_system: "svg_top_left_y_down",
+        viewport_mm: viewport,
+        machine_output_enabled: false,
+        contours,
+        diagnostics: diagnostics.clone(),
+    };
+    let geometry = Geometry {
+        schema: "reversal.transmog-sketch-bridge.v1",
+        source_sha256,
+        coordinate_system: "xy_mm_top_left_y_negative_down",
+        placement_xy_down_mm: [0.0, 0.0],
+        layout: None,
+        requested_curve_tolerance_mm: tolerance,
+        max_bezier_chord_bound_mm: max_bound,
+        features,
+        contour_identity: identity,
+        sources: Some(records),
+        diagnostics,
+    };
+    Ok((sketch, geometry))
 }
 
 #[derive(Debug, Serialize)]
@@ -351,13 +625,20 @@ pub struct Selection<'a> {
     pub material: &'a str,
     pub units: Units,
     pub thickness: f64,
+    /// An explicit user recipe replaces the catalog lookup. It is never merged
+    /// into the catalog and is recorded (marked `user_defined`) in the job.
+    pub user_material: Option<&'a UserMaterial>,
 }
 
-#[derive(Clone, Copy, Debug, Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(
+    Clone, Copy, Debug, PartialEq, Eq, Serialize, serde::Deserialize, schemars::JsonSchema,
+)]
 #[serde(rename_all = "snake_case")]
 pub enum SourceFormat {
     Svg,
     Dxf,
+    /// A [`SourceBundle`] JSON document holding several SVG/DXF sources.
+    Bundle,
 }
 
 pub fn integrate_source(
@@ -369,18 +650,35 @@ pub fn integrate_source(
     placement: [f64; 2],
     layout: Option<&Layout>,
 ) -> Result<Integration> {
-    let sketch = match format {
-        SourceFormat::Svg => crate::inspect_svg(bytes)?,
-        SourceFormat::Dxf => crate::dxf_intake::inspect_dxf(bytes, tolerance)?,
+    let (sketch, geometry) = match format {
+        SourceFormat::Bundle => {
+            ensure!(
+                placement == [0.0, 0.0] && layout.is_none(),
+                "a source bundle carries placement and layout per source"
+            );
+            ensure!(
+                tolerance.is_finite() && (0.000001..=1.0).contains(&tolerance),
+                "curve tolerance must be 0.000001..1 mm"
+            );
+            bundle_geometry(bytes, tolerance)?
+        }
+        single => {
+            let sketch = match single {
+                SourceFormat::Svg => crate::inspect_svg(bytes)?,
+                _ => crate::dxf_intake::inspect_dxf(bytes, tolerance)?,
+            };
+            let geometry = to_transmog(&sketch, tolerance, placement, layout)?;
+            (sketch, geometry)
+        }
     };
-    let geometry = to_transmog(&sketch, tolerance, placement, layout)?;
-    let planning = cutting::plan(
+    let planning = cutting::plan_with(
         sketch,
         catalog,
         selection.model,
         selection.material,
         selection.units,
         selection.thickness,
+        selection.user_material,
     )?;
     let contours = geometry
         .features
@@ -451,6 +749,12 @@ pub fn verified_integration(
     // The applied layout is retained, so reopen expands the same copies from the
     // retained source and typed intent rather than trusting stored geometry.
     let layout: Option<Layout> = serde_json::from_value(recorded["transmog"]["layout"].clone())?;
+    let user_material: Option<UserMaterial> =
+        serde_json::from_value(recorded["planning"]["user_material"].clone())?;
+    ensure!(
+        user_material.is_some() == row.user_defined,
+        "user-defined material marker differs from the recorded recipe"
+    );
     let rebuilt = integrate_source(
         original,
         format,
@@ -460,6 +764,7 @@ pub fn verified_integration(
             material: &row.material,
             units: row.units,
             thickness: row.thickness,
+            user_material: user_material.as_ref(),
         },
         tolerance,
         placement,
