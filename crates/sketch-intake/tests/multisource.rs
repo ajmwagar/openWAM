@@ -226,6 +226,21 @@ fn user_material_must_be_explicit_and_consistent() {
 }
 
 #[test]
+fn wam_extras_must_agree_with_the_selected_feed() {
+    let sources = json!([source("a", "sq.svg", SQUARE, [0.0, 0.0])]);
+    let wam = |fine: f64| {
+        json!({"uid": 257, "speed_rates": [29.1, 26.2, fine], "eco_rates": [2.756, 2.48, 2.205],
+            "abrasive_g_min": 150, "max_tab": 3})
+    };
+    let mut ok = user_settings();
+    ok["user_material"]["wam"] = wam(23.3);
+    assert_eq!(prepare(sources.clone(), ok)["status"], "ok");
+    let mut bad = user_settings();
+    bad["user_material"]["wam"] = wam(20.0);
+    assert_eq!(prepare(sources, bad)["status"], "error");
+}
+
+#[test]
 fn single_source_prepare_is_unchanged_and_has_no_bundle_fields() {
     let response = invoke(&api::capabilities()["prepare_example"]);
     let planning = &project(&response)["integration"]["planning"];

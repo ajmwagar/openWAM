@@ -104,6 +104,23 @@ pub struct UserMaterial {
     /// Free-text provenance, for example the .wzr the recipe was read from.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub origin: Option<String>,
+    /// Extra fields of a WAM material record, kept so an imported recipe can be
+    /// written back unchanged. Planning never reads them except `feed`.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub wam: Option<WamRecipe>,
+}
+
+/// WAM material fields that openWAM planning does not use. Rates are
+/// `[rough (coarse), medium, fine]` in `units` per minute.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize, schemars::JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct WamRecipe {
+    /// WAM's account-bound material id; null for a recipe not created by WAM.
+    pub uid: Option<u64>,
+    pub speed_rates: [f64; 3],
+    pub eco_rates: [f64; 3],
+    pub abrasive_g_min: f64,
+    pub max_tab: Option<u64>,
 }
 
 impl UserMaterial {
@@ -136,6 +153,24 @@ impl UserMaterial {
             ensure!(
                 v.is_finite() && (0.0..=10_000.0).contains(&v),
                 "user material {label} must be finite and non-negative"
+            );
+        }
+        if let Some(wam) = &self.wam {
+            for v in wam.speed_rates.iter().chain(&wam.eco_rates) {
+                positive(*v)?;
+            }
+            ensure!(
+                wam.abrasive_g_min.is_finite() && wam.abrasive_g_min >= 0.0,
+                "abrasive rate must be finite and non-negative"
+            );
+            let picked = match self.cut_rate {
+                CutRate::Coarse => wam.speed_rates[0],
+                CutRate::Medium => wam.speed_rates[1],
+                CutRate::Fine => wam.speed_rates[2],
+            };
+            ensure!(
+                picked.to_bits() == self.feed.to_bits(),
+                "feed must equal the speed-mode rate of the selected cut rate"
             );
         }
         Ok(())
