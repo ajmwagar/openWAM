@@ -13,7 +13,7 @@ use std::path::{Path, PathBuf};
 use std::process::{Command, ExitCode, Stdio};
 
 const MAX_ARTIFACT_BYTES: u64 = 64 << 20;
-const USAGE: &str = "usage: openwam-wzr capabilities | read FILE.wzr | roundtrip FILE.wzr | material FILE.wzr | open FILE.wzr | paths_only (FILE.svg|-) | export_wzr --artifact (FILE|-) --out FILE.wzr [--name NAME.svg] [--openwam PATH]";
+const USAGE: &str = "usage: openwam-wzr capabilities | read FILE.wzr | roundtrip FILE.wzr | material FILE.wzr [--name N] | open FILE.wzr [--name N] | paths_only (FILE.svg|-) | export_wzr --artifact (FILE|-) --out FILE.wzr [--name NAME.svg] [--openwam PATH]";
 
 struct Fail(&'static str, String);
 
@@ -82,9 +82,7 @@ fn run(args: &[String]) -> Result<Value, Fail> {
         Some("material") => {
             let path = args.get(1).ok_or_else(|| fail("usage", USAGE))?;
             let project = json::read(&read_file(path)?).map_err(|e| fail("wzr_invalid", e))?;
-            let origin = Path::new(path)
-                .file_name()
-                .map_or_else(|| path.clone(), |n| n.to_string_lossy().into_owned());
+            let origin = origin_name(args, path);
             let material = open::material_recipe(&project, &origin)
                 .map_err(|e| fail("material_invalid", e))?;
             Ok(json!({
@@ -97,9 +95,7 @@ fn run(args: &[String]) -> Result<Value, Fail> {
         Some("open") => {
             let path = args.get(1).ok_or_else(|| fail("usage", USAGE))?;
             let project = json::read(&read_file(path)?).map_err(|e| fail("wzr_invalid", e))?;
-            let origin = Path::new(path)
-                .file_name()
-                .map_or_else(|| path.clone(), |n| n.to_string_lossy().into_owned());
+            let origin = origin_name(args, path);
             Ok(json!({
                 "status": "ok", "kind": "wzr_open", "wam_version": project.wam_version,
                 "files": open::designs(&project).map_err(|e| fail("wzr_invalid", e))?,
@@ -121,6 +117,18 @@ fn run(args: &[String]) -> Result<Value, Fail> {
         Some("export_wzr") => export_wzr(&args[1..]),
         _ => Err(fail("usage", USAGE)),
     }
+}
+
+/// Name recorded as a recipe's origin: `--name`, else the file name.
+fn origin_name(args: &[String], path: &str) -> String {
+    flag(args, "--name").map_or_else(
+        || {
+            Path::new(path)
+                .file_name()
+                .map_or_else(|| path.to_owned(), |n| n.to_string_lossy().into_owned())
+        },
+        str::to_owned,
+    )
 }
 
 fn flag<'a>(args: &'a [String], name: &str) -> Option<&'a str> {
