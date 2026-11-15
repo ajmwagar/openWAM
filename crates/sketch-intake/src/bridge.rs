@@ -119,6 +119,10 @@ pub struct SourceRecord {
     pub name: String,
     pub format: SourceFormat,
     pub source_sha256: String,
+    /// The source's own viewport (mm), before the bundle takes the maximum.
+    pub viewport_mm: [f64; 2],
+    /// True when contour ids carry a `#<copy>` suffix because a layout was applied.
+    pub layout_applied: bool,
     pub contour_ids: Vec<String>,
     pub instances: Vec<InstanceRecord>,
 }
@@ -577,6 +581,8 @@ fn bundle_geometry(bytes: &[u8], tolerance: f64) -> Result<(Sketch, Geometry)> {
             name: spec.name.clone(),
             format: spec.format,
             source_sha256,
+            viewport_mm: sketch.viewport_mm,
+            layout_applied: spec.layout.is_some(),
             contour_ids,
             instances,
         });
