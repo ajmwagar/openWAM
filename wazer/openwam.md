@@ -78,6 +78,12 @@ tests, including four project/preview tests, plus Clippy and formatting checks.
 The preview's HTML structure and operation coordinates were tested; visual
 inspection was unavailable because no browser was connected.
 
+`openwam-demonstration.json` and `openwam-ui-demonstration.json` are not present in
+this tree, so those two claims cannot be checked from a clone. The
+[2026-11-07 execution receipt](execution-receipt-2026-11-07.md) is the retained,
+openable equivalent: saved request/response pairs, exit codes, digests and
+operation counts for the plate fixture through CAM planning and research export.
+
 The same creation command accepts explicitly scaled planar `.dxf` inputs. Its
 arguments match the owner-integration command: model, exact material/thickness
 table point, unit system, curve tolerance in mm and placement X/Y-down in mm.
