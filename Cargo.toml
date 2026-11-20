@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["crates/sketch-intake", "crates/waterjet-control", "vendor/transmog/crates/transmog-core", "vendor/swarf/crates/swarf-waterjet"]
+members = ["crates/sketch-intake", "crates/openwam-wzr", "crates/waterjet-control", "vendor/transmog/crates/transmog-core", "vendor/swarf/crates/swarf-waterjet"]
 
 [workspace.package]
 version = "0.1.0"

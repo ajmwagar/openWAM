@@ -1,0 +1,23 @@
+[package]
+name = "openwam-wzr"
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+publish = false
+description = "WAM 2.4 .wzr project file reader/writer and verified-plan exporter. Talks to the AGPL openwam CLI only as a separate process."
+
+[[bin]]
+name = "openwam-wzr"
+path = "src/bin/openwam-wzr.rs"
+
+[dependencies]
+kurbo = "0.11"
+roxmltree = "0.20"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["float_roundtrip"] }
+sha2 = "0.10"
+svgtypes = "0.15"
+thiserror = "2"
+
+[lints]
+workspace = true
