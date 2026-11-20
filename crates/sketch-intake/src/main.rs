@@ -119,9 +119,11 @@ fn main() -> Result<()> {
                     units,
                     material: args[3].to_str().context("invalid material")?,
                     thickness: number(4)?,
+                    user_material: None,
                 },
                 number(6)?,
                 [number(7)?, number(8)?],
+                None,
             )?;
             if args[0] == "--openwam-create" {
                 serde_json::to_value(reversal_sketch_intake::openwam::create(

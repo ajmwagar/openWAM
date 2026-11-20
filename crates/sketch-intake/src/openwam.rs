@@ -1,6 +1,14 @@
 //! Portable offline projects. Reopen through source/owner recomputation before
 //! presenting operations; a preview is never a controller cut file.
 use crate::{MAX_INPUT_BYTES, bridge, cutting::Catalog, simulation};
+
+fn source_limit(is_bundle: bool) -> usize {
+    if is_bundle {
+        bridge::MAX_BUNDLE_BYTES
+    } else {
+        MAX_INPUT_BYTES
+    }
+}
 use anyhow::{Context, Result, ensure};
 use serde::{Deserialize, Serialize};
 use std::fmt::Write;
@@ -20,7 +28,10 @@ pub struct Project {
 }
 
 pub fn create(original: &[u8], integration: &bridge::Integration) -> Result<Project> {
-    ensure!(original.len() <= MAX_INPUT_BYTES, "source exceeds 1 MiB");
+    ensure!(
+        original.len() <= source_limit(integration.source_format == bridge::SourceFormat::Bundle),
+        "source exceeds 1 MiB"
+    );
     let project = Project {
         schema: SCHEMA.into(),
         source_text: std::str::from_utf8(original)
@@ -45,7 +56,7 @@ pub fn reopen(bytes: &[u8], catalog: &Catalog) -> Result<(Project, bridge::Integ
         "unsupported OpenWAM project schema"
     );
     ensure!(
-        project.source_text.len() <= MAX_INPUT_BYTES,
+        project.source_text.len() <= source_limit(project.integration["source_format"] == "bundle"),
         "source exceeds 1 MiB"
     );
     let rebuilt = bridge::verified_integration(

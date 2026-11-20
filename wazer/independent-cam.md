@@ -116,6 +116,13 @@ records input/output hashes and retained plan details. The same fixture is a
 CLI regression test, including deterministic repetition, independent verification,
 preview annotations and an explicit kerf override.
 
+The crate's own `examples/plate.svg` ladder (prepare, verify, plan_cam, verify_cam,
+preview_cam, research_cam_gcode, verify_cam_gcode) is retained with every request
+and response in the
+[2026-11-07 execution receipt](execution-receipt-2026-11-07.md): two cut paths, four
+spans, 90 plan operations, 125 research G-code commands, all verification rungs
+`verified: true`.
+
 ## Supported geometry and integration limits
 
 Selected cutting paths must be simple closed flattened polygons. The first

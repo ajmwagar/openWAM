@@ -1,0 +1,19 @@
+{
+  "schema": "reversal.openwam-request.v1",
+  "request": {
+    "operation": "prepare",
+    "source_text": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100mm\" height=\"50mm\" viewBox=\"0 0 100 50\">\n  <path id=\"outline\" d=\"M5 5 H95 V45 H5 Z\"/>\n  <circle id=\"hole\" cx=\"20\" cy=\"25\" r=\"5\"/>\n  <path id=\"open-sketch\" fill=\"none\" stroke=\"black\" d=\"M40 25 C50 10 70 40 80 25\"/>\n</svg>\n",
+    "source_format": "svg",
+    "settings": {
+      "model": "pro",
+      "material": "Aluminum",
+      "units": "metric",
+      "thickness": 3,
+      "tolerance_mm": 0.02,
+      "placement_xy_down_mm": [
+        0,
+        0
+      ]
+    }
+  }
+}

@@ -37,6 +37,7 @@ fn selection() -> Selection<'static> {
         material: "Aluminum",
         units: Units::Metric,
         thickness: 3.0,
+        user_material: None,
     }
 }
 fn dxf(entities: &str, units: i32) -> Vec<u8> {
@@ -49,8 +50,8 @@ fn line() -> &'static str {
 #[test]
 fn bezier_adapter_meets_measured_tolerance_and_does_not_mislabel_splines() {
     let sketch = inspect_svg(svg()).unwrap();
-    let coarse = bridge::to_transmog(&sketch, 0.1, [0.0, 0.0]).unwrap();
-    let fine = bridge::to_transmog(&sketch, 0.01, [0.0, 0.0]).unwrap();
+    let coarse = bridge::to_transmog(&sketch, 0.1, [0.0, 0.0], None).unwrap();
+    let fine = bridge::to_transmog(&sketch, 0.01, [0.0, 0.0], None).unwrap();
     assert!(fine.max_bezier_chord_bound_mm <= 0.01);
     let Feature::Sketch { profile, .. } = &fine.features[0] else {
         panic!()
@@ -92,6 +93,7 @@ fn svg_transmog_swarf_preserves_holes_mirroring_closure_and_source_identity() {
         selection(),
         0.02,
         [0.0, 0.0],
+        None,
     )
     .unwrap();
     assert_eq!(report.transmog.features.len(), 2);
@@ -116,6 +118,7 @@ fn original_recomputation_rejects_forged_operations_and_geometry() {
         selection(),
         0.02,
         [1.0, 2.0],
+        None,
     )
     .unwrap();
     let bytes = serde_json::to_vec_pretty(&r).unwrap();
@@ -167,6 +170,7 @@ fn dxf_circles_and_explicit_closed_polylines_integrate_with_bounded_curves() {
         selection(),
         0.02,
         [0.0, 0.0],
+        None,
     )
     .unwrap();
     assert_eq!(r.transmog.features.len(), 2);
@@ -189,6 +193,7 @@ fn endpoint_gaps_stay_separate_and_stock_placement_is_explicit() {
         selection(),
         0.02,
         [1.0, 1.0],
+        None,
     )
     .unwrap();
     assert_eq!(r.swarf.request.contours.len(), 2);
@@ -201,9 +206,10 @@ fn endpoint_gaps_stay_separate_and_stock_placement_is_explicit() {
             &cutting::bundled().unwrap(),
             selection(),
             0.02,
-            [-10.0, 0.0]
+            [-10.0, 0.0],
+            None
         )
         .is_err()
     );
-    assert!(bridge::to_transmog(&inspect_svg(svg()).unwrap(), 0.0, [0.0, 0.0]).is_err());
+    assert!(bridge::to_transmog(&inspect_svg(svg()).unwrap(), 0.0, [0.0, 0.0], None).is_err());
 }

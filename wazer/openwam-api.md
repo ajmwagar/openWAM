@@ -139,6 +139,16 @@ all-target Clippy with the experimental UI, and a headless CLI type check passed
 Tests also exercise revisions, explicit fault replay, forged artifacts and
 structured errors through the actual CLI process.
 
+That file, like `openwam-demonstration.json` and `openwam-ui-demonstration.json`
+referenced from [openwam.md](openwam.md), is **not present in this tree**. For a
+ladder that can actually be opened and re-run, use the
+[2026-11-07 execution receipt](execution-receipt-2026-11-07.md): it retains every
+request and response under `receipts/2026-11-07/` for capabilities → prepare →
+verify → plan_cam → verify_cam → preview_cam → research_cam_gcode →
+verify_cam_gcode on `examples/plate.svg`, with observed exit codes, digests and
+operation counts. Its research export is verified as software only; controller
+qualification stays false.
+
 ## Frontend boundary
 
 The previous server-rendered prototype is retained only as the optional
